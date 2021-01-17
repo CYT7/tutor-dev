@@ -22,17 +22,17 @@
               <el-form-item label="确认密码" prop="repassword">
                 <el-input v-model="parentRegisterForm.repassword" type="password" name="repassword" placeholder="请再次输入密码"></el-input>
               </el-form-item>
-              <el-form-item label="真实姓名" prop="realName">
-                <el-input v-model="parentRegisterForm.realName" name="realName" placeholder="请输入真实姓名"></el-input>
-              </el-form-item>
-              <el-form-item label="昵称" prop="nickName">
+              <el-form-item label="用户名" prop="nickName">
                 <el-input v-model="parentRegisterForm.nickName" name="nickName" placeholder="请输入昵称"></el-input>
               </el-form-item>
               <el-form-item label="性 别" prop="gender">
-                <el-radio-group v-model="parentRegisterForm.gender" name="gender" size="medium">
-                  <el-radio  label="未知"></el-radio>
-                  <el-radio  label="男"></el-radio>
-                  <el-radio  label="女"></el-radio>
+<!--                <el-radio-group v-model="parentRegisterForm.gender" name="gender" size="medium">-->
+<!--                  <el-radio  label="未知"></el-radio>-->
+<!--                  <el-radio  label="男"></el-radio>-->
+<!--                  <el-radio  label="女"></el-radio>-->
+<!--                </el-radio-group>-->
+                <el-radio-group v-model="parentRegisterForm.gender" name="gender">
+                  <el-radio v-for="item in gender" :key = "item.id" :label="item.id">{{item.name}}</el-radio>
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="城市" prop="city">
@@ -40,7 +40,7 @@
                   style="float: left"
                   placeholder="请选择城市"
                   :options="options"
-                  v-model="parentRegisterForm.city"
+                  v-model="parentRegisterForm.address"
                   :show-all-levels="false">
                 </el-cascader>
               </el-form-item>
@@ -62,23 +62,21 @@ import { provinceAndCityData } from 'element-china-area-data'
 export default {
   name: 'RegisterParent',
   data () {
-    // 手机号验证
-    var checkPhone = (rule, value, callback) => {
-      const phoneReg = /^1[3|4|5|6|7|8][0-9]{9}$/
-      if (!value) {
-        return callback(new Error('电话号码不能为空'))
+    // 验证手机号的校验规则
+    var checkMobile = (rule, value, callback) => {
+      const regMobile = /^1(3|5|7|8)\d{9}$/;// 验证手机号的正则表达式
+      if (regMobile.test(value)) {
+        return callback()// 合法的手机号
       }
-      setTimeout(() => {
-        if (!Number.isInteger(+value)) {
-          callback(new Error('请输入数字值'))
-        } else {
-          if (phoneReg.test(value)) {
-            callback()
-          } else {
-            callback(new Error('电话号码格式不正确'))
-          }
-        }
-      }, 100)
+      callback(new Error('请输入合法的手机号'))// 不合法
+    }
+    // 验证邮箱的校验规则
+    var checkEmail = (rule, value, callback) => {
+      const regEmail =  /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;// 验证邮箱的正则表达式
+      if (regEmail.test(value)) {
+        return callback()// 合法的邮箱
+      }
+      callback(new Error('请输入合法的邮箱'))// 不合法的邮箱
     }
     // 密码是否一致验证
     var validatePass1 = (rule, value, callback) => {
@@ -103,19 +101,33 @@ export default {
     return {
       // 城市数据
       options: provinceAndCityData,
+      gender : [{
+        id:0,
+        name:'未知'
+      },{
+        id:1,
+        name:'男'
+      },{
+        id:2,
+        name:'女'
+      }],
       parentRegisterForm: {
-        nickName: '',
+        phone: '',
+        email: '',
         password: '',
         repassword: '',
         gender: '',
-        phone: '',
-        email: '',
-        city: ''
+        nickName: '',
+        address:[]
       },
       rules: {
-        nickName: [
-          // { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 1, max: 10, message: '长度在 1 到 10个字符', trigger: 'blur' }
+        phone: [
+          { required: true, message: '请输入手机号码', trigger: 'blur' },
+          {validator: checkMobile, trigger: 'blur' }
+        ],
+        email:[
+          { required: true, message: '请输入邮箱', trigger: 'blur' },
+          {validator: checkEmail, trigger: 'blur' }
         ],
         password: [
           {required: true, validator: validatePass1, min: 6, message: '密码长度最少为6位', trigger: 'blur'}
@@ -123,9 +135,6 @@ export default {
         repassword: [
           {required: true, validator: validatePass2, min: 6, message: '密码长度最少为6位', trigger: 'blur'}
         ],
-        phone: [
-          {validator: checkPhone, trigger: 'blur' }
-        ]
       }
     }
   },
@@ -133,7 +142,7 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          const registerData = axios.post('parentRegister', this.login_form)
+          const registerData = axios.post('http://127.0.0.1:7001/business/user/create', this.parentRegisterForm)
             .then(function (response) {
               console.log(response)
             })
