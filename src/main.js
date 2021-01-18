@@ -7,6 +7,12 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
+
+//引入轮播图
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
+//使用轮播图
+Vue.use(VueAwesomeSwiper ,/* { default global options } */)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
