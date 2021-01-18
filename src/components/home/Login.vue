@@ -137,8 +137,11 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const loginData = axios.post('http://127.0.0.1:7001/business/user/login', this.login_form)
-            .then(function (response) {
-              console.log(response)
+            .then(response => {
+              if (response.data.code === 0 ){
+                console.log(response)
+                this.$router.push('/home')
+              }
             })
             .catch(function (error) {
               console.log(error)
