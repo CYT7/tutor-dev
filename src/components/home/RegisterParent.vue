@@ -16,21 +16,16 @@
               <el-form-item label="邮箱" prop="email">
                 <el-input v-model="parentRegisterForm.email" name="phone" placeholder="请输入邮箱"></el-input>
               </el-form-item>
-              <el-form-item label="密 码" prop="password">
+              <el-form-item label="密码" prop="password">
                 <el-input v-model="parentRegisterForm.password" type="password" name="password" placeholder="请输入密码"></el-input>
               </el-form-item>
               <el-form-item label="确认密码" prop="repassword">
                 <el-input v-model="parentRegisterForm.repassword" type="password" name="repassword" placeholder="请再次输入密码"></el-input>
               </el-form-item>
-              <el-form-item label="用户名" prop="nickName">
+              <el-form-item label="昵称" prop="nickName">
                 <el-input v-model="parentRegisterForm.nickName" name="nickName" placeholder="请输入昵称"></el-input>
               </el-form-item>
-              <el-form-item label="性 别" prop="gender">
-<!--                <el-radio-group v-model="parentRegisterForm.gender" name="gender" size="medium">-->
-<!--                  <el-radio  label="未知"></el-radio>-->
-<!--                  <el-radio  label="男"></el-radio>-->
-<!--                  <el-radio  label="女"></el-radio>-->
-<!--                </el-radio-group>-->
+              <el-form-item label="性别" prop="gender">
                 <el-radio-group v-model="parentRegisterForm.gender" name="gender">
                   <el-radio v-for="item in gender" :key = "item.id" :label="item.id">{{item.name}}</el-radio>
                 </el-radio-group>
@@ -133,7 +128,7 @@ export default {
           {required: true, validator: validatePass1, min: 6, message: '密码长度最少为6位', trigger: 'blur'}
         ],
         repassword: [
-          {required: true, validator: validatePass2, min: 6, message: '密码长度最少为6位', trigger: 'blur'}
+          {required: true, validator: validatePass2,  trigger: 'blur'}
         ],
       }
     }
