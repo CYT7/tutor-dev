@@ -11,15 +11,15 @@
       ><!--height可实现固定表头的表格-->
         <el-table-column
           label="家教 ID" align="center"
-          prop="t_id">
+          prop="id">
         </el-table-column>
         <el-table-column align="center"
                          label="教授科目"
-                         prop="subject">
+                         prop="goodAt">
         </el-table-column>
         <el-table-column align="center"
                          label="教龄"
-                         prop="tea_age">
+                         prop="experience">
         </el-table-column>
         <el-table-column align="center"
                          label="毕业院校"
@@ -72,10 +72,10 @@
       TeacherInfoHeader
     },
     mounted() {
-      axios.get('/api/teacher_jian.json')
+      axios.get('http://127.0.0.1:7001/business/teacher/list?page=1')
         .then(
-          (resp) => {
-            this.teacher_jian_Data = resp.data.teacherJian
+          (res) => {
+            this.teacher_jian_Data = res.data
             //数据拿到，ok!
             console.log(this.teacher_jian_Data)
           },

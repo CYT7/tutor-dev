@@ -139,8 +139,14 @@ export default {
           const loginData = axios.post('http://127.0.0.1:7001/business/user/login', this.login_form)
             .then(response => {
               if (response.data.code === 0 ){
-                console.log(response)
                 this.$router.push('/home')
+                this.$notify({
+                  title:'Success',
+                  dangerouslyUseHTMLString: true,
+                  message: res.Msg,
+                  type: 'Success'
+                })
+                console.log(response)
               }
             })
             .catch(function (error) {

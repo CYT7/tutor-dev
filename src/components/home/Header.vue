@@ -12,6 +12,7 @@
           @change="handleChange">
         </el-cascader>
       </div>
+      <div>欢迎您！{{ nickName }}</div>
     </div>
     <div class="menu">
       <el-menu :default-active="activeIndex"
