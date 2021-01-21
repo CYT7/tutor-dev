@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/Login'
-import RegisterParent from '@/components/RegisterParent'
-import RegisterTutor from '@/components/RegisterTutor'
-import Home from '@/components/Home'
-import TeacherInfo from '@/components/TeacherInfo'
-import TeachersWanted from '@/components/TeachersWanted'
-import TeacherDetail from '@/components/TeacherDetail'
-import ParentDetail from '@/components/ParentDetail'
+import Login from '@/components/home/Login'
+import RegisterParent from '@/components/home/RegisterParent'
+import RegisterTutor from '@/components/home/RegisterTutor'
+import Home from '@/components/home/Home'
+import TeacherInfo from '@/components/teacher/TeacherInfo'
+import TeachersWanted from '@/components/teacher/TeachersWanted'
+import TeacherDetail from '@/components/detail/TeacherDetail'
+import ParentDetail from '@/components/detail/ParentDetail'
 Vue.use(Router)
 
 export default new Router({

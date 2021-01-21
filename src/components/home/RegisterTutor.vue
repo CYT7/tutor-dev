@@ -5,7 +5,7 @@
         <el-card shadow="hover">
           <el-row>
             <div style="width: auto;height: 60px;display:flex;">
-              <img src="../assets/styles/images/logo.png" class="logo" style="width: 180px;height: 60px;float: left">
+              <img src="../../assets/styles/images/logo.png" class="logo" style="width: 180px;height: 60px;float: left">
               <h2 style="float: left">大学生家教网-家教注册</h2>
             </div>
             <el-divider></el-divider>

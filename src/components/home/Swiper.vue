@@ -20,13 +20,13 @@
         },
         swiperList: [
           {
-            id: "0001", url:require('../assets/styles/images/banner1.png')
+            id: "0001", url:require('../../assets/styles/images/banner1.png')
           },
           {
-            id: "0002",  url:require('../assets/styles/images/banner2.png')
+            id: "0002",  url:require('../../assets/styles/images/banner2.png')
           },
           {
-            id: "0003",  url:require('../assets/styles/images/banner3.png')
+            id: "0003",  url:require('../../assets/styles/images/banner3.png')
           }
         ]
       }
