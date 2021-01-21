@@ -5,52 +5,30 @@
     </el-col>
     <div style="margin-top: 10px" align="center">
       <el-table
-        :data="teacher_jian_Data.filter(data => !search || data.subject.toLowerCase().includes(search.toLowerCase()))"
+        :data="teacher_jian_Data.filter(data => !search || data.goodAt.toLowerCase().includes(search.toLowerCase()))"
         style="width: 82%"
         height="500"
       ><!--height可实现固定表头的表格-->
-        <el-table-column
-          label="家教 ID" align="center"
-          prop="id">
-        </el-table-column>
-        <el-table-column align="center"
-                         label="教授科目"
-                         prop="goodAt">
-        </el-table-column>
-        <el-table-column align="center"
-                         label="教龄"
-                         prop="experience">
-        </el-table-column>
-        <el-table-column align="center"
-                         label="毕业院校"
-                         prop="school">
-        </el-table-column>
-        <el-table-column align="center"
-                         label="所在城市"
-                         prop="city">
-        </el-table-column>
+        <el-table-column align="center" label="家教 ID"  prop="id"></el-table-column>
+        <el-table-column align="center" label="教授科目" prop="goodAt"></el-table-column>
+        <el-table-column align="center" label="教学经验(年)" prop="experience"></el-table-column>
+        <el-table-column align="center" label="成功次数" prop="totalSuccess"></el-table-column>
+        <el-table-column align="center" label="在读/毕业院校" prop="school"></el-table-column>
+        <el-table-column align="center" label="年龄" prop="age"></el-table-column>
+        <el-table-column align="center" label="授课费用(时)" prop="hourPrice"></el-table-column>
+        <el-table-column align="center" label="所在城市" prop="city"></el-table-column>
         <!--点击查看，跳转到家教页面详情-->
-        <el-table-column align="center"
-                         label="操作"
-                         width="150">
+        <el-table-column align="center" label="操作" width="150">
           <template slot-scope="scope">
-            <router-link
-              :to="`/teacherDetail/${scope.row.t_id}`"><!--(scope.row.字段)可以获得当前行的任意一个字段-->
+            <router-link :to="`/teacherDetail/${scope.row.id}`"><!--(scope.row.字段)可以获得当前行的任意一个字段-->
               <el-button type="text" size="small" icon="el-icon-thumb">查看</el-button>
             </router-link>
           </template>
         </el-table-column>
         <!--搜索框（根据教授科目筛选家教信息）-->
-        <el-table-column
-          align="right"
-          width="190">
+        <el-table-column align="right" width="190">
           <template slot="header" slot-scope="scope">
-            <el-input
-              prefix-icon="el-icon-search"
-              v-model="search"
-              size="mini"
-              placeholder="输入教授科目进行筛选"
-            />
+            <el-input prefix-icon="el-icon-search" v-model="search" size="mini" placeholder="输入教授科目进行筛选"/>
           </template>
         </el-table-column>
       </el-table>
@@ -60,28 +38,28 @@
 <script>
   import TeacherInfoHeader from "./TeacherInfoHeader";
   import axios from 'axios'
-  const token = '';
+  const tokens = localStorage.getItem('token');
   export default {
     name: "TeacherInfo",
     data() {
       return {
         teacher_jian_Data: [],
-        search: ''
+        search: '',
+        tokens : []
       }
     },
     components:{
       TeacherInfoHeader
     },
     mounted() {
-      axios.post(localStorage.getItem(token))
-      axios.get('http://127.0.0.1:7001/business/teacher/list?page=1',{
+      axios.get('http://127.0.0.1:7001/business/teacher/list',{
         headers:{
-          authorization:`Bearer ${token}`
+          authorization:`Bearer ${tokens}`
         }
       })
         .then(
           (res) => {
-            this.teacher_jian_Data = res.data
+            this.teacher_jian_Data = res.data.data
             //数据拿到，ok!
             console.log(this.teacher_jian_Data)
           },
