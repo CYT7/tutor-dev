@@ -6,7 +6,6 @@
         <IndexContent></IndexContent>
       </el-col>
     </el-row>
-
   </div>
 
 </template>
@@ -15,12 +14,11 @@
   import Header from "./Header";
   import IndexContent from "./Content";
 
-
   export default {
     name: "Home",
     components: {
       IndexContent,
-      Header
+      Header,
     }
   }
 </script>

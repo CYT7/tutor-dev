@@ -12,7 +12,6 @@
           @change="handleChange">
         </el-cascader>
       </div>
-      <div>欢迎您！{{ nickName }}</div>
     </div>
     <div class="menu">
       <el-menu :default-active="activeIndex"
@@ -33,7 +32,7 @@
         </el-menu-item>
         <el-menu-item index="3" >
           <router-link tag="div" :to="{path:'/TeachersWanted'}">
-            <i class="el-icon-s-operation"></i>招聘信息库
+            <i class="el-icon-s-operation"></i>需求信息库
           </router-link>
         </el-menu-item>
         <el-submenu index="4">
