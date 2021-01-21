@@ -60,6 +60,7 @@
 <script>
   import TeacherInfoHeader from "./TeacherInfoHeader";
   import axios from 'axios'
+  const token = '';
   export default {
     name: "TeacherInfo",
     data() {
@@ -72,7 +73,12 @@
       TeacherInfoHeader
     },
     mounted() {
-      axios.get('http://127.0.0.1:7001/business/teacher/list?page=1')
+      axios.post(localStorage.getItem(token))
+      axios.get('http://127.0.0.1:7001/business/teacher/list?page=1',{
+        headers:{
+          authorization:`Bearer ${token}`
+        }
+      })
         .then(
           (res) => {
             this.teacher_jian_Data = res.data
