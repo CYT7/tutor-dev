@@ -1,7 +1,7 @@
 <template>
   <div style="margin-top: 0px">
     <div style="width: 580px;height: 60px">
-      <img src="../../assets/styles/images/logo.png" class="logo">
+      <img src="../assets/styles/images/logo.png" class="logo">
       <div class="block">
         <el-cascader
           size="large"
@@ -26,7 +26,7 @@
           </router-link>
         </el-menu-item>
         <el-menu-item index="2" >
-          <router-link tag="div" :to="{path:'/TeacherInfo'}">
+          <router-link tag="div" :to="{path:'/teacherinfo'}">
             <i class="el-icon-s-home"></i>家教信息库
           </router-link>
         </el-menu-item>
@@ -57,10 +57,10 @@
   //导入省市数据
   import { provinceAndCityData } from 'element-china-area-data';
   export default {
-    name: "TeachersWantedHeader",
+    name: "HireTeacherinfoHeader",
     data() {
       return {
-        activeIndex: '3',
+        activeIndex: '2',
         value: [],
         options: provinceAndCityData,
         selectedOptions: [],

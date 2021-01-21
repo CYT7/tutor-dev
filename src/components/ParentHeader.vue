@@ -1,7 +1,7 @@
 <template>
   <div style="margin-top: 0px">
     <div style="width: 580px;height: 60px">
-      <img src="../../assets/styles/images/logo.png" class="logo">
+      <img src="../assets/styles/images/logo.png" class="logo">
       <div class="block">
         <el-cascader
           size="large"
