@@ -133,24 +133,22 @@ export default {
     tutorSubmitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          const loginData = axios.post('http://127.0.0.1:7001/business/user/login', this.login_form)
+          axios.post('http://127.0.0.1:7001/business/user/login', this.login_form)
             .then(res => {
-              console.log(res.data)
               if (res.data.code === 0 ){
                 localStorage.setItem('token',res.data.token)
                 this.$router.push('/home')
-                this.$notify({
-                  title:'Success',
-                  dangerouslyUseHTMLString: true,
-                  message: res.data.msg,
-                  type: 'Success'
+                this.$message({
+                  message: res.data.msg || 'Success',
+                  type: 'Success',
+                  duration: 3 * 1000
                 })
-                console.log(response)
+                console.log(res.data)
               }else if (res.data.code !== 0) {
-                this.$notify({
-                  title:'Error',
-                  message: res.data.msg,
-                  type: 'error'
+                this.$message({
+                  message: res.data.msg || 'Error',
+                  type: 'error',
+                  duration: 3 * 1000
                 })
               }
             })
@@ -166,9 +164,8 @@ export default {
     parentSubmitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          const loginData = axios.post('http://127.0.0.1:7001/business/user/login', this.login_form)
+          axios.post('http://127.0.0.1:7001/business/user/login', this.login_form)
             .then(res => {
-              console.log(res.data)
               if (res.data.code === 0 ){
                 localStorage.setItem('token',res.data.token)
                 this.$router.push('/home')
@@ -178,7 +175,7 @@ export default {
                   message: res.data.msg,
                   type: 'Success'
                 })
-                console.log(response)
+                console.log(res.data)
               }else if (res.data.code !== 0) {
                 this.$notify({
                   title:'Error',
@@ -190,7 +187,6 @@ export default {
             .catch(function (error) {
               console.log(error)
             })
-          console.log(loginData)
         } else {
           console.log('error submit!!')
           return false

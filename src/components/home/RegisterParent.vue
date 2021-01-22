@@ -117,12 +117,10 @@ export default {
       },
       rules: {
         phone: [
-          { required: true, message: '请输入手机号码', trigger: 'blur' },
-          {validator: checkMobile, trigger: 'blur' }
+          { required: true, message: '请输入手机号码', trigger: 'blur',validator: checkMobile, trigger: 'blur' },
         ],
         email:[
-          { required: true, message: '请输入邮箱', trigger: 'blur' },
-          {validator: checkEmail, trigger: 'blur' }
+          { required: true, message: '请输入邮箱', trigger: 'blur',validator: checkEmail, trigger: 'blur' },
         ],
         password: [
           {required: true, validator: validatePass1, min: 6, message: '密码长度最少为6位', trigger: 'blur'}
@@ -137,14 +135,27 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          const registerData = axios.post('http://127.0.0.1:7001/business/user/create', this.parentRegisterForm)
-            .then(function (response) {
-              console.log(response)
+          axios.post('http://127.0.0.1:7001/business/user/create', this.parentRegisterForm)
+            .then(res => {
+              if (res.data.code === 0 ){
+                this.$router.push('/')
+                this.$message({
+                  message: res.data.msg || 'Success',
+                  type: 'Success',
+                  duration: 3 * 1000
+                })
+                console.log(res.data)
+              }else if (res.data.code !== 0) {
+                this.$message({
+                  message: res.data.msg || 'Error',
+                  type: 'error',
+                  duration: 3 * 1000
+                })
+              }
             })
             .catch(function (error) {
               console.log(error)
             })
-          console.log(registerData)
         } else {
           console.log('error submit!!')
           return false
