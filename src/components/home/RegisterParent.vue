@@ -42,6 +42,7 @@
               <el-form-item>
                 <el-button type="primary" @click="submitForm('parentRegisterForm')">提&nbsp;&nbsp;交</el-button>
                 <el-button @click="resetForm('parentRegisterForm')">重&nbsp;&nbsp;置</el-button>
+                <el-button><router-link tag="div" :to="{path:'/'}">返回登录</router-link></el-button>
               </el-form-item>
             </el-form>
           </el-row>

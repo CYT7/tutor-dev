@@ -7,13 +7,10 @@
       </el-col>
     </el-row>
   </div>
-
 </template>
-
 <script>
   import Header from "./Header";
   import IndexContent from "./Content";
-
   export default {
     name: "Home",
     components: {
@@ -22,7 +19,6 @@
     }
   }
 </script>
-
 <style scoped="scoped">
   .header{
     margin-top: 0px;

@@ -23,7 +23,6 @@
             </div>
           </el-card>
         </router-link>
-
       </div>
     </div>
     <div class="recruitRecommend">
@@ -31,7 +30,6 @@
         <i class="el-icon-s-operation" style="color: #409EFF"></i>&nbsp;&nbsp;&nbsp;&nbsp;需求推荐
       </el-divider>
       <div  v-for="list in recruitData" :key="list" class="recruitRecommend">
-
         <router-link :to="`/parentDetail/${list.id}`">
           <el-card class="box-card" style="height: 248px;" @click.native="recruitDetail(list.id)">
             <div  class="text item">
@@ -47,13 +45,10 @@
             </div>
           </el-card>
         </router-link>
-
       </div>
     </div>
-
   </div>
 </template>
-
 <script>
   // 导入ajax请求库
   import axios from 'axios'
@@ -72,17 +67,15 @@
         headers:{
           authorization:`Bearer ${tokens}`
         }
-      }) // 返回ES6 Promise对象: resovle : Function, reject : Function
-        .then( (resp) => {  // 箭头函数不会创建自己的this，只继承父级链上的this
+      })// 返回ES6 Promise对象: resovle : Function, reject : Function
+        .then( (resp) => { // 箭头函数不会创建自己的this，只继承父级链上的this
           const tutors = resp.data.data
           this.tutorData = tutors;
           console.log(tutors);
-
         }) // success, 注意这里传入的是函数对象没有()号
         .catch(function (error) {   // failure
           console.log(error);
         });
-
       axios.get('http://127.0.0.1:7001/business/need/list',{
         headers:{
           authorization:`Bearer ${tokens}`
@@ -92,7 +85,6 @@
           const recruit = resp.data.data
           this.recruitData = recruit;
           console.log(recruit);
-
         }) // success, 注意这里传入的是函数对象没有()号
         .catch(function (error) {   // failure
           console.log(error);
@@ -100,7 +92,6 @@
     }
   }
 </script>
-
 <style scoped="scoped">
   .box-card{
     width:480px;
@@ -121,7 +112,6 @@
   span{
     color: #409EFF;
   }
-
   .tutorRecommend,.recruitRecommend{
     margin-top: 18px;
     float: left;
