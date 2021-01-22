@@ -4,20 +4,21 @@
       <el-divider content-position="left">
         <i class="el-icon-menu" style="color: #409EFF"></i>&nbsp;&nbsp;&nbsp;&nbsp;家教推荐
       </el-divider>
-      <div  v-for="list in tutorData" :key="list" class="tutorRecommend">
+      <div  v-for="(list,index) in tutorData" :key="index" class="tutorRecommend">
         <router-link :to="`/teacherDetail/${list.id}`">
           <el-card class="box-card" style="height: 330px" @click.native="tutorDetail(list.id)">
             <div  class="text item">
               <div style="display: flex;margin-left: 20px">
-                <el-avatar :size="80" style="float: left;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-                <h3 style="float: left;margin-left: 80px">{{list.tname}}</h3>
+                <span v-if="list.User.image_url !== null"><el-avatar :size="80" style="float: left;"  :src="list.User.image_url" :key="list.User.image_url"></el-avatar></span>
+                <span v-else><el-avatar :size="80" style="float: left;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar></span>
+                <h3 style="float: left;margin-left: 80px">{{list.User.nickName}}老师</h3>
               </div>
               <div>
                 <ul class="info">
                   <li><span>就读学校:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.school}}</li>
                   <li><span>所在城市:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.city}}</li>
                   <li><span>教授学科:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.goodAt}}</li>
-                  <li><span>授课价格:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.hourPrice}}</li>
+                  <li><span>授课价格:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.hourPrice}}元</li>
                 </ul>
               </div>
             </div>
@@ -29,17 +30,21 @@
       <el-divider content-position="left">
         <i class="el-icon-s-operation" style="color: #409EFF"></i>&nbsp;&nbsp;&nbsp;&nbsp;需求推荐
       </el-divider>
-      <div  v-for="list in recruitData" :key="list" class="recruitRecommend">
+      <div  v-for="(list,index) in recruitData" :key="index" class="recruitRecommend">
         <router-link :to="`/parentDetail/${list.id}`">
           <el-card class="box-card" style="height: 248px;" @click.native="recruitDetail(list.id)">
             <div  class="text item">
               <span style="font-size: 20px;font-weight: bolder">{{list.title}}</span>
               <div>
                 <ul class="info">
-                  <li>辅导学科:&nbsp;&nbsp;&nbsp;&nbsp;{{list.subject}}</li>
-                  <li>授课总价:&nbsp;&nbsp;&nbsp;&nbsp;{{list.totalPrice}}元</li>
-                  <li>性别要求:&nbsp;&nbsp;&nbsp;&nbsp;{{list.teacherGender}}</li>
-                  <li>授课地址:&nbsp;&nbsp;&nbsp;&nbsp;{{list.address}}</li>
+                  <li>辅导学科:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{list.subject}}</span></li>
+                  <li>授课总价:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{list.totalPrice}}元</span></li>
+                  <li>性别要求:&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span v-if="list.teacherGender ==0">不限</span>
+                    <span v-else-if="list.teacherGender ==1">男</span>
+                    <span v-else>女</span>
+                  </li>
+                  <li>授课地址:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{list.address}}</span></li>
                 </ul>
               </div>
             </div>
