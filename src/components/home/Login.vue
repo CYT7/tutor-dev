@@ -51,7 +51,6 @@
                   </el-row>
                 </el-card>
               </el-row>
-
             </el-tab-pane>
             <el-tab-pane label="家教登录" name="second">
               <el-row  class="loginForm">
@@ -100,7 +99,6 @@
     </el-row>
   </div>
 </template>
-
 <script>
 import axios from 'axios'
 export default {
@@ -113,7 +111,7 @@ export default {
       if (regEmail.test(value) || regMobile.test(value)) {
         return callback()
       }
-      callback(new Error('请输入合法的邮箱或手机'))
+      callback(new Error('请输入合法的邮箱或手机号码'))
     }
     return {
       activeName: 'first',
@@ -123,8 +121,7 @@ export default {
       },
       rules: {
         username: [
-          { required: true, message: '请输入手机或者邮箱', trigger: 'blur' },
-          { validator: check, trigger: 'blur' }
+          { required: true, message: '请输入手机或者邮箱', trigger: 'blur',validator: check, trigger: 'blur' },
         ],
         password: [
           {required: true, message: '请输入密码', trigger: 'blur'}
@@ -137,24 +134,29 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const loginData = axios.post('http://127.0.0.1:7001/business/user/login', this.login_form)
-            .then(response => {
-              console.log(response.data)
-              if (response.data.code === 0 ){
-                localStorage.setItem('token',response.data.token)
+            .then(res => {
+              console.log(res.data)
+              if (res.data.code === 0 ){
+                localStorage.setItem('token',res.data.token)
                 this.$router.push('/home')
                 this.$notify({
                   title:'Success',
                   dangerouslyUseHTMLString: true,
-                  message: response.msg,
+                  message: res.data.msg,
                   type: 'Success'
                 })
                 console.log(response)
+              }else if (res.data.code !== 0) {
+                this.$notify({
+                  title:'Error',
+                  message: res.data.msg,
+                  type: 'error'
+                })
               }
             })
             .catch(function (error) {
               console.log(error)
             })
-          console.log(loginData)
         } else {
           console.log('error submit!!')
           return false
@@ -165,8 +167,25 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const loginData = axios.post('http://127.0.0.1:7001/business/user/login', this.login_form)
-            .then(function (response) {
-              console.log(response)
+            .then(res => {
+              console.log(res.data)
+              if (res.data.code === 0 ){
+                localStorage.setItem('token',res.data.token)
+                this.$router.push('/home')
+                this.$notify({
+                  title:'Success',
+                  dangerouslyUseHTMLString: true,
+                  message: res.data.msg,
+                  type: 'Success'
+                })
+                console.log(response)
+              }else if (res.data.code !== 0) {
+                this.$notify({
+                  title:'Error',
+                  message: res.data.msg,
+                  type: 'error'
+                })
+              }
             })
             .catch(function (error) {
               console.log(error)
