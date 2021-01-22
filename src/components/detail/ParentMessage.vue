@@ -11,17 +11,14 @@
             <el-breadcrumb-item>招聘详情</el-breadcrumb-item>
           </el-breadcrumb>
         </el-header>
-
         <el-container>
           <el-container>
-
             <el-main>
               <div class="top-border">
               <el-row class="top-text">
                 <el-col :span="10"><div class="grid-content bg-purple-light">{{parentList.title}}</div></el-col>
               </el-row>
               </div>
-
               <div class="body-border">
                 <el-row style="margin-top: 20px;margin-left:10px;color: #409EFF">
                   <el-col style="font-weight: bold">具体要求</el-col>
@@ -68,25 +65,21 @@
                 <el-col :span="6"><div class="grid-content bg-purple">发布信息的日期</div></el-col>
                 <el-col :span="4"><div class="grid-content bg-purple-light">{{parentList.publish}}</div></el-col>
               </el-row>
-                <!--<el-row>
+                <el-row>
                   <el-button type="primary" style="margin-top: 8px;margin-bottom: 8px;margin-left: 10px">
                     <router-link :to="`/login`" class="router-link">
                     家教登录接洽</router-link></el-button>
-                </el-row>-->
+                </el-row>
               </div>
-
             </el-main>
-
-
             <el-aside width="30%">
-            <!--  <el-row style="margin-top: 20px">
+            <el-row style="margin-top: 20px">
                 <div class="body-border-2" >
                 <el-button type="primary" style="margin-top: 8px;margin-bottom: 8px"><router-link :to="`/login`" class="router-link">
                   家长登录</router-link></el-button>
                 <el-button type="success"><router-link :to="`/tutorRegister`" class="router-link">家教注册</router-link></el-button>
                 </div>
-              </el-row>-->
-
+              </el-row>
               <div class="body-border-2" style="margin-top: 20px">
                 <el-row>
                   <el-col :span="2"><div class="grid-content bg-purple">&nbsp;</div></el-col>
@@ -100,36 +93,24 @@
                   <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
                 </el-row>
               </div>
-
             </el-aside>
-
           </el-container>
         </el-container>
-
-
       </div>
       </el-col>
-
     </el-row>
-
-
-
   </div>
 </template>
-
 <script>
-
     export default {
         name: "ParentMessage",
         methods: {
-
         },
         props:{
           parentList:Object
         }
     }
 </script>
-
 <style scoped>
   .el-row {
     margin-bottom: 20px;
@@ -190,6 +171,4 @@
     margin-top: 2px;
     background-color: #F2F6FC;
   }
-
-
 </style>

@@ -36,15 +36,15 @@
           </router-link>
         </el-menu-item>
         <el-submenu index="4">
-          <template slot="title" ><i class="el-icon-user-solid"></i><span>个人中心</span></template>
+          <template slot="title" ><i class="el-icon-user-solid"></i><span>其他</span></template>
           <el-menu-item index="4-1"  style="text-align: center">
             <router-link tag="div" :to="{path:'/tutorCenter'}">
-              <span style="font-size: 16px">家教个人中心</span>
+              <i class="el-icon-user-solid"></i><span style="font-size: 16px">个人中心</span>
             </router-link>
           </el-menu-item>
           <el-menu-item index="4-2" style="text-align: center">
             <router-link tag="div" :to="{path:'/parentCenter'}">
-              <span style="font-size: 16px">家长个人中心</span>
+              <i class="el-icon-user-solid"></i><span style="font-size: 16px">退出登录</span>
             </router-link>
           </el-menu-item>
         </el-submenu>

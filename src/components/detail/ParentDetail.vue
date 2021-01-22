@@ -9,6 +9,7 @@
 
 <script>
   import axios from 'axios'
+  const tokens = localStorage.getItem('token');
   import ParentMessage from "./ParentMessage.vue";
   import ParentHeader from "./ParentHeader"
     export default {
@@ -20,17 +21,22 @@
       data(){
         return{
           parentList: Object,
+          tokens : []
         }
       },
       mounted() {
 
-        const msgid=this.$route.params.msgid
-        console.log(msgid)
+        const id=this.$route.params.id
+        console.log(id)
 
-        const pid =this.$route.params.pid
-        console.log(pid)
-
-        axios.get('api/parent_details.json')
+        axios.get('http://127.0.0.1:7001/business/need/information',{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          },
+          params:{
+            id:id
+          }
+        })
           .then(
             (resp) => {
               console.log("调用API");

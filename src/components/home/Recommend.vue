@@ -32,7 +32,7 @@
       </el-divider>
       <div  v-for="list in recruitData" :key="list" class="recruitRecommend">
 
-        <router-link :to="`/parentDetail/${list.id}/${list.pid}`">
+        <router-link :to="`/parentDetail/${list.id}`">
           <el-card class="box-card" style="height: 248px;" @click.native="recruitDetail(list.id)">
             <div  class="text item">
               <span style="font-size: 20px;font-weight: bolder">{{list.title}}</span>
@@ -98,22 +98,6 @@
           console.log(error);
         });
     }
-    // methods:{
-    //   recruitDetail(value){
-
-    // <template slot-scope="scope">
-    //     <router-link
-    // :to="`/parentDetail/${scope.row.msgid}/${scope.row.pid}`"><!--传俩id-->
-    //     <el-button type="text" size="small" icon="el-icon-thumb">查看</el-button>
-    //     </router-link>
-    //     </template>
-
-    //     this.$router.push({path:'/recruitDetail',query:{msgid:value}})
-    //   },
-    //   tutorDetail(value){
-    //     // this.$router.push({path:'/tutorDetail',query:{t_id:value}})
-    //   }
-    // }
   }
 </script>
 
