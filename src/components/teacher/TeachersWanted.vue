@@ -3,18 +3,20 @@
     <el-col :span="20" :offset="2"><TeachersWantedHeader></TeachersWantedHeader></el-col>
     <div style="margin-top: 10px" align="center">
       <el-table
-        :data="hire_teacher_Data.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
+        :data="hire_teacher_Data.filter(data => !search || data.subject.toLowerCase().includes(search.toLowerCase()))"
         style="width: 82%"
         height="500"
       ><!--height可实现固定表头的表格-->
-        <el-table-column align="center" label="需求ID" prop="id"></el-table-column>
-        <el-table-column align="center" label="家教要求" prop="subject"></el-table-column>
-        <el-table-column align="center" label="需求发布时间" prop="createTime" :formatter="formatDate"></el-table-column>
+        <el-table-column type="index" width="50" align="center" />
         <el-table-column align="center" label="学生称呼" prop="nickName"> </el-table-column>
+        <el-table-column align="center" label="授课科目" prop="subject"></el-table-column>
+        <el-table-column align="center" label="所在城市区域" prop="address"></el-table-column>
+        <el-table-column align="center" label="需求总报价(元)" prop="totalPrice"></el-table-column>
+        <el-table-column align="center" label="需求发布时间" prop="createTime" :formatter="formatDate"></el-table-column>
         <!--点击查看，跳转到招聘页面详情-->
         <el-table-column align="center" label="操作" width="150">
           <template slot-scope="scope">
-            <router-link :to="`/parentDetail/${scope.row.id}`"><!--传俩id-->
+            <router-link :to="`/parentDetail`"><!--传俩id-->
               <el-button type="text" size="small" icon="el-icon-thumb">查看</el-button>
             </router-link>
           </template>

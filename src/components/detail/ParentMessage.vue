@@ -3,21 +3,17 @@
     <el-row>
       <el-col :span="2"><div class="grid-content bg-purple">&nbsp;</div></el-col>
       <el-col :span="22"><div class="grid-content bg-purple-light">
-
         <el-header height="20px">
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/home' }">家教网首页</el-breadcrumb-item>
-            <el-breadcrumb-item :to="{ path: '/hireteacher' }">招聘家教</el-breadcrumb-item>
-            <el-breadcrumb-item>招聘详情</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/TeachersWanted' }">招聘家教</el-breadcrumb-item>
+            <el-breadcrumb-item>需求详情</el-breadcrumb-item>
           </el-breadcrumb>
         </el-header>
         <el-container>
           <el-container>
             <el-main>
               <div class="top-border">
-              <el-row class="top-text">
-                <el-col :span="10"><div class="grid-content bg-purple-light">{{parentList.title}}</div></el-col>
-              </el-row>
               </div>
               <div class="body-border">
                 <el-row style="margin-top: 20px;margin-left:10px;color: #409EFF">
@@ -26,7 +22,7 @@
               <el-row >
                 <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                 <el-col :span="6"><div class="grid-content bg-purple">招聘编号</div></el-col>
-                <el-col :span="4"><div class="grid-content bg-purple">{{parentList.msgid}}
+                <el-col :span="4"><div class="grid-content bg-purple">{{parentList.id}}
                 </div></el-col>
               </el-row>
               <el-row>

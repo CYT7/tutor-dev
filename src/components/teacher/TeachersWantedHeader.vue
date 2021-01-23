@@ -32,27 +32,34 @@
         </el-menu-item>
         <el-menu-item index="3" >
           <router-link tag="div" :to="{path:'/TeachersWanted'}">
-            <i class="el-icon-s-operation"></i>招聘信息库
+            <i class="el-icon-s-operation"></i>需求信息库
           </router-link>
         </el-menu-item>
         <el-submenu index="4">
-          <template slot="title" ><i class="el-icon-user-solid"></i><span>个人中心</span></template>
+          <template slot="title" ><i class="el-icon-user-solid"></i><span>其他</span></template>
           <el-menu-item index="4-1"  style="text-align: center">
             <router-link tag="div" :to="{path:'/tutorCenter'}">
-              <span style="font-size: 16px">家教个人中心</span>
+              <i class="el-icon-user-solid"></i><span style="font-size: 16px">个人中心</span>
             </router-link>
           </el-menu-item>
           <el-menu-item index="4-2" style="text-align: center">
             <router-link tag="div" :to="{path:'/parentCenter'}">
-              <span style="font-size: 16px">家长个人中心</span>
+              <i class="el-icon-user-solid"></i><span style="font-size: 16px">退出登录</span>
             </router-link>
           </el-menu-item>
         </el-submenu>
+        <div class="search">
+          <div class="searchinput">
+            <el-input v-model="searchinput" placeholder="请输入内容"></el-input>
+          </div>
+          <div class="searchbutton">
+            <el-button icon="el-icon-search" circle @click="searchSubmit"></el-button>
+          </div>
+        </div>
       </el-menu>
     </div>
   </div>
 </template>
-
 <script>
   //导入省市数据
   import { provinceAndCityData } from 'element-china-area-data';

@@ -1,12 +1,9 @@
 <template>
-
   <div>
     <el-col :span="20" offset="2"><parent-header></parent-header></el-col>
     <el-col :span="20"><parent-message :parent-list="parentList"></parent-message></el-col>
   </div>
-
 </template>
-
 <script>
   import axios from 'axios'
   const tokens = localStorage.getItem('token');
@@ -29,18 +26,14 @@
         const id=this.$route.params.id
         console.log(id)
 
-        axios.get('http://127.0.0.1:7001/business/need/information',{
+        axios.post('http://127.0.0.1:7001/business/need/information',{
           headers:{
             authorization:`Bearer ${tokens}`
-          },
-          params:{
-            id:id
           }
-        })
-          .then(
+        }).then(
             (resp) => {
               console.log("调用API");
-              const data = resp.data;
+              const data = resp.data.data;
               this.parentList = data
               console.log(this.parentList)
             },
