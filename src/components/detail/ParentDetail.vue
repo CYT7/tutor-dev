@@ -25,29 +25,10 @@
     created(){
       this.getParams()
     },
-    // mounted() {
-    //   const id =this.$route.params.id
-    //   console.log(id)
-    //   axios.post('http://127.0.0.1:7001/business/need/information',{id:this.$route.params.id},{
-    //     headers:{
-    //       authorization:`Bearer ${tokens}`
-    //     }
-    //   }).then(
-    //       (res) => {
-    //         const data = res.data.data;
-    //         this.parentList = data
-    //         console.log(this.parentList)
-    //       },
-    //       (err) => {
-    //         console.log(err);
-    //       }
-    //     )
-    // }
     methods:{
       getParams(){
-        const id =this.$route.params.id
-        console.log(id)
-        axios.post('http://127.0.0.1:7001/business/need/information',{id:id},{
+        this.id =this.$route.query.id
+        axios.post('http://127.0.0.1:7001/business/need/information',{id:this.id},{
           headers:{
             authorization:`Bearer ${tokens}`
           }

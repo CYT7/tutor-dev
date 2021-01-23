@@ -16,7 +16,7 @@
         <!--点击查看，跳转到招聘页面详情-->
         <el-table-column align="center" label="操作" width="150">
           <template slot-scope="scope">
-            <router-link :to="{path:`/parentDetail`,params:{id:scope.row.id},query:{id:scope.row.id}}">
+            <router-link :to="{path:`/parentDetail`,name:`ParentDetail`,params:{id:scope.row.id},query:{id:scope.row.id}}">
               <el-button type="text" size="small" icon="el-icon-thumb">查看</el-button>
             </router-link>
           </template>
