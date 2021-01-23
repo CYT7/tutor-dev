@@ -6,76 +6,82 @@
         <el-header height="20px">
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/home' }">家教网首页</el-breadcrumb-item>
-            <el-breadcrumb-item :to="{ path: '/TeachersWanted' }">招聘家教</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/TeachersWanted' }">需求信息库</el-breadcrumb-item>
             <el-breadcrumb-item>需求详情</el-breadcrumb-item>
           </el-breadcrumb>
         </el-header>
         <el-container>
           <el-container>
             <el-main>
-              <div class="top-border">
-              </div>
               <div class="body-border">
                 <el-row style="margin-top: 20px;margin-left:10px;color: #409EFF">
                   <el-col style="font-weight: bold">具体要求</el-col>
                 </el-row>
-              <el-row >
-                <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
-                <el-col :span="6"><div class="grid-content bg-purple">招聘编号</div></el-col>
-                <el-col :span="4"><div class="grid-content bg-purple">{{parentList.id}}
-                </div></el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
-                <el-col :span="6"><div class="grid-content bg-purple">家长编号</div></el-col>
-                <el-col :span="4"><div class="grid-content bg-purple-light">{{parentList.pid}}</div></el-col>
-              </el-row>
-
-              <el-row>
-                <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
-                <el-col :span="6"><div class="grid-content bg-purple">教师要求</div></el-col>
-                <el-col :span="4"><div class="grid-content bg-purple-light">{{parentList.identities}}</div></el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
-                <el-col :span="6"><div class="grid-content bg-purple">辅导科目</div></el-col>
-                <el-col :span="4"><div class="grid-content bg-purple-light">{{parentList.major}}</div></el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
-                <el-col :span="6"><div class="grid-content bg-purple">价格</div></el-col>
-                <el-col :span="4"><div class="grid-content bg-purple-light">{{parentList.price}}</div></el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
-                <el-col :span="6"><div class="grid-content bg-purple">所在城市</div></el-col>
-                <el-col :span="4"><div class="grid-content bg-purple-light">{{parentList.address}}</div></el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
-                <el-col :span="6"><div class="grid-content bg-purple">学员性别</div></el-col>
-                <el-col :span="4"><div class="grid-content bg-purple-light">{{parentList.sex}}</div></el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
-                <el-col :span="6"><div class="grid-content bg-purple">发布信息的日期</div></el-col>
-                <el-col :span="4"><div class="grid-content bg-purple-light">{{parentList.publish}}</div></el-col>
-              </el-row>
                 <el-row>
-                  <el-button type="primary" style="margin-top: 8px;margin-bottom: 8px;margin-left: 10px">
-                    <router-link :to="`/login`" class="router-link">
-                    家教登录接洽</router-link></el-button>
+                  <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                  <el-col :span="6"><div class="grid-content bg-purple">同学称呼</div></el-col>
+                  <el-col :span="4"><div class="grid-content bg-purple-light">{{parentList.nickName}}</div></el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                  <el-col :span="6"><div class="grid-content bg-purple">同学性别</div></el-col>
+                  <el-col :span="4">
+                    <div class="grid-content bg-purple-light">
+                      <span v-if="parentList.gender ==0">不限</span>
+                      <span v-else-if="parentList.gender ==1">男</span>
+                      <span v-else>女</span>
+                    </div>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                  <el-col :span="6"><div class="grid-content bg-purple">辅导科目</div></el-col>
+                  <el-col :span="4"><div class="grid-content bg-purple-light">{{parentList.subject}}</div></el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                  <el-col :span="6"><div class="grid-content bg-purple">教师性别要求</div></el-col>
+                  <el-col :span="4">
+                    <div class="grid-content bg-purple-light">
+                      <span v-if="parentList.teacherGender ==0">不限</span>
+                      <span v-else-if="parentList.teacherGender ==1">男</span>
+                      <span v-else>女</span>
+                    </div>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                  <el-col :span="6"><div class="grid-content bg-purple">总共上几次课</div></el-col>
+                  <el-col :span="4"><div class="grid-content bg-purple-light">{{parentList.frequency}}次</div></el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                  <el-col :span="6"><div class="grid-content bg-purple">上课时间</div></el-col>
+                  <el-col :span="4"><div class="grid-content bg-purple-light">{{parentList.teach_date}}</div></el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                  <el-col :span="6"><div class="grid-content bg-purple">上课几小时</div></el-col>
+                  <el-col :span="4"><div class="grid-content bg-purple-light">{{parentList.timeHour}}小时</div></el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                  <el-col :span="6"><div class="grid-content bg-purple">课时费用</div></el-col>
+                  <el-col :span="4"><div class="grid-content bg-purple-light">{{parentList.hourPrice}}元</div></el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                  <el-col :span="6"><div class="grid-content bg-purple">需求总价格</div></el-col>
+                  <el-col :span="4"><div class="grid-content bg-purple-light">{{parentList.totalPrice}}元</div></el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                  <el-col :span="6"><div class="grid-content bg-purple">所在城市区域</div></el-col>
+                  <el-col :span="4"><div class="grid-content bg-purple-light">{{parentList.address}}</div></el-col>
                 </el-row>
               </div>
             </el-main>
             <el-aside width="30%">
-            <el-row style="margin-top: 20px">
-                <div class="body-border-2" >
-                <el-button type="primary" style="margin-top: 8px;margin-bottom: 8px"><router-link :to="`/login`" class="router-link">
-                  家长登录</router-link></el-button>
-                <el-button type="success"><router-link :to="`/tutorRegister`" class="router-link">家教注册</router-link></el-button>
-                </div>
-              </el-row>
               <div class="body-border-2" style="margin-top: 20px">
                 <el-row>
                   <el-col :span="2"><div class="grid-content bg-purple">&nbsp;</div></el-col>
@@ -84,7 +90,7 @@
                       <a style="font-size: 20px">应聘提示</a>
                     </i>
                     <br>
-                    <a style="font-size: 15px ;line-height: 25px; margin-left:30px">部分家长只查看家教信息而未发布招家教信息，家教如果完善自己的家教简历，会给提升自己的招聘成功率</a>
+                    <a style="font-size: 15px ;line-height: 25px; margin-left:30px">家教只查看部分的需求信息而不能查看所有信息，家教如果应聘成功，会在个人中心查看到所有信息</a>
                   </div></el-col>
                   <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
                 </el-row>
@@ -98,14 +104,15 @@
   </div>
 </template>
 <script>
-    export default {
-        name: "ParentMessage",
-        methods: {
-        },
-        props:{
-          parentList:Object
-        }
+
+  export default {
+    name: "ParentMessage",
+    methods: {
+    },
+    props:{
+      parentList:Object
     }
+  }
 </script>
 <style scoped>
   .el-row {
@@ -123,7 +130,7 @@
   .el-aside {
     /*background-color: #D3DCE6;*/
     color: #333;
-   /* text-align: left;*/
+    /* text-align: left;*/
     line-height: 40px;
 
   }
