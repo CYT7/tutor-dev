@@ -20,7 +20,7 @@
         <!--点击查看，跳转到家教页面详情-->
         <el-table-column align="center" label="操作" width="150">
           <template slot-scope="scope">
-            <router-link :to="`/teacherDetail/${scope.row.id}`"><!--(scope.row.字段)可以获得当前行的任意一个字段-->
+            <router-link :to="{path:`/TeacherDetail`,name:`TeacherDetail`,params:{id:scope.row.id},query:{id:scope.row.id}}">
               <el-button type="text" size="small" icon="el-icon-thumb">查看</el-button>
             </router-link>
           </template>

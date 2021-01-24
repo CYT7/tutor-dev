@@ -26,13 +26,13 @@
           </router-link>
         </el-menu-item>
         <el-menu-item index="2" >
-          <router-link tag="div" :to="{path:'/teacherinfo'}">
+          <router-link tag="div" :to="{path:'/TeacherInfo'}">
             <i class="el-icon-s-home"></i>家教信息库
           </router-link>
         </el-menu-item>
         <el-menu-item index="3" >
-          <router-link tag="div" :to="{path:'/hireteacher'}">
-            <i class="el-icon-s-operation"></i>招聘信息库
+          <router-link tag="div" :to="{path:'/TeachersWanted'}">
+            <i class="el-icon-s-operation"></i>需求信息库
           </router-link>
         </el-menu-item>
         <el-submenu index="4">

@@ -42,14 +42,14 @@ export default new Router({
       component: TeachersWanted
     },
     {
-      path: '/TeacherDetail',
-      name: 'TeacherDetail',
-      component: TeacherDetail
-    },
-    {
       path: '/ParentDetail',
       name: 'ParentDetail',
       component: ParentDetail
+    },
+    {
+      path: '/TeacherDetail',
+      name: 'TeacherDetail',
+      component: TeacherDetail
     },
   ]
 })
