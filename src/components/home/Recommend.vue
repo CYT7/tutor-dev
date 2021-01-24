@@ -5,7 +5,7 @@
         <i class="el-icon-menu" style="color: #409EFF"></i>&nbsp;&nbsp;&nbsp;&nbsp;家教推荐
       </el-divider>
       <div  v-for="(list,index) in tutorData" :key="index" class="tutorRecommend">
-        <router-link :to="`/teacherDetail/${list.id}`">
+        <router-link :to="{path:`/TeacherDetail`,name:`TeacherDetail`,params:{id:list.id},query:{id:list.id}}">
           <el-card class="box-card" style="height: 330px" @click.native="tutorDetail(list.id)">
             <div  class="text item">
               <div style="display: flex;margin-left: 20px">
@@ -31,7 +31,7 @@
         <i class="el-icon-s-operation" style="color: #409EFF"></i>&nbsp;&nbsp;&nbsp;&nbsp;需求推荐
       </el-divider>
       <div  v-for="(list,index) in recruitData" :key="index" class="recruitRecommend">
-        <router-link :to="`/parentDetail/${list.id}`">
+        <router-link :to="{path:`/parentDetail`,name:`ParentDetail`,params:{id:list.id},query:{id:list.id}}">
           <el-card class="box-card" style="height: 248px;" @click.native="recruitDetail(list.id)">
             <div  class="text item">
               <span style="font-size: 20px;font-weight: bolder">{{list.title}}</span>
