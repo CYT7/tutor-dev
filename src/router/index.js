@@ -8,6 +8,7 @@ import TeacherInfo from '@/components/teacher/TeacherInfo'
 import TeachersWanted from '@/components/teacher/TeachersWanted'
 import TeacherDetail from '@/components/detail/TeacherDetail'
 import ParentDetail from '@/components/detail/ParentDetail'
+import PersonalCenter from '@/components/personal/PersonalCenter'
 Vue.use(Router)
 
 export default new Router({
@@ -50,6 +51,11 @@ export default new Router({
       path: '/TeacherDetail',
       name: 'TeacherDetail',
       component: TeacherDetail
+    },
+    {
+      path: '/PersonalCenter',
+      name: 'PersonalCenter',
+      component: PersonalCenter
     },
   ]
 })

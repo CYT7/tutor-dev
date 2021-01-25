@@ -36,10 +36,10 @@
           </router-link>
         </el-menu-item>
         <el-submenu index="4">
-          <template slot="title" ><i class="el-icon-user-solid"></i><span>其他</span></template>
+          <template slot="title" ><i class="el-icon-user-solid"></i><span>个人中心</span></template>
           <el-menu-item index="4-1"  style="text-align: center">
             <router-link tag="div" :to="{path:'/PersonalCenter'}">
-              <i class="el-icon-user-solid"></i><span style="font-size: 16px">个人中心</span>
+              <span style="font-size: 16px">个人中心</span>
             </router-link>
           </el-menu-item>
           <el-menu-item index="4-2" style="text-align: center">
@@ -47,34 +47,24 @@
               <span style="font-size: 16px">家长个人中心</span>
             </router-link>
           </el-menu-item>
-          <el-menu-item index="4-2" style="text-align: center">
+          <el-menu-item index="4-3" style="text-align: center">
             <el-dropdown-item divided @click.native="logout">
               <span style="display:block;">退出</span>
             </el-dropdown-item>
           </el-menu-item>
         </el-submenu>
-        <div class="search">
-          <div class="searchinput">
-            <el-input v-model="searchinput" placeholder="请输入内容"></el-input>
-          </div>
-          <div class="searchbutton">
-            <el-button icon="el-icon-search" circle @click="searchSubmit"></el-button>
-          </div>
-        </div>
       </el-menu>
     </div>
   </div>
 </template>
 <script>
-  // 导入ajax请求库
-  import axios from 'axios';
   //导入省市数据
   import { provinceAndCityData } from 'element-china-area-data';
   export default {
     name: "Header",
     data() {
       return {
-        activeIndex: '1',
+        activeIndex: '4',
         value: [],
         options: provinceAndCityData,
         selectedOptions: [],
@@ -87,9 +77,6 @@
       },
       handleChange(value) {
         console.log(value);
-      },
-      searchSubmit(){
-        this.$router.push({path: '/teacherinfo', query:{search: this.searchinput}});
       },
       async logout(){
         localStorage.clear()
