@@ -47,6 +47,11 @@
               <span style="font-size: 16px">家长个人中心</span>
             </router-link>
           </el-menu-item>
+          <el-menu-item index="4-2" style="text-align: center">
+            <el-dropdown-item divided @click.native="logout">
+              <span style="display:block;">退出</span>
+            </el-dropdown-item>
+          </el-menu-item>
         </el-submenu>
       </el-menu>
     </div>
@@ -72,6 +77,15 @@
       },
       handleChange(value) {
         console.log(value);
+      },
+      async logout(){
+        localStorage.clear()
+        this.$router.push('/')
+        this.$message({
+          message: '退出登录成功' || 'Success',
+          type: 'Success',
+          duration: 3 * 1000
+        })
       }
     }
   }

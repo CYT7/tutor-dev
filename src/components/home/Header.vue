@@ -44,8 +44,13 @@
           </el-menu-item>
           <el-menu-item index="4-2" style="text-align: center">
             <router-link tag="div" :to="{path:'/parentCenter'}">
-              <i class="el-icon-user-solid"></i><span style="font-size: 16px">退出登录</span>
+              <span style="font-size: 16px">家长个人中心</span>
             </router-link>
+          </el-menu-item>
+          <el-menu-item index="4-2" style="text-align: center">
+            <el-dropdown-item divided @click.native="logout">
+              <span style="display:block;">退出</span>
+            </el-dropdown-item>
           </el-menu-item>
         </el-submenu>
         <div class="search">
@@ -85,6 +90,15 @@
       },
       searchSubmit(){
         this.$router.push({path: '/teacherinfo', query:{search: this.searchinput}});
+      },
+      async logout(){
+        localStorage.clear()
+        this.$router.push('/')
+        this.$message({
+          message: '退出登录成功' || 'Success',
+          type: 'Success',
+          duration: 3 * 1000
+        })
       }
     }
   }
