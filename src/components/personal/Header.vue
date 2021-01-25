@@ -36,7 +36,7 @@
           </router-link>
         </el-menu-item>
         <el-submenu index="4">
-          <template slot="title" ><i class="el-icon-user-solid"></i><span>个人中心</span></template>
+          <template slot="title" ><i class="el-icon-user-solid"></i><span>其他</span></template>
           <el-menu-item index="4-1"  style="text-align: center">
             <router-link tag="div" :to="{path:'/PersonalCenter'}">
               <span style="font-size: 16px">个人中心</span>
