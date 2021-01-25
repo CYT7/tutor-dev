@@ -52,7 +52,7 @@
       Header
     },
     mounted() {
-      axios.get('http://127.0.0.1:7001/business/teacher/list',{
+      axios.post('http://127.0.0.1:7001/business/user/information',{},{
         headers:{
           authorization:`Bearer ${Token}`
         }
