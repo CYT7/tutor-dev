@@ -64,12 +64,6 @@
         )
     },
     methods:{
-      // func(){
-      //   this.$router.push({
-      //     path: `/parentDetail`,
-      //     params:{ id:scope.row.id}
-      //   })
-      // },
       formatDate(row, column) {
         const date = new Date(parseInt(row.createTime) * 1000)
         const Y = date.getFullYear() + '-'

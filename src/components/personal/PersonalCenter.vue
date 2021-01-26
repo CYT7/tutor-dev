@@ -34,7 +34,6 @@
     data() {
       return {
         resultsMap: {},
-        search: '',
         tokens : []
       }
     },
