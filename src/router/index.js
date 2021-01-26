@@ -9,6 +9,7 @@ import TeachersWanted from '@/components/teacher/TeachersWanted'
 import TeacherDetail from '@/components/detail/TeacherDetail'
 import ParentDetail from '@/components/detail/ParentDetail'
 import PersonalCenter from '@/components/personal/PersonalCenter'
+import PersonalNeeds from '@/components/personal/PersonalNeeds'
 Vue.use(Router)
 
 export default new Router({
@@ -56,6 +57,11 @@ export default new Router({
       path: '/PersonalCenter',
       name: 'PersonalCenter',
       component: PersonalCenter
+    },
+    {
+      path: '/PersonalNeeds',
+      name: 'PersonalNeeds',
+      component: PersonalNeeds
     },
   ]
 })

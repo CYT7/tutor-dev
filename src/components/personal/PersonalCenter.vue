@@ -21,12 +21,6 @@
           </div>
         </el-form-item>
         <el-form-item label="地址"><el-input v-model="resultsMap.address" disabled></el-input></el-form-item>
-        <el-form-item label="状态">
-          <div class="grid-content bg-purple-light">
-            <span v-if="resultsMap.status ==0">禁用</span>
-            <span v-else-if="resultsMap.status ==1">正常</span>
-          </div>
-        </el-form-item>
       </el-form>
     </div>
   </el-row>

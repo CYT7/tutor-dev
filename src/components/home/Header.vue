@@ -47,7 +47,12 @@
               <span style="font-size: 16px">家长个人中心</span>
             </router-link>
           </el-menu-item>
-          <el-menu-item index="4-2" style="text-align: center">
+          <el-menu-item index="4-3" style="text-align: center">
+            <router-link tag="div" :to="{path:'/PersonalNeeds'}">
+              <span style="font-size: 16px">个人需求</span>
+            </router-link>
+          </el-menu-item>
+          <el-menu-item index="4-4" style="text-align: center">
             <el-dropdown-item divided @click.native="logout">
               <span style="display:block;">退出</span>
             </el-dropdown-item>
