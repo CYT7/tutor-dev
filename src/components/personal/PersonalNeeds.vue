@@ -2,18 +2,19 @@
   <el-row :gutter="20">
     <el-col :span="20" :offset="2"><Header></Header></el-col>
     <div style="margin-top: 10px" align="center">
-      <el-table :data="resultsMap" style="width: 100%" height="500"><!--height可实现固定表头的表格-->
+      <el-table :data="resultsMap" style="width: 82%" height="500"><!--height可实现固定表头的表格-->
         <el-table-column type="index" width="50" align="center" />
-        <el-table-column align="center" label="学生称呼" prop="nickName"> </el-table-column>
+        <el-table-column align="center" label="预约id" prop="id"> </el-table-column>
+        <el-table-column align="center" label="学生称呼" prop="name"> </el-table-column>
         <el-table-column align="center" label="授课科目" prop="subject"></el-table-column>
         <el-table-column align="center" label="所在城市区域" prop="address"></el-table-column>
-        <el-table-column align="center" label="需求总报价(元)" prop="totalPrice"></el-table-column>
-        <el-table-column align="center" label="需求发布时间" prop="createTime" :formatter="formatDate"></el-table-column>
-        <!--点击查看，跳转到招聘页面详情-->
+        <el-table-column align="center" label="预约总报价(元)" prop="totalPrice"></el-table-column>
+        <el-table-column align="center" label="预约发布时间" prop="createTime" :formatter="formatDate"></el-table-column>
+        <!--点击查看，跳转到预约页面详情-->
         <el-table-column align="center" label="操作" width="150">
           <template slot-scope="scope">
             <router-link :to="{path:`/parentDetail`,name:`ParentDetail`,params:{id:scope.row.id},query:{id:scope.row.id}}">
-              <el-button type="text" size="small" icon="el-icon-thumb">查看</el-button>
+              <el-button type="text" size="small" icon="el-icon-thumb">查看详情</el-button>
             </router-link>
           </template>
         </el-table-column>
@@ -22,38 +23,37 @@
   </el-row>
 </template>
 <script>
-  import Header from "./Header"
+  import Header from "./Header";
   import axios from 'axios'
-  const Token = localStorage.getItem('token');
+  const tokens = localStorage.getItem('token');
   export default {
     name: "PersonalNeeds",
     data() {
       return {
-        resultsMap: {},
+        resultsMap: [],
+        search: '',
         tokens : []
       }
     },
     components: {
       Header
     },
-    created() {
-      this.getList();
+    mounted() {
+      axios.get('http://127.0.0.1:7001/business/need/list',{
+        headers:{
+          authorization:`Bearer ${tokens}`
+        }}).then(
+        (resp) => {
+          this.resultsMap = resp.data.data
+          //数据拿到，ok!
+          console.log(this.resultsMap)
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
     },
     methods:{
-      getList(){
-        axios.get('http://127.0.0.1:7001/business/need/list',{
-          headers:{
-            authorization:`Bearer ${Token}`
-          }
-        }).then((res) => {
-            this.resultsMap = res.data.data
-            console.log(this.resultsMap)
-          },
-          (err) => {
-            console.log(err);
-          }
-        )
-      },
       formatDate(row, column) {
         const date = new Date(parseInt(row.createTime) * 1000)
         const Y = date.getFullYear() + '-'
@@ -75,10 +75,8 @@
           date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
         return Y + M + D + h + m + s
       }
-    },
+    }
   }
 </script>
-
 <style scoped>
-
 </style>

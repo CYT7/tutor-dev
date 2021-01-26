@@ -43,18 +43,13 @@
             </router-link>
           </el-menu-item>
           <el-menu-item index="4-2" style="text-align: center">
-            <router-link tag="div" :to="{path:'/parentCenter'}">
-              <span style="font-size: 16px">家长个人中心</span>
-            </router-link>
-          </el-menu-item>
-          <el-menu-item index="4-3" style="text-align: center">
             <router-link tag="div" :to="{path:'/PersonalNeeds'}">
-              <span style="font-size: 16px">个人需求</span>
+              <span style="font-size: 16px">个人需求列表</span>
             </router-link>
           </el-menu-item>
           <el-menu-item index="4-3" style="text-align: center">
             <router-link tag="div" :to="{path:'/PersonalAppointment'}">
-              <span style="font-size: 16px">个人预约</span>
+              <span style="font-size: 16px">个人预约列表</span>
             </router-link>
           </el-menu-item>
           <el-menu-item index="4-4" style="text-align: center">

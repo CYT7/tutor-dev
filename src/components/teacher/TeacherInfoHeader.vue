@@ -36,18 +36,23 @@
           </router-link>
         </el-menu-item>
         <el-submenu index="4">
-          <template slot="title" ><i class="el-icon-user-solid"></i><span>个人中心</span></template>
+          <template slot="title" ><i class="el-icon-user-solid"></i><span>其他</span></template>
           <el-menu-item index="4-1"  style="text-align: center">
-            <router-link tag="div" :to="{path:'/tutorCenter'}">
-              <span style="font-size: 16px">家教个人中心</span>
+            <router-link tag="div" :to="{path:'/PersonalCenter'}">
+              <i class="el-icon-user-solid"></i><span style="font-size: 16px">个人中心</span>
             </router-link>
           </el-menu-item>
           <el-menu-item index="4-2" style="text-align: center">
-            <router-link tag="div" :to="{path:'/parentCenter'}">
-              <span style="font-size: 16px">家长个人中心</span>
+            <router-link tag="div" :to="{path:'/PersonalNeeds'}">
+              <span style="font-size: 16px">个人需求列表</span>
             </router-link>
           </el-menu-item>
           <el-menu-item index="4-3" style="text-align: center">
+            <router-link tag="div" :to="{path:'/PersonalAppointment'}">
+              <span style="font-size: 16px">个人预约列表</span>
+            </router-link>
+          </el-menu-item>
+          <el-menu-item index="4-4" style="text-align: center">
             <el-dropdown-item divided @click.native="logout">
               <span style="display:block;">退出</span>
             </el-dropdown-item>
