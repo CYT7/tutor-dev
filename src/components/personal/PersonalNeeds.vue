@@ -4,12 +4,12 @@
     <div style="margin-top: 10px" align="center">
       <el-table :data="resultsMap" style="width: 82%" height="500"><!--height可实现固定表头的表格-->
         <el-table-column type="index" width="50" align="center" />
-        <el-table-column align="center" label="预约id" prop="id"> </el-table-column>
-        <el-table-column align="center" label="学生称呼" prop="name"> </el-table-column>
+        <el-table-column align="center" label="需求id" prop="id"> </el-table-column>
+        <el-table-column align="center" label="学生称呼" prop="nickname"> </el-table-column>
         <el-table-column align="center" label="授课科目" prop="subject"></el-table-column>
         <el-table-column align="center" label="所在城市区域" prop="address"></el-table-column>
-        <el-table-column align="center" label="预约总报价(元)" prop="totalPrice"></el-table-column>
-        <el-table-column align="center" label="预约发布时间" prop="createTime" :formatter="formatDate"></el-table-column>
+        <el-table-column align="center" label="需求总报价(元)" prop="totalPrice"></el-table-column>
+        <el-table-column align="center" label="需求发布时间" prop="createTime" :formatter="formatDate"></el-table-column>
         <!--点击查看，跳转到预约页面详情-->
         <el-table-column align="center" label="操作" width="150">
           <template slot-scope="scope">
