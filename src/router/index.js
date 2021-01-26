@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import Login from '@/components/home/Login'
 import RegisterParent from '@/components/home/RegisterParent'
 import RegisterTutor from '@/components/home/RegisterTutor'
@@ -11,6 +12,7 @@ import ParentDetail from '@/components/detail/ParentDetail'
 import PersonalCenter from '@/components/personal/PersonalCenter'
 import PersonalNeeds from '@/components/personal/PersonalNeeds'
 import PersonalAppointment from '@/components/personal/PersonalAppointment'
+import TeacherCenter from '@/components/personal/TeacherCenter'
 Vue.use(Router)
 
 export default new Router({
@@ -68,6 +70,11 @@ export default new Router({
       path: '/PersonalAppointment',
       name: 'PersonalAppointment',
       component: PersonalAppointment
+    },
+    {
+      path: '/TeacherCenter',
+      name: 'TeacherCenter',
+      component: TeacherCenter
     },
   ]
 })

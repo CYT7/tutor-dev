@@ -52,6 +52,11 @@
               <span style="font-size: 16px">个人预约列表</span>
             </router-link>
           </el-menu-item>
+          <el-menu-item index="4-3" style="text-align: center">
+            <router-link tag="div" :to="{path:'/TeacherCenter'}">
+              <span style="font-size: 16px">老师个人中心列表</span>
+            </router-link>
+          </el-menu-item>
           <el-menu-item index="4-4" style="text-align: center">
             <el-dropdown-item divided @click.native="logout">
               <span style="display:block;">退出</span>
