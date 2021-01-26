@@ -12,6 +12,8 @@ import ParentDetail from '@/components/detail/ParentDetail'
 import PersonalCenter from '@/components/personal/PersonalCenter'
 import PersonalNeeds from '@/components/personal/PersonalNeeds'
 import PersonalAppointment from '@/components/personal/PersonalAppointment'
+import TeacherAppointment from '@/components/personal/TeacherAppointment'
+import TeacherNeeds from '@/components/personal/TeacherNeeds'
 import TeacherCenter from '@/components/personal/TeacherCenter'
 Vue.use(Router)
 
@@ -75,6 +77,16 @@ export default new Router({
       path: '/TeacherCenter',
       name: 'TeacherCenter',
       component: TeacherCenter
+    },
+    {
+      path: '/TeacherAppointment',
+      name: 'TeacherAppointment',
+      component: TeacherAppointment
+    },
+    {
+      path: '/TeacherNeeds',
+      name: 'TeacherNeeds',
+      component: TeacherNeeds
     },
   ]
 })
