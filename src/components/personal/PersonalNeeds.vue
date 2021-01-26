@@ -2,11 +2,7 @@
   <el-row :gutter="20">
     <el-col :span="20" :offset="2"><Header></Header></el-col>
     <div style="margin-top: 10px" align="center">
-      <el-table
-        :data="resultsMap.filter(data => !search || data.subject.toLowerCase().includes(search.toLowerCase()))"
-        style="width: 82%"
-        height="500"
-      ><!--height可实现固定表头的表格-->
+      <el-table :data="resultsMap" style="width: 100%" height="500"><!--height可实现固定表头的表格-->
         <el-table-column type="index" width="50" align="center" />
         <el-table-column align="center" label="学生称呼" prop="nickName"> </el-table-column>
         <el-table-column align="center" label="授课科目" prop="subject"></el-table-column>
@@ -19,12 +15,6 @@
             <router-link :to="{path:`/parentDetail`,name:`ParentDetail`,params:{id:scope.row.id},query:{id:scope.row.id}}">
               <el-button type="text" size="small" icon="el-icon-thumb">查看</el-button>
             </router-link>
-          </template>
-        </el-table-column>
-        <!--搜索框（根据招聘主题即科目筛选招聘信息）-->
-        <el-table-column align="right" width="190">
-          <template slot="header" slot-scope="scope">
-            <el-input prefix-icon="el-icon-search" v-model="search" size="mini" placeholder="输入招聘科目进行筛选"/>
           </template>
         </el-table-column>
       </el-table>
