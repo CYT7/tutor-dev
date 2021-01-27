@@ -39,7 +39,7 @@
       Header
     },
     mounted() {
-      axios.get('http://127.0.0.1:7001/business/need/list',{
+      axios.get('http://127.0.0.1:7001/business/need/Userlist',{
         headers:{
           authorization:`Bearer ${tokens}`
         }}).then(

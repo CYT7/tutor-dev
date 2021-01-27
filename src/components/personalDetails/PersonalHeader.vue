@@ -52,49 +52,24 @@
               <span style="font-size: 16px">个人预约列表</span>
             </router-link>
           </el-menu-item>
-          <el-menu-item index="4-3" style="text-align: center">
-            <router-link tag="div" :to="{path:'/TeacherCenter'}">
-              <span style="font-size: 16px">老师个人中心列表</span>
-            </router-link>
-          </el-menu-item>
-          <el-menu-item index="4-3" style="text-align: center">
-            <router-link tag="div" :to="{path:'/TeacherNeeds'}">
-              <span style="font-size: 16px">老师个人需求列表</span>
-            </router-link>
-          </el-menu-item>
-          <el-menu-item index="4-3" style="text-align: center">
-            <router-link tag="div" :to="{path:'/TeacherAppointment'}">
-              <span style="font-size: 16px">老师个人预约列表</span>
-            </router-link>
-          </el-menu-item>
           <el-menu-item index="4-4" style="text-align: center">
             <el-dropdown-item divided @click.native="logout">
               <span style="display:block;">退出</span>
             </el-dropdown-item>
           </el-menu-item>
         </el-submenu>
-        <div class="search">
-          <div class="searchinput">
-            <el-input v-model="searchinput" placeholder="请输入内容"></el-input>
-          </div>
-          <div class="searchbutton">
-            <el-button icon="el-icon-search" circle @click="searchSubmit"></el-button>
-          </div>
-        </div>
       </el-menu>
     </div>
   </div>
 </template>
 <script>
-  // 导入ajax请求库
-  import axios from 'axios';
   //导入省市数据
   import { provinceAndCityData } from 'element-china-area-data';
   export default {
-    name: "Header",
+    name: "PersonalHeader",
     data() {
       return {
-        activeIndex: '1',
+        activeIndex: '4',
         value: [],
         options: provinceAndCityData,
         selectedOptions: [],
@@ -107,9 +82,6 @@
       },
       handleChange(value) {
         console.log(value);
-      },
-      searchSubmit(){
-        this.$router.push({path: '/teacherinfo', query:{search: this.searchinput}});
       },
       async logout(){
         localStorage.clear()
