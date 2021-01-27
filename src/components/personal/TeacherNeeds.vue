@@ -5,11 +5,21 @@
       <el-table :data="resultsMap" style="width: 82%" height="500"><!--height可实现固定表头的表格-->
         <el-table-column type="index" width="50" align="center" />
         <el-table-column align="center" label="需求id" prop="id"> </el-table-column>
-        <el-table-column align="center" label="学生称呼" prop="nickname"> </el-table-column>
+        <el-table-column align="center" label="学生称呼" prop="nickName"> </el-table-column>
         <el-table-column align="center" label="授课科目" prop="subject"></el-table-column>
         <el-table-column align="center" label="所在城市区域" prop="address"></el-table-column>
         <el-table-column align="center" label="需求总报价(元)" prop="totalPrice"></el-table-column>
         <el-table-column align="center" label="需求发布时间" prop="createTime" :formatter="formatDate"></el-table-column>
+        <el-table-column label="需求状态" prop="state" align="center">
+          <template slot-scope="scope">
+            <div v-if="scope.row.state === 1" style="font-weight: bolder">审核中</div>
+            <div v-else-if="scope.row.state === 2" style="color: #F56C6C; font-weight: bolder">审核不通过</div>
+            <div v-else-if="scope.row.state === 3" style="color: #67C23A; font-weight: bolder">审核通过</div>
+            <div v-else-if="scope.row.state === 4" style="color: #E6A23C; font-weight: bolder">已选定</div>
+            <div v-else-if="scope.row.state === 5" style="color: #409EFF; font-weight: bolder">已完成</div>
+            <div v-else style="color: #F56C6C; font-weight: bolder">已关闭</div>
+          </template>
+        </el-table-column>
         <!--点击查看，跳转到预约页面详情-->
         <el-table-column align="center" label="操作" width="150">
           <template slot-scope="scope">

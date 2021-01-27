@@ -10,6 +10,15 @@
         <el-table-column align="center" label="所在城市区域" prop="address"></el-table-column>
         <el-table-column align="center" label="预约总报价(元)" prop="totalPrice"></el-table-column>
         <el-table-column align="center" label="预约发布时间" prop="createTime" :formatter="formatDate"></el-table-column>
+        <el-table-column label="预约状态" prop="state" align="center">
+          <template slot-scope="scope">
+            <div v-if="scope.row.state === 0" style="font-weight: bolder">未回应预约</div>
+            <div v-else-if="scope.row.state === 1" style="color: #409EFF; font-weight: bolder">已预约 待付款</div>
+            <div v-else-if="scope.row.state === 2" style="color: #E6A23C; font-weight: bolder">进行中</div>
+            <div v-else-if="scope.row.state === 3" style="color: #67C23A; font-weight: bolder">已完成</div>
+            <div v-else style="color: #F56C6C; font-weight: bolder">已关闭</div>
+          </template>
+        </el-table-column>
         <!--点击查看，跳转到预约页面详情-->
         <el-table-column align="center" label="操作" width="150">
           <template slot-scope="scope">

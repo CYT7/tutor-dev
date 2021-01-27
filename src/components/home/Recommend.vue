@@ -17,8 +17,8 @@
                 <ul class="info">
                   <li><span>就读学校:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.school}}</li>
                   <li><span>所在城市:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.city}}</li>
-                  <li><span>教授学科:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.goodAt}}</li>
-                  <li><span>授课价格:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.hourPrice}}元</li>
+                  <li><span>擅长学科:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.goodAt}}</li>
+                  <li><span>课时费用:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.hourPrice}}元/时</li>
                 </ul>
               </div>
             </div>
@@ -30,7 +30,7 @@
       <el-divider content-position="left">
         <i class="el-icon-s-operation" style="color: #409EFF"></i>&nbsp;&nbsp;&nbsp;&nbsp;需求推荐
       </el-divider>
-      <div  v-for="(list,index) in recruitData" :key="index" class="recruitRecommend">
+      <div  v-for="(list,index) in needData" :key="index" class="recruitRecommend">
         <router-link :to="{path:`/parentDetail`,name:`ParentDetail`,params:{id:list.id},query:{id:list.id}}">
           <el-card class="box-card" style="height: 248px;" @click.native="recruitDetail(list.id)">
             <div  class="text item">
@@ -39,13 +39,8 @@
                 <ul class="info">
                   <li>辅导学科:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{list.subject}}</span></li>
                   <li>授课总价:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{list.totalPrice}}元</span></li>
-                  <li>性别要求:&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span v-if="list.teacherGender ==0">不限</span>
-                    <span v-else-if="list.teacherGender ==1">男</span>
-                    <span v-else>女</span>
-                  </li>
                   <li>授课地址:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{list.address}}</span></li>
-                  <li>创建时间：&nbsp;&nbsp;&nbsp;&nbsp;<span>{{formatDate(list.createTime)}}</span></li>
+                  <li>发布时间：&nbsp;&nbsp;&nbsp;&nbsp;<span>{{formatDate(list.createTime)}}</span></li>
                 </ul>
               </div>
             </div>
@@ -64,35 +59,29 @@
     data() {
       return {
         tutorData:[],
-        recruitData:[],
+        needData:[],
         tokens : []
       };
     },
     mounted() {
+      //家教推荐
       axios.get('http://127.0.0.1:7001/business/teacher/recommendList',{
         headers:{
           authorization:`Bearer ${tokens}`
         }
-      })// 返回ES6 Promise对象: resovle : Function, reject : Function
-        .then( (resp) => { // 箭头函数不会创建自己的this，只继承父级链上的this
-          const tutors = resp.data.data
-          this.tutorData = tutors;
-          console.log(tutors);
-        }) // success, 注意这里传入的是函数对象没有()号
-        .catch(function (error) {   // failure
+      }).then( (res) => {
+        this.tutorData = res.data.data
+        }).catch(function (error) {
           console.log(error);
         });
+      //需求推荐
       axios.get('http://127.0.0.1:7001/business/need/list',{
         headers:{
           authorization:`Bearer ${tokens}`
         }
-      }) // 返回ES6 Promise对象: resovle : Function, reject : Function
-        .then( (resp) => {  // 箭头函数不会创建自己的this，只继承父级链上的this
-          const recruit = resp.data.data
-          this.recruitData = recruit;
-          console.log(recruit);
-        }) // success, 注意这里传入的是函数对象没有()号
-        .catch(function (error) {   // failure
+      }).then( (res) => {
+        this.needData = res.data.data
+        }).catch(function (error) {
           console.log(error);
         });
     },

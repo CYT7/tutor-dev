@@ -2,16 +2,6 @@
   <div style="margin-top: 0px">
     <div style="width: 580px;height: 60px">
       <img src="../../assets/styles/images/logo.png" class="logo">
-      <div class="block">
-        <el-cascader
-          size="large"
-          placeholder="请选择城市"
-          :options="options"
-          filterable
-          v-model="selectedOptions"
-          @change="handleChange">
-        </el-cascader>
-      </div>
     </div>
     <div class="menu">
       <el-menu :default-active="activeIndex"
@@ -27,7 +17,7 @@
         </el-menu-item>
         <el-menu-item index="2" >
           <router-link tag="div" :to="{path:'/TeacherInfo'}">
-            <i class="el-icon-s-home"></i>家教信息库
+            <i class="el-icon-menu"></i>家教信息库
           </router-link>
         </el-menu-item>
         <el-menu-item index="3" >
@@ -36,80 +26,58 @@
           </router-link>
         </el-menu-item>
         <el-submenu index="4">
-          <template slot="title" ><i class="el-icon-user-solid"></i><span>其他</span></template>
+          <template slot="title" ><i class="el-icon-user-solid"></i><span>个人中心</span></template>
           <el-menu-item index="4-1"  style="text-align: center">
             <router-link tag="div" :to="{path:'/PersonalCenter'}">
-              <i class="el-icon-user-solid"></i><span style="font-size: 16px">个人中心</span>
+              <i class="el-icon-s-custom"></i><span style="font-size: 16px">个人信息</span>
             </router-link>
           </el-menu-item>
           <el-menu-item index="4-2" style="text-align: center">
             <router-link tag="div" :to="{path:'/PersonalNeeds'}">
-              <span style="font-size: 16px">个人需求列表</span>
+              <i class="el-icon-s-order"></i><span style="font-size: 16px">个人需求列表</span>
             </router-link>
           </el-menu-item>
           <el-menu-item index="4-3" style="text-align: center">
             <router-link tag="div" :to="{path:'/PersonalAppointment'}">
-              <span style="font-size: 16px">个人预约列表</span>
+              <i class="el-icon-tickets"></i><span style="font-size: 16px">个人预约列表</span>
             </router-link>
           </el-menu-item>
           <el-menu-item index="4-3" style="text-align: center">
             <router-link tag="div" :to="{path:'/TeacherCenter'}">
-              <span style="font-size: 16px">老师个人中心列表</span>
+              <i class="el-icon-s-custom"></i><span style="font-size: 16px">老师个人中心列表</span>
             </router-link>
           </el-menu-item>
           <el-menu-item index="4-3" style="text-align: center">
             <router-link tag="div" :to="{path:'/TeacherNeeds'}">
-              <span style="font-size: 16px">老师个人需求列表</span>
+              <i class="el-icon-s-order"></i><span style="font-size: 16px">老师个人需求列表</span>
             </router-link>
           </el-menu-item>
           <el-menu-item index="4-3" style="text-align: center">
             <router-link tag="div" :to="{path:'/TeacherAppointment'}">
-              <span style="font-size: 16px">老师个人预约列表</span>
+              <i class="el-icon-tickets"></i><span style="font-size: 16px">老师个人预约列表</span>
             </router-link>
           </el-menu-item>
           <el-menu-item index="4-4" style="text-align: center">
-            <el-dropdown-item divided @click.native="logout">
-              <span style="display:block;">退出</span>
+            <el-dropdown-item @click.native="logout">
+              <i class="el-icon-close"></i><span style="font-size: 16px">退出</span>
             </el-dropdown-item>
           </el-menu-item>
         </el-submenu>
-        <div class="search">
-          <div class="searchinput">
-            <el-input v-model="searchinput" placeholder="请输入内容"></el-input>
-          </div>
-          <div class="searchbutton">
-            <el-button icon="el-icon-search" circle @click="searchSubmit"></el-button>
-          </div>
-        </div>
       </el-menu>
     </div>
   </div>
 </template>
 <script>
-  // 导入ajax请求库
-  import axios from 'axios';
-  //导入省市数据
-  import { provinceAndCityData } from 'element-china-area-data';
   export default {
     name: "Header",
     data() {
       return {
         activeIndex: '1',
-        value: [],
-        options: provinceAndCityData,
-        selectedOptions: [],
-        searchinput:''
       };
     },
     methods: {
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
-      },
-      handleChange(value) {
-        console.log(value);
-      },
-      searchSubmit(){
-        this.$router.push({path: '/teacherinfo', query:{search: this.searchinput}});
       },
       async logout(){
         localStorage.clear()

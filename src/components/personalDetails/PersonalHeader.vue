@@ -2,16 +2,6 @@
   <div style="margin-top: 0px">
     <div style="width: 580px;height: 60px">
       <img src="../../assets/styles/images/logo.png" class="logo">
-      <div class="block">
-        <el-cascader
-          size="large"
-          placeholder="请选择城市"
-          :options="options"
-          filterable
-          v-model="selectedOptions"
-          @change="handleChange">
-        </el-cascader>
-      </div>
     </div>
     <div class="menu">
       <el-menu :default-active="activeIndex"
@@ -36,25 +26,40 @@
           </router-link>
         </el-menu-item>
         <el-submenu index="4">
-          <template slot="title" ><i class="el-icon-user-solid"></i><span>其他</span></template>
+          <template slot="title" ><i class="el-icon-user-solid"></i><span>个人中心</span></template>
           <el-menu-item index="4-1"  style="text-align: center">
             <router-link tag="div" :to="{path:'/PersonalCenter'}">
-              <i class="el-icon-user-solid"></i><span style="font-size: 16px">个人中心</span>
+              <i class="el-icon-s-custom"></i><span style="font-size: 16px">个人信息</span>
             </router-link>
           </el-menu-item>
           <el-menu-item index="4-2" style="text-align: center">
             <router-link tag="div" :to="{path:'/PersonalNeeds'}">
-              <span style="font-size: 16px">个人需求列表</span>
+              <i class="el-icon-s-order"></i><span style="font-size: 16px">个人需求列表</span>
             </router-link>
           </el-menu-item>
           <el-menu-item index="4-3" style="text-align: center">
             <router-link tag="div" :to="{path:'/PersonalAppointment'}">
-              <span style="font-size: 16px">个人预约列表</span>
+              <i class="el-icon-tickets"></i><span style="font-size: 16px">个人预约列表</span>
+            </router-link>
+          </el-menu-item>
+          <el-menu-item index="4-3" style="text-align: center">
+            <router-link tag="div" :to="{path:'/TeacherCenter'}">
+              <i class="el-icon-s-custom"></i><span style="font-size: 16px">老师个人中心列表</span>
+            </router-link>
+          </el-menu-item>
+          <el-menu-item index="4-3" style="text-align: center">
+            <router-link tag="div" :to="{path:'/TeacherNeeds'}">
+              <i class="el-icon-s-order"></i><span style="font-size: 16px">老师个人需求列表</span>
+            </router-link>
+          </el-menu-item>
+          <el-menu-item index="4-3" style="text-align: center">
+            <router-link tag="div" :to="{path:'/TeacherAppointment'}">
+              <i class="el-icon-tickets"></i><span style="font-size: 16px">老师个人预约列表</span>
             </router-link>
           </el-menu-item>
           <el-menu-item index="4-4" style="text-align: center">
-            <el-dropdown-item divided @click.native="logout">
-              <span style="display:block;">退出</span>
+            <el-dropdown-item @click.native="logout">
+              <i class="el-icon-close"></i><span style="font-size: 16px">退出</span>
             </el-dropdown-item>
           </el-menu-item>
         </el-submenu>
@@ -63,25 +68,16 @@
   </div>
 </template>
 <script>
-  //导入省市数据
-  import { provinceAndCityData } from 'element-china-area-data';
   export default {
     name: "PersonalHeader",
     data() {
       return {
         activeIndex: '4',
-        value: [],
-        options: provinceAndCityData,
-        selectedOptions: [],
-        searchinput:''
       };
     },
     methods: {
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
-      },
-      handleChange(value) {
-        console.log(value);
       },
       async logout(){
         localStorage.clear()

@@ -28,7 +28,11 @@
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">老师id</div></el-col>
-                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.teacher.id}}</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">
+                        <router-link :to="{path:`/TeacherDetail`,name:`TeacherDetail`,params:{id:resultsMap.teacher.id},query:{id:resultsMap.teacher.id}}">
+                          {{resultsMap.teacher.id}}
+                        </router-link>
+                      </div></el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>

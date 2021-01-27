@@ -20,10 +20,6 @@
   }
 </script>
 <style scoped="scoped">
-  .header{
-    margin-top: 0px;
-  }
-  .indexContent{
-    margin-top: 20px;
-  }
+  .header{ margin-top: 0px; }
+  .indexContent{ margin-top: 20px; }
 </style>

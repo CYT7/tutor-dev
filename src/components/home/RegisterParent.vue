@@ -51,7 +51,6 @@
     </el-row>
   </div>
 </template>
-
 <script>
 import axios from 'axios'
 import { provinceAndCityData } from 'element-china-area-data'

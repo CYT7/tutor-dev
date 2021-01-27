@@ -90,7 +90,7 @@
                       <a style="font-size: 20px">应聘提示</a>
                     </i>
                     <br>
-                    <a style="font-size: 15px ;line-height: 25px; margin-left:30px">家教只查看部分的需求信息而不能查看所有信息，家教如果应聘成功，会在个人中心查看到所有信息</a>
+                    <a style="font-size: 15px ;line-height: 25px; margin-left:30px">家教只能查看部分的需求信息而不能查看所有信息，家教如果应聘成功，会在个人中心查看到该需求的所有信息</a>
                   </div></el-col>
                   <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
                 </el-row>

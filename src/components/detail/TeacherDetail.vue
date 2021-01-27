@@ -20,7 +20,6 @@
       return{
         teacherList: Object,
         tokens : [],
-        id:[]
       }
     },
     created(){
@@ -47,7 +46,5 @@
     }
   }
 </script>
-
 <style scoped>
-
 </style>

@@ -19,7 +19,6 @@
       return{
         parentList: Object,
         tokens : [],
-        id:[]
       }
     },
     created(){

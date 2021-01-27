@@ -2,11 +2,8 @@
   <el-row :gutter="20">
     <el-col :span="20" :offset="2"><TeachersWantedHeader></TeachersWantedHeader></el-col>
     <div style="margin-top: 10px" align="center">
-      <el-table
-        :data="hire_teacher_Data.filter(data => !search || data.subject.toLowerCase().includes(search.toLowerCase()))"
-        style="width: 82%"
-        height="500"
-      ><!--height可实现固定表头的表格-->
+      <el-table :data="needData.filter(data => !search || data.subject.toLowerCase().includes(search.toLowerCase()))" style="width: 82%" height="500">
+        <!--height可实现固定表头的表格-->
         <el-table-column type="index" width="50" align="center" />
         <el-table-column align="center" label="学生称呼" prop="nickName"> </el-table-column>
         <el-table-column align="center" label="授课科目" prop="subject"></el-table-column>
@@ -31,7 +28,6 @@
     </div>
   </el-row>
 </template>
-
 <script>
   import TeachersWantedHeader from "./TeachersWantedHeader";
   import axios from 'axios'
@@ -40,7 +36,7 @@
     name: "TeachersWanted",
     data() {
       return {
-        hire_teacher_Data: [],
+        needData: [],
         search: '',
         tokens : []
       }
@@ -53,10 +49,9 @@
         headers:{
           authorization:`Bearer ${tokens}`
         }}).then(
-          (resp) => {
-            this.hire_teacher_Data = resp.data.data
-            //数据拿到，ok!
-            console.log(this.hire_teacher_Data)
+          (res) => {
+            this.needData = res.data.data
+            console.log(this.needData)
           },
           (err) => {
             console.log(err);
