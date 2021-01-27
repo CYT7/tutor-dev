@@ -13,7 +13,7 @@
         <!--点击查看，跳转到预约页面详情-->
         <el-table-column align="center" label="操作" width="150">
           <template slot-scope="scope">
-            <router-link :to="{path:`/parentDetail`,name:`ParentDetail`,params:{id:scope.row.id},query:{id:scope.row.id}}">
+            <router-link :to="{path:`/TeacherNeed`,name:`TeacherNeed`,params:{id:scope.row.id},query:{id:scope.row.id}}">
               <el-button type="text" size="small" icon="el-icon-thumb">查看详情</el-button>
             </router-link>
           </template>

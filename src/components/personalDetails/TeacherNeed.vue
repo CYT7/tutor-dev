@@ -97,7 +97,7 @@
                       <el-col :span="6"><div class="grid-content bg-purple">QQ</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.qq}}</div></el-col>
                     </el-row>
-                    <el-row v-if="resultsMap.wechat?'':resultsMap.wechat">
+                    <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">微信号</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.wechat?'':resultsMap.wechat}}</div></el-col>
@@ -150,7 +150,7 @@
   import PersonalHeader from "./PersonalHeader";
   const tokens = localStorage.getItem('token');
   export default {
-    name: "NeedDetail",
+    name: "TeacherNeed",
     components:{
       PersonalHeader
     },
