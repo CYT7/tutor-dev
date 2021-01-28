@@ -75,7 +75,7 @@
           console.log(error);
         });
       //需求推荐
-      axios.get('http://127.0.0.1:7001/business/need/list',{
+      axios.get('http://127.0.0.1:7001/business/need/List',{
         headers:{
           authorization:`Bearer ${tokens}`
         }

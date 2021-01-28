@@ -2,7 +2,7 @@
   <el-row :gutter="20">
     <el-col :span="20" :offset="2"><Header></Header></el-col>
     <div style="margin-top: 10px" align="center">
-      <el-table :data="resultsMap" style="width: 82%" height="500"><!--height可实现固定表头的表格-->
+      <el-table :data="resultsMap.slice((currentPage-1)*pagesize,currentPage*pagesize)" style="width: 82%" height="500"><!--height可实现固定表头的表格-->
         <el-table-column type="index" width="50" align="center" />
         <el-table-column align="center" label="需求id" prop="id"> </el-table-column>
         <el-table-column align="center" label="学生称呼" prop="nickName"> </el-table-column>
@@ -29,6 +29,15 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[5, 10, 20]"
+        :page-size="pagesize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="resultsMap.length">
+      </el-pagination>
     </div>
   </el-row>
 </template>
@@ -40,6 +49,8 @@
     name: "PersonalNeeds",
     data() {
       return {
+        currentPage:1, //初始页
+        pagesize:10,//每页的数据
         resultsMap: [],
         search: '',
         tokens : []
@@ -48,22 +59,33 @@
     components: {
       Header
     },
-    mounted() {
-      axios.get('http://127.0.0.1:7001/business/need/Userlist',{
-        headers:{
-          authorization:`Bearer ${tokens}`
-        }}).then(
-        (resp) => {
-          this.resultsMap = resp.data.data
-          //数据拿到，ok!
-          console.log(this.resultsMap)
-        },
-        (err) => {
-          console.log(err);
-        }
-      )
+    created(){
+      this.getList()
     },
     methods:{
+      getList(){
+        axios.get('http://127.0.0.1:7001/business/need/Userlist',{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }}).then(
+          (res) => {
+            this.resultsMap = res.data.data
+            console.log(this.resultsMap)
+          },
+          (err) => {
+            console.log(err);
+          }
+        )
+      },
+      // 初始页currentPage、初始每页数据数pagesize和数据data
+      handleSizeChange: function (size) {
+        this.pagesize = size;
+        console.log(this.pagesize)  //每页下拉显示数据
+      },
+      handleCurrentChange: function(currentPage){
+        this.currentPage = currentPage;
+        console.log(this.currentPage)  //点击第几页
+      },
       formatDate(row, column) {
         const date = new Date(parseInt(row.createTime) * 1000)
         const Y = date.getFullYear() + '-'
