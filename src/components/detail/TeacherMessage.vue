@@ -116,6 +116,7 @@
       </el-row>
       <el-dialog title="新建预约" :visible.sync="dialogVisible2" width="30%" :before-close="handleClose">
         <el-form ref="ruleForm2" :model="ruleForm2" :rules="rules2" label-width="140px" class="demo-ruleForm">
+          <el-form-item label="老师编号" prop="id"><el-input v-model="ruleForm2.id=teacherList.id" disabled /></el-form-item>
           <el-form-item label="学生称呼" prop="name"><el-input v-model="ruleForm2.name" /></el-form-item>
           <el-form-item label="科目" prop="subject">
             <el-select v-model="ruleForm2.subject" placeholder="请选择" style="float: left">
@@ -150,6 +151,10 @@
           <el-form-item label="联系方式" prop="phone"><el-input v-model="ruleForm2.phone" /></el-form-item>
           <el-form-item label="QQ" prop="qq"><el-input v-model="ruleForm2.qq" /></el-form-item>
           <el-form-item label="微信号" prop="wechat"><el-input v-model="ruleForm2.wechat" /></el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('ruleForm2')">立即创建</el-button>
+            <el-button @click="resetForm('ruleForm2')">重置</el-button>
+          </el-form-item>
         </el-form>
       </el-dialog>
     </div>
@@ -166,100 +171,100 @@
         // 城市数据
         options: regionData,
         times: [{
-          value: 1,
-          label: '星期一',
+          label:'星期一',
+          value: '星期一',
           children: [{
-            value: 1-1,
-            label: '上午',
+            label:'上午',
+            value:'上午'
           },{
-            value:1-2,
+            value:'下午',
             label:'下午'
           },{
-            value:1-3,
+            value:'晚上',
             label:'晚上'
           }
           ]
-        },{
-          value: 2,
+        }, {
+          value: '星期二',
           label: '星期二',
           children: [{
-            value: 2-1,
-            label: '上午',
+            label:'上午',
+            value:'上午'
           },{
-            value:2-2,
+            value:'下午',
             label:'下午'
           },{
-            value:2-3,
+            value:'晚上',
             label:'晚上'
           }
           ]
-        },{
-          value: 3,
+        }, {
+          value: '星期三',
           label: '星期三',
           children: [{
-            value: 3-1,
-            label: '上午',
+            label:'上午',
+            value:'上午'
           },{
-            value:3-2,
+            value:'下午',
             label:'下午'
           },{
-            value:3-3,
+            value:'晚上',
             label:'晚上'
           }
           ]
-        },{
-          value: 4,
+        }, {
+          value: '星期四',
           label: '星期四',
           children: [{
-            value: 4-1,
-            label: '上午',
+            label:'上午',
+            value:'上午'
           },{
-            value:4-2,
+            value:'下午',
             label:'下午'
           },{
-            value:4-3,
+            value:'晚上',
             label:'晚上'
           }
           ]
-        },{
-          value: 5,
+        }, {
+          value: '星期五',
           label: '星期五',
           children: [{
-            value: 5-1,
-            label: '上午',
+            label:'上午',
+            value:'上午'
           },{
-            value:5-2,
+            value:'下午',
             label:'下午'
           },{
-            value:5-3,
+            value:'晚上',
             label:'晚上'
           }
           ]
-        },{
-          value: 6,
+        }, {
+          value: '星期六',
           label: '星期六',
           children: [{
-            value: 6-1,
-            label: '上午',
+            label:'上午',
+            value:'上午'
           },{
-            value:6-2,
+            value:'下午',
             label:'下午'
           },{
-            value:6-3,
+            value:'晚上',
             label:'晚上'
           }
           ]
-        },{
-          value: 7,
+        }, {
+          value: '星期日',
           label: '星期日',
           children: [{
-            value: 7-1,
-            label: '上午',
+            label:'上午',
+            value:'上午'
           },{
-            value:7-2,
+            value:'下午',
             label:'下午'
           },{
-            value:7-3,
+            value:'晚上',
             label:'晚上'
           }
           ]
@@ -310,6 +315,29 @@
             console.log(err);
           }
         )
+      },
+      submitForm(formName){
+        this.$refs[formName].validate(valid =>{
+          if (valid) {
+            axios.post('http://127.0.0.1:7001/business/appoint/create',this.ruleForm2,{
+              headers:{
+                authorization:`Bearer ${tokens}`
+              }
+            }).then(res => {
+              if (res.data.code === 0) {
+                this.$refs[formName].resetFields()
+                this.dialogVisible2 = false
+              }
+              console.log(res)
+            })
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
+      },
+      resetForm (formName) {
+        this.$refs[formName].resetFields()
       }
     },
     props: {
