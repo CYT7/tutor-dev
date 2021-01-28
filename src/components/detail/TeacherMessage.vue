@@ -90,6 +90,9 @@
                     <el-col :span="4"><div class="grid-content bg-purple">授课价格</div></el-col>
                     <el-col :span="10"><div class="grid-content bg-purple-light">{{teacherList.hourPrice}}元/小时</div></el-col>
                   </el-row>
+                  <el-row>
+                    <el-button type="primary" class="favorites" @click="dialogVisible2=true">预约</el-button>
+                  </el-row>
                 </div>
               </el-main>
               <el-aside width="20%">
@@ -111,14 +114,57 @@
         </div>
         </el-col>
       </el-row>
+      <el-dialog title="新建预约" :visible.sync="dialogVisible2" width="30%" :before-close="handleClose">
+        <el-form ref="ruleForm2" :model="ruleForm2" :rules="rules2" label-width="140px" class="demo-ruleForm">
+          <el-form-item label="学生称呼" prop="name"><el-input v-model="ruleForm2.name" /></el-form-item>
+          <el-form-item label="科目" prop="subject"><el-input v-model="ruleForm2.subject" /></el-form-item>
+          <el-form-item label="预约上几次家教" prop="frequency"><el-input v-model="ruleForm2.frequency" /></el-form-item>
+          <el-form-item label="上课时间" prop="teach_date"><el-input v-model="ruleForm2.teach_date" /></el-form-item>
+          <el-form-item label="每次上几小时" prop="timeHour"><el-input v-model="ruleForm2.timeHour" /></el-form-item>
+          <el-form-item label="上课地址" prop="address"><el-input v-model="ruleForm2.address" /></el-form-item>
+          <el-form-item label="课时费用" prop="hourPrice"><el-input v-model="ruleForm2.hourPrice" /></el-form-item>
+          <el-form-item label="联系方式" prop="phone"><el-input v-model="ruleForm2.phone" /></el-form-item>
+          <el-form-item label="QQ" prop="qq"><el-input v-model="ruleForm2.qq" /></el-form-item>
+          <el-form-item label="微信号" prop="qq"><el-input v-model="ruleForm2.qq" /></el-form-item>
+        </el-form>
+      </el-dialog>
     </div>
 </template>
 <script>
   export default {
     name: "TeacherMessage",
-    methods: {},
+    data(){
+      return {
+        dialogVisible2:false,
+        ruleForm2:{
+          name:'',
+          frequency:'',
+          timeHour:'',
+          teach_date:'',
+          hourPrice:'',
+          phone:'',
+          qq:'',
+          wechat:'',
+          address:'',
+          subject:'',
+          id:''
+        },
+        rules2: {
+          name: [{ required: true, message: '请输入学生称呼', trigger: 'blur' }]
+        }
+      }
+    },
+    methods: {
+      handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done()
+          })
+          .catch(_ => {})
+      },
+    },
     props: {
-      teacherList: Object
+      teacherList: []
     }
   }
 </script>
