@@ -117,25 +117,155 @@
       <el-dialog title="新建预约" :visible.sync="dialogVisible2" width="30%" :before-close="handleClose">
         <el-form ref="ruleForm2" :model="ruleForm2" :rules="rules2" label-width="140px" class="demo-ruleForm">
           <el-form-item label="学生称呼" prop="name"><el-input v-model="ruleForm2.name" /></el-form-item>
-          <el-form-item label="科目" prop="subject"><el-input v-model="ruleForm2.subject" /></el-form-item>
+          <el-form-item label="科目" prop="subject">
+            <el-select v-model="ruleForm2.subject" placeholder="请选择" style="float: left">
+              <el-option
+                v-for="item in catelist"
+                :key="item.id"
+                :label="item.name"
+                :value="item.name"
+              ></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="预约上几次家教" prop="frequency"><el-input v-model="ruleForm2.frequency" /></el-form-item>
-          <el-form-item label="上课时间" prop="teach_date"><el-input v-model="ruleForm2.teach_date" /></el-form-item>
+          <el-form-item label="上课时间" prop="teach_date">
+            <el-cascader
+              v-model="ruleForm2.teach_date"
+              :options="times"
+              :props="{ expandTrigger: 'hover', multiple: true }"
+              style="float: left;"
+              @change="handleChange"></el-cascader>
+          </el-form-item>
           <el-form-item label="每次上几小时" prop="timeHour"><el-input v-model="ruleForm2.timeHour" /></el-form-item>
-          <el-form-item label="上课地址" prop="address"><el-input v-model="ruleForm2.address" /></el-form-item>
+          <el-form-item label="上课地址" prop="address">
+            <el-cascader
+              style="float: left"
+              placeholder="请选择城市"
+              :options="options"
+              v-model="ruleForm2.address"
+              :show-all-levels="false">
+            </el-cascader>
+          </el-form-item>
           <el-form-item label="课时费用" prop="hourPrice"><el-input v-model="ruleForm2.hourPrice" /></el-form-item>
           <el-form-item label="联系方式" prop="phone"><el-input v-model="ruleForm2.phone" /></el-form-item>
           <el-form-item label="QQ" prop="qq"><el-input v-model="ruleForm2.qq" /></el-form-item>
-          <el-form-item label="微信号" prop="qq"><el-input v-model="ruleForm2.qq" /></el-form-item>
+          <el-form-item label="微信号" prop="wechat"><el-input v-model="ruleForm2.wechat" /></el-form-item>
         </el-form>
       </el-dialog>
     </div>
 </template>
 <script>
+  import { regionData } from 'element-china-area-data'
+  //导入一个ajax的请求库
+  import axios from 'axios'
+  const tokens = localStorage.getItem('token');
   export default {
     name: "TeacherMessage",
     data(){
       return {
+        // 城市数据
+        options: regionData,
+        times: [{
+          value: 1,
+          label: '星期一',
+          children: [{
+            value: 1-1,
+            label: '上午',
+          },{
+            value:1-2,
+            label:'下午'
+          },{
+            value:1-3,
+            label:'晚上'
+          }
+          ]
+        },{
+          value: 2,
+          label: '星期二',
+          children: [{
+            value: 2-1,
+            label: '上午',
+          },{
+            value:2-2,
+            label:'下午'
+          },{
+            value:2-3,
+            label:'晚上'
+          }
+          ]
+        },{
+          value: 3,
+          label: '星期三',
+          children: [{
+            value: 3-1,
+            label: '上午',
+          },{
+            value:3-2,
+            label:'下午'
+          },{
+            value:3-3,
+            label:'晚上'
+          }
+          ]
+        },{
+          value: 4,
+          label: '星期四',
+          children: [{
+            value: 4-1,
+            label: '上午',
+          },{
+            value:4-2,
+            label:'下午'
+          },{
+            value:4-3,
+            label:'晚上'
+          }
+          ]
+        },{
+          value: 5,
+          label: '星期五',
+          children: [{
+            value: 5-1,
+            label: '上午',
+          },{
+            value:5-2,
+            label:'下午'
+          },{
+            value:5-3,
+            label:'晚上'
+          }
+          ]
+        },{
+          value: 6,
+          label: '星期六',
+          children: [{
+            value: 6-1,
+            label: '上午',
+          },{
+            value:6-2,
+            label:'下午'
+          },{
+            value:6-3,
+            label:'晚上'
+          }
+          ]
+        },{
+          value: 7,
+          label: '星期日',
+          children: [{
+            value: 7-1,
+            label: '上午',
+          },{
+            value:7-2,
+            label:'下午'
+          },{
+            value:7-3,
+            label:'晚上'
+          }
+          ]
+        }],
         dialogVisible2:false,
+        catelist:'',
         ruleForm2:{
           name:'',
           frequency:'',
@@ -145,7 +275,7 @@
           phone:'',
           qq:'',
           wechat:'',
-          address:'',
+          address:[],
           subject:'',
           id:''
         },
@@ -153,6 +283,9 @@
           name: [{ required: true, message: '请输入学生称呼', trigger: 'blur' }]
         }
       }
+    },
+    created(){
+      this.getCateList();
     },
     methods: {
       handleClose(done) {
@@ -162,6 +295,22 @@
           })
           .catch(_ => {})
       },
+      getCateList(){
+        axios.get('http://127.0.0.1:7001/business/category/List',{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }
+        }).then(
+          (res) => {
+            const data = res.data.data;
+            this.catelist = data
+            console.log(this.catelist)
+          },
+          (err) => {
+            console.log(err);
+          }
+        )
+      }
     },
     props: {
       teacherList: []
