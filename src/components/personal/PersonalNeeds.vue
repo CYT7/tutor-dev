@@ -1,9 +1,9 @@
 <template>
   <el-row :gutter="20">
-    <el-col :span="20" :offset="2"><Header></Header></el-col>
+    <el-col :span="20"><Header></Header></el-col>
     <el-col :span="20">
       <div class="grid-content bg-purple" style="margin-top: 15px;margin-right:-100px;float: right">
-        <el-button type="primary" @click="dialogVisible2=false">+新建需求</el-button>
+        <el-button type="primary" @click="dialogVisible2=true">+新建需求</el-button>
       </div>
     </el-col>
     <div style="margin-top: 20px" align="center">
