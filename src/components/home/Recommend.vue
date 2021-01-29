@@ -39,8 +39,8 @@
                 <ul class="info">
                   <li>辅导学科:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{list.subject}}</span></li>
                   <li>授课总价:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{list.totalPrice}}元</span></li>
-                  <li>授课地址:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{list.address}}</span></li>
-                  <li>发布时间：&nbsp;&nbsp;&nbsp;&nbsp;<span>{{formatDate(list.createTime)}}</span></li>
+                  <li>授课地址:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{formatAddress(list.address)}}</span></li>
+                  <li>发布时间：&nbsp;&nbsp;<span>{{formatDate(list.createTime)}}</span></li>
                 </ul>
               </div>
             </div>
@@ -53,6 +53,7 @@
 <script>
   // 导入ajax请求库
   import axios from 'axios'
+  import { CodeToText } from 'element-china-area-data'
   const tokens = localStorage.getItem('token');
   export default {
     name: "Recommend",
@@ -106,7 +107,27 @@
           s = s < 10 ? ('0' + s ) : s;
           return y + '-' + MM + '-' + d + '-' + h + ':' + m + ':' + s;
         }
-      }
+      },
+      formatAddress: function (value) {
+        if (value === null) {
+          return null
+        }
+        let area = ''
+        switch (value.length) {
+          case 1:
+            area += CodeToText[value[0]]
+            break
+          case 2:
+            area += CodeToText[value[0]] + '/' + CodeToText[value[1]]
+            break
+          case 3:
+            area += CodeToText[value[0]] + '/' + CodeToText[value[1]] + '/' + CodeToText[value[2]]
+            break
+          default:
+            break
+        }
+        return area
+      },
     }
   }
 </script>
