@@ -2,8 +2,7 @@
   <el-row :gutter="20">
     <el-col :span="20" :offset="2"><TeachersWantedHeader></TeachersWantedHeader></el-col>
     <div style="margin-top: 10px" align="center">
-      <el-table :data="needData.filter(data => !search || data.subject.toLowerCase().includes(search.toLowerCase()))
-      .slice((currentPage-1)*pagesize,currentPage*pagesize)" style="width: 82%" height="500">
+      <el-table :data="needData.filter(data => !search || data.subject.toLowerCase().includes(search.toLowerCase()))" style="width: 80%" height="500">
         <!--height可实现固定表头的表格-->
         <el-table-column type="index" width="50" align="center"/>
         <el-table-column align="center" label="学生称呼" prop="nickName"> </el-table-column>
@@ -29,12 +28,11 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[5, 10, 20]"
-        :page-size="pagesize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="needData.length">
-      </el-pagination>
+        :hide-on-single-page="true"
+        :page-size="list.per_page"
+        layout="total, prev, pager, next, jumper"
+        :page-count="list.totals"
+      ></el-pagination>
     </div>
   </el-row>
 </template>
@@ -47,9 +45,9 @@
     name: "TeachersWanted",
     data() {
       return {
-        currentPage:1, //初始页
-        pagesize:10,//每页的数据
+        page:1, //初始页
         needData: [],
+        list:[],
         search: '',
         tokens : []
       }
@@ -62,12 +60,13 @@
     },
     methods:{
       getList(){
-        axios.get('http://127.0.0.1:7001/business/need/list',{
+        axios.get('http://127.0.0.1:7001/business/need/List',{
           headers:{
             authorization:`Bearer ${tokens}`
           }}).then(
           (res) => {
             this.needData = res.data.data
+            this.list = res.data
             console.log(this.needData)
           },
           (err) => {
@@ -76,13 +75,25 @@
         )
       },
       // 初始页currentPage、初始每页数据数pagesize和数据data
-      handleSizeChange: function (size) {
-        this.pagesize = size;
-        console.log(this.pagesize)  //每页下拉显示数据
+      handleSizeChange: function (val) {
+        console.log(`每页 ${val} 条`)
       },
-      handleCurrentChange: function(currentPage){
-        this.currentPage = currentPage;
-        console.log(this.currentPage)  //点击第几页
+      handleCurrentChange: function(val){
+        this.page = val
+        axios.get('http://127.0.0.1:7001/business/need/List?page='+this.page,{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }
+        }).then(
+          (res) => {
+            this.needData = res.data.data
+            this.list = res.data
+            console.log(this.needData)
+          },
+          (err) => {
+            console.log(err);
+          }
+        )
       },
       formatDate(row, column) {
         const date = new Date(parseInt(row.createTime) * 1000)
