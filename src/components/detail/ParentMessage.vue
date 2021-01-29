@@ -79,6 +79,11 @@
                   <el-col :span="6"><div class="grid-content bg-purple">所在城市区域</div></el-col>
                   <el-col :span="4"><div class="grid-content bg-purple-light">{{formatAddress(parentList.address)}}</div></el-col>
                 </el-row>
+                <el-row>
+                  <el-popconfirm title="确定应聘需求嘛？" @confirm="handleApply({id:parentList.id})">
+                    <el-button slot="reference" class="favorites" type="primary">应聘</el-button>
+                  </el-popconfirm>
+                </el-row>
               </div>
             </el-main>
             <el-aside width="30%">
@@ -104,7 +109,9 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
   import { CodeToText } from 'element-china-area-data'
+  const tokens = localStorage.getItem('token');
   export default {
     name: "ParentMessage",
     methods: {
@@ -128,6 +135,22 @@
         }
         return area
       },
+      handleApply(id) {
+        this.id = id
+        axios.post('http://127.0.0.1:7001/business/need/apply',this.id,{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }
+        }).then(res =>{
+          if (res.data.code === 0){
+            this.$notify({
+              title:'成功',
+              message:res.data.msg,
+              type:'success'
+            })
+          }
+        })
+      }
     },
     props:{
       parentList:Object
@@ -193,5 +216,11 @@
     border-radius: 4px;
     margin-top: 2px;
     background-color: #F2F6FC;
+  }
+  .favorites{
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-right: 40px;
+    float: right
   }
 </style>
