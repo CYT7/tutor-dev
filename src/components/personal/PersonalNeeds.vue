@@ -72,8 +72,7 @@
             v-model="ruleForm2.teach_date"
             :options="times"
             :props="{ expandTrigger: 'hover', multiple: true }"
-            style="float: left;"
-            @change="handleChange"></el-cascader>
+            style="float: left;"></el-cascader>
         </el-form-item>
         <el-form-item label="每次上几小时" prop="timeHour"><el-input v-model="ruleForm2.timeHour" /></el-form-item>
         <el-form-item label="上课地址" prop="address">
