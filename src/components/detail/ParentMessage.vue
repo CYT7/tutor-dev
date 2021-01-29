@@ -148,6 +148,12 @@
               message:res.data.msg,
               type:'success'
             })
+          }else{
+            this.$notify({
+              title:'失败',
+              message:res.data.msg,
+              type:'error'
+            })
           }
         })
       }
