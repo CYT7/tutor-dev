@@ -338,7 +338,7 @@
       },
       resetForm (formName) {
         this.$refs[formName].resetFields()
-      }
+      },
     },
     props: {
       teacherList: []

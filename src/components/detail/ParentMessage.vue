@@ -77,7 +77,7 @@
                 <el-row>
                   <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                   <el-col :span="6"><div class="grid-content bg-purple">所在城市区域</div></el-col>
-                  <el-col :span="4"><div class="grid-content bg-purple-light">{{parentList.address}}</div></el-col>
+                  <el-col :span="4"><div class="grid-content bg-purple-light">{{formatAddress(parentList.address)}}</div></el-col>
                 </el-row>
               </div>
             </el-main>
@@ -104,10 +104,30 @@
   </div>
 </template>
 <script>
-
+  import { CodeToText } from 'element-china-area-data'
   export default {
     name: "ParentMessage",
     methods: {
+      formatAddress: function (value) {
+        if (value === null) {
+          return null
+        }
+        let area = ''
+        switch (value.length) {
+          case 1:
+            area += CodeToText[value[0]]
+            break
+          case 2:
+            area += CodeToText[value[0]] + '/' + CodeToText[value[1]]
+            break
+          case 3:
+            area += CodeToText[value[0]] + '/' + CodeToText[value[1]] + '/' + CodeToText[value[2]]
+            break
+          default:
+            break
+        }
+        return area
+      },
     },
     props:{
       parentList:Object

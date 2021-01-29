@@ -7,7 +7,7 @@
         <el-table-column align="center" label="需求id" prop="id"> </el-table-column>
         <el-table-column align="center" label="学生称呼" prop="nickName"> </el-table-column>
         <el-table-column align="center" label="授课科目" prop="subject"></el-table-column>
-        <el-table-column align="center" label="所在城市区域" prop="address"></el-table-column>
+        <el-table-column align="center" label="所在城市区域" prop="address" :formatter="formatAddress" ></el-table-column>
         <el-table-column align="center" label="需求总报价(元)" prop="totalPrice"></el-table-column>
         <el-table-column align="center" label="需求发布时间" prop="createTime" :formatter="formatDate"></el-table-column>
         <el-table-column label="需求状态" prop="state" align="center">
@@ -43,7 +43,8 @@
 </template>
 <script>
   import Header from "./Header";
-  import axios from 'axios'
+  import axios from 'axios';
+  import { CodeToText } from 'element-china-area-data'
   const tokens = localStorage.getItem('token');
   export default {
     name: "TeacherNeeds",
@@ -107,7 +108,27 @@
         const s =
           date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
         return Y + M + D + h + m + s
-      }
+      },
+      formatAddress(row) {
+        if (row.address === null) {
+          return null
+        }
+        let area = ''
+        switch (row.address.length) {
+          case 1:
+            area += CodeToText[row.address[0]]
+            break
+          case 2:
+            area += CodeToText[row.address[0]] + '/' + CodeToText[row.address[1]]
+            break
+          case 3:
+            area += CodeToText[row.address[0]] + '/' + CodeToText[row.address[1]] + '/' + CodeToText[row.address[2]]
+            break
+          default:
+            break
+        }
+        return area
+      },
     }
   }
 </script>
