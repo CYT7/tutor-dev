@@ -7,7 +7,7 @@
       </div>
     </el-col>
     <div style="margin-top: 20px" align="center">
-      <el-table :data="resultsMap.slice((currentPage-1)*pagesize,currentPage*pagesize)" style="width: 80%" height="500"><!--height可实现固定表头的表格-->
+      <el-table :data="resultsMap" style="width: 80%" height="500"><!--height可实现固定表头的表格-->
         <el-table-column type="index" width="50" align="center" />
         <el-table-column align="center" label="需求id" prop="id"> </el-table-column>
         <el-table-column align="center" label="学生称呼" prop="nickName"> </el-table-column>
@@ -37,12 +37,11 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[5, 10, 20]"
-        :page-size="pagesize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="resultsMap.length">
-      </el-pagination>
+        :hide-on-single-page="true"
+        :page-size="list.per_page"
+        layout="total, prev, pager, next, jumper"
+        :page-count="list.totals"
+      ></el-pagination>
     </div>
     <el-dialog title="新建需求"
                :visible.sync="dialogVisible2"
@@ -110,9 +109,9 @@
     name: "PersonalNeeds",
     data() {
       return {
-        currentPage:1, //初始页
-        pagesize:10,//每页的数据
+        page:1, //初始页
         resultsMap: [],
+        list:[],
         tokens : [],
         dialogVisible2:false,
         ruleForm2:{
@@ -260,6 +259,7 @@
           }}).then(
           (res) => {
             this.resultsMap = res.data.data
+            this.list = res.data
             console.log(this.resultsMap)
           },
           (err) => {
@@ -268,13 +268,25 @@
         )
       },
       // 初始页currentPage、初始每页数据数pagesize和数据data
-      handleSizeChange: function (size) {
-        this.pagesize = size;
-        console.log(this.pagesize)  //每页下拉显示数据
+      handleSizeChange: function (val) {
+        console.log(`每页 ${val} 条`)
       },
-      handleCurrentChange: function(currentPage){
-        this.currentPage = currentPage;
-        console.log(this.currentPage)  //点击第几页
+      handleCurrentChange: function(val){
+        this.page = val
+        axios.get('http://127.0.0.1:7001/business/need/Userlist?page='+this.page,{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }
+        }).then(
+          (res) => {
+            this.resultsMap = res.data.data
+            this.list = res.data
+            console.log(this.resultsMap)
+          },
+          (err) => {
+            console.log(err);
+          }
+        )
       },
       formatDate(row, column) {
         const date = new Date(parseInt(row.createTime) * 1000)
