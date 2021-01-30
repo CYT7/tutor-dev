@@ -13,18 +13,39 @@
         <el-table-column label="预约状态" prop="state" align="center">
           <template slot-scope="scope">
             <div v-if="scope.row.state === 0" style="font-weight: bolder">未回应预约</div>
-            <div v-else-if="scope.row.state === 1" style="color: #409EFF; font-weight: bolder">已预约 待付款</div>
+            <div v-else-if="scope.row.state === 1" style="color: #409EFF; font-weight: bolder">已预约</div>
             <div v-else-if="scope.row.state === 2" style="color: #E6A23C; font-weight: bolder">进行中</div>
             <div v-else-if="scope.row.state === 3" style="color: #67C23A; font-weight: bolder">已完成</div>
             <div v-else style="color: #F56C6C; font-weight: bolder">已关闭</div>
           </template>
         </el-table-column>
         <!--点击查看，跳转到预约页面详情-->
-        <el-table-column align="center" label="操作" width="150">
+        <el-table-column align="center" label="操作">
           <template slot-scope="scope">
             <router-link :to="{path:`/TeacherAppoint`,name:`TeacherAppoint`,params:{id:scope.row.id},query:{id:scope.row.id}}">
-              <el-button type="text" size="small" icon="el-icon-thumb">查看详情</el-button>
+              <el-button type="text" size="small" icon="el-icon-thumb">查看</el-button>
             </router-link>
+            <span v-if="scope.row.state === 0">
+              <el-popconfirm title="确定同意接受此预约吗？" @confirm="handleAgree({id:scope.row.id})">
+                <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">同意</el-button>
+              </el-popconfirm>
+              <el-popconfirm title="确定不同意接受此预约吗？" @confirm="handleDisagree({id:scope.row.id})">
+                <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">不同意</el-button>
+              </el-popconfirm>
+            </span>
+            <span v-if="scope.row.state === 1">
+              <el-popconfirm title="确定关闭此预约吗？" @confirm="handleClose({id:scope.row.id})">
+                <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">关闭</el-button>
+              </el-popconfirm>
+            </span>
+            <span v-else-if="scope.row.state === 2">
+              <el-popconfirm title="确定你已经完成此预约吗？" @confirm="handleComplete({id:scope.row.id})">
+                <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">完成</el-button>
+              </el-popconfirm>
+              <el-popconfirm title="确定关闭此预约吗？" @confirm="handleClose({id:scope.row.id})">
+                <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">关闭</el-button>
+              </el-popconfirm>
+            </span>
           </template>
         </el-table-column>
       </el-table>
@@ -77,10 +98,10 @@
           }
         )
       },
-      // 初始页currentPage、初始每页数据数pagesize和数据data
       handleSizeChange: function (val) {
         console.log(`每页 ${val} 条`)
       },
+      // 分页
       handleCurrentChange: function(val){
         this.page = val
         axios.get('http://127.0.0.1:7001/business/appoint/teacherList?page='+this.page,{
@@ -98,6 +119,56 @@
           }
         )
       },
+      // 同意预约
+      handleAgree(id) {
+        this.id = id
+        axios.post('http://127.0.0.1:7001/business/appoint/agree',this.id,{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }
+        }).then(res => {
+          console.log(res)
+          this.request()
+        })
+        console.log(this.id)
+      },
+      // 不同意预约
+      handleDisagree(id) {
+        axios.post('http://127.0.0.1:7001/business/appoint/disagree',id,{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }
+        }).then(res => {
+          console.log(res)
+          this.request()
+        })
+        console.log(id)
+      },
+      // 关闭预约
+      handleClose(id) {
+        axios.post('http://127.0.0.1:7001/business/appoint/teacherClose',id,{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }
+        }).then(res => {
+          console.log(res)
+          this.request()
+        })
+        console.log(id)
+      },
+      // 完成预约
+      handleComplete(id) {
+        axios.post('http://127.0.0.1:7001/business/appoint/finish',id,{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }
+        }).then(res => {
+          console.log(res)
+          this.request()
+        })
+        console.log(id)
+      },
+      // 时间格式转化
       formatDate(row, column) {
         const date = new Date(parseInt(row.createTime) * 1000)
         const Y = date.getFullYear() + '-'
@@ -119,6 +190,7 @@
           date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
         return Y + M + D + h + m + s
       },
+      // 地址数据转化
       formatAddress(row) {
         if (row.address === null) {
           return null

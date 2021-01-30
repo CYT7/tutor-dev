@@ -87,6 +87,21 @@
                         </div>
                       </el-col>
                     </el-row>
+                    <el-row>
+                      <span v-if="resultsMap.state == 1">
+                        <el-popconfirm title="确定支付此预约吗？" @confirm="handlePay({id:resultsMap.id})">
+                          <el-button slot="reference" class="favorites" type="primary">支付预约</el-button>
+                        </el-popconfirm>
+                        <el-popconfirm title="确定关闭此预约吗？" @confirm="handleClose({id:resultsMap.id})">
+                          <el-button slot="reference" class="favorites" type="danger">关闭</el-button>
+                        </el-popconfirm>
+                      </span>
+                      <span v-else-if="resultsMap.state !=3 && resultsMap.state !=4">
+                        <el-popconfirm title="确定关闭此预约吗？" @confirm="handleClose({id:resultsMap.id})">
+                          <el-button slot="reference" class="favorites" type="danger">关闭</el-button>
+                        </el-popconfirm>
+                      </span>
+                    </el-row>
                   </div>
                 </el-main>
                 <el-aside width="30%">
@@ -127,7 +142,6 @@
       return{
         resultsMap: [],
         tokens : [],
-        id:[]
       }
     },
     created(){
@@ -150,6 +164,28 @@
             console.log(err);
           }
         )
+      },
+      // 支付预约
+      handlePay(id) {
+        axios.post('http://127.0.0.1:7001/business/appoint/pay',id,{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }
+        }).then(res => {
+          console.log(res)
+        })
+        console.log(id)
+      },
+      // 关闭预约
+      handleClose(id) {
+        axios.post('http://127.0.0.1:7001/business/appoint/userClose',id,{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }
+        }).then(res => {
+          console.log(res)
+        })
+        console.log(id)
       },
       formatAddress: function (value) {
         if (value === null) {
@@ -175,4 +211,9 @@
   }
 </script>
 <style scoped>
+  .favorites{
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-right: 40px;
+  }
 </style>

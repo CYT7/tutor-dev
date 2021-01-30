@@ -9,7 +9,7 @@
             <el-header height="20px">
               <el-breadcrumb separator-class="el-icon-arrow-right">
                 <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-                <el-breadcrumb-item :to="{ path: '/PersonalAppointment' }">个人预约列表</el-breadcrumb-item>
+                <el-breadcrumb-item :to="{ path: '/TeacherAppointment' }">老师个人预约列表</el-breadcrumb-item>
                 <el-breadcrumb-item>预约详情</el-breadcrumb-item>
               </el-breadcrumb>
             </el-header>
@@ -24,11 +24,6 @@
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">预约id</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.id}}</div></el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
-                      <el-col :span="6"><div class="grid-content bg-purple">老师id</div></el-col>
-                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.teacher.id}}</div></el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
@@ -70,6 +65,23 @@
                       <el-col :span="6"><div class="grid-content bg-purple">所在城市区域</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{formatAddress(resultsMap.address)}}</div></el-col>
                     </el-row>
+                    <el-row v-if="resultsMap.phone !== ''">
+                      <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">联系方式</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.phone}}</div></el-col>
+                    </el-row>
+                    <el-row v-if="resultsMap.qq !== ''">
+<!--                      <span v-if="resultsMap.qq !== ''"></span>-->
+                      <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">QQ</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.qq}}</div></el-col>
+                    </el-row>
+                    <el-row v-if="resultsMap.wechat !== ''">
+                        <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                        <el-col :span="6"><div class="grid-content bg-purple">微信号</div></el-col>
+                        <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.wechat}}</div></el-col>
+                      </span>
+                    </el-row>
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">预约状态</div></el-col>
@@ -82,6 +94,29 @@
                           <span v-else>预约已关闭</span>
                         </div>
                       </el-col>
+                    </el-row>
+                    <el-row>
+                      <span v-if="resultsMap.state ==0">
+                        <el-popconfirm title="确定同意接受此预约吗？" @confirm="handleAgree({id:resultsMap.id})">
+                          <el-button slot="reference" class="favorites" type="primary">同意</el-button>
+                        </el-popconfirm>
+                        <el-popconfirm title="确定不同意接受此预约吗？" @confirm="handleDisagree({id:resultsMap.id})">
+                          <el-button slot="reference" class="favorites" type="warning">不同意</el-button>
+                        </el-popconfirm>
+                      </span>
+                      <span v-else-if="resultsMap.state ==1">
+                        <el-popconfirm title="确定关闭此预约吗？" @confirm="handleAgree({id:resultsMap.id})">
+                          <el-button slot="reference" class="favorites" type="danger">关闭</el-button>
+                        </el-popconfirm>
+                      </span>
+                      <span v-else-if="resultsMap.state ==2">
+                        <el-popconfirm title="确定你已经完成此预约吗" @confirm="handleComplete({id:resultsMap.id})">
+                          <el-button slot="reference" class="favorites" type="success">完成</el-button>
+                        </el-popconfirm>
+                        <el-popconfirm title="确定关闭此预约吗？" @confirm="handleClose({id:resultsMap.id})">
+                          <el-button slot="reference" class="favorites" type="danger">关闭</el-button>
+                        </el-popconfirm>
+                      </span>
                     </el-row>
                   </div>
                 </el-main>
@@ -147,6 +182,55 @@
           }
         )
       },
+      // 同意预约
+      handleAgree(id) {
+        this.id = id
+        axios.post('http://127.0.0.1:7001/business/appoint/agree',this.id,{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }
+        }).then(res => {
+          console.log(res)
+          this.request()
+        })
+        console.log(this.id)
+      },
+      // 不同意预约
+      handleDisagree(id) {
+        axios.post('http://127.0.0.1:7001/business/appoint/disagree',id,{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }
+        }).then(res => {
+          console.log(res)
+          this.request()
+        })
+        console.log(id)
+      },
+      // 关闭预约
+      handleClose(id) {
+        axios.post('http://127.0.0.1:7001/business/appoint/teacherClose',id,{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }
+        }).then(res => {
+          console.log(res)
+          this.request()
+        })
+        console.log(id)
+      },
+      // 完成预约
+      handleComplete(id) {
+        axios.post('http://127.0.0.1:7001/business/appoint/finish',id,{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }
+        }).then(res => {
+          console.log(res)
+          this.request()
+        })
+        console.log(id)
+      },
       formatAddress: function (value) {
         if (value === null) {
           return null
@@ -171,4 +255,9 @@
   }
 </script>
 <style scoped>
+  .favorites{
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-right: 40px;
+  }
 </style>
