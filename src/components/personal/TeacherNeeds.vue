@@ -21,11 +21,16 @@
           </template>
         </el-table-column>
         <!--点击查看，跳转到预约页面详情-->
-        <el-table-column align="center" label="操作" width="150">
+        <el-table-column align="center" label="操作">
           <template slot-scope="scope">
             <router-link :to="{path:`/TeacherNeed`,name:`TeacherNeed`,params:{id:scope.row.id},query:{id:scope.row.id}}">
-              <el-button type="text" size="small" icon="el-icon-thumb">查看详情</el-button>
+              <el-button type="text" size="small" icon="el-icon-thumb">查看</el-button>
             </router-link>
+            <span v-if="scope.row.state != 5 && scope.row.state != 6">
+               <el-popconfirm title="确定关闭此需求吗？" @confirm="handleShut({id:scope.row.id})">
+                <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">关闭</el-button>
+              </el-popconfirm>
+            </span>
           </template>
         </el-table-column>
       </el-table>
@@ -98,6 +103,17 @@
             console.log(err);
           }
         )
+      },
+      // 关闭预约
+      handleShut(id) {
+        axios.post('http://127.0.0.1:7001/business/need/userClose',id,{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }
+        }).then(res => {
+          console.log(res)
+        })
+        console.log(id)
       },
       formatDate(row, column) {
         const date = new Date(parseInt(row.createTime) * 1000)
