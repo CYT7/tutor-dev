@@ -31,20 +31,106 @@
           </div>
         </el-form-item>
         <el-form-item label="地址">{{resultsMap.address}}</el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="dialogVisible2=true">修改</el-button>
+        </el-form-item>
       </el-form>
     </div>
+    <el-dialog title="修改个人信息" :visible.sync="dialogVisible2"  width="30%" :before-close="handleClose" :append-to-body="true">
+      <el-form ref="ruleForm2" :model="ruleForm2" :rules="rules2" label-width="auto" class="demo-ruleForm">
+        <el-form-item label="昵称" prop="nickName"><el-input v-model="ruleForm2.nickName" /></el-form-item>
+        <el-form-item label="旧密码" prop="oldPassword">
+          <el-input v-model="ruleForm2.oldPassword" type="password" name="oldPassword" placeholder="请输入旧密码" />
+        </el-form-item>
+        <el-form-item label="新密码" prop="password">
+          <el-input v-model="ruleForm2.password"  type="password" name="password" placeholder="请输入新密码"  />
+        </el-form-item>
+        <el-form-item label="确认新密码" prop="repassword"><el-input v-model="ruleForm2.repassword" type="password" name="repassword" placeholder="请再次输入密码" /></el-form-item>
+        <el-form-item label="性别" prop="gender">
+          <el-radio-group v-model="ruleForm2.gender" name="gender" style="float: left">
+            <el-radio v-for="item in gender" :key = "item.id" :label="item.id">{{item.name}}</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="所在城市" prop="address">
+          <el-cascader
+            style="float: left"
+            placeholder="请选择城市"
+            :options="options"
+            v-model="ruleForm2.address"
+            :show-all-levels="false">
+          </el-cascader>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('ruleForm2')">立即创建</el-button>
+          <el-button @click="resetForm('ruleForm2')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </el-row>
 </template>
 <script>
   import Header from "./Header"
+  import { provinceAndCityData } from 'element-china-area-data'
   import axios from 'axios'
   const Token = localStorage.getItem('token');
   export default {
     name: "PersonalCenter",
     data() {
+      // 密码是否一致验证
+      var validatePass1 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入新密码'))
+        } else {
+          if (this.ruleForm2.repassword !== '') {
+            this.$refs.ruleForm2.validateField('repassword')
+          }
+          callback()
+        }
+      }
+      var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'))
+        } else if (value !== this.ruleForm2.newPassword) {
+          callback(new Error('两次输入密码不一致!'))
+        } else {
+          callback()
+        }
+      }
       return {
         resultsMap: {},
-        tokens : [],
+        Token : [],
+        dialogVisible2:false,
+        ruleForm2:{
+          nickName:'',
+          gender:'',
+          qq:'',
+          wechat:'',
+          address:[],
+          oldPassword:'',
+          newPassword:'',
+          repassword:''
+        },
+        options: provinceAndCityData,// 城市数据
+        gender : [{
+          id:0,
+          name:'未知'
+        },{
+          id:1,
+          name:'男'
+        },{
+          id:2,
+          name:'女'
+        }],
+        rules2: {
+          nickName: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
+          oldPassword: [{ required: true, message: '请输入旧密码', trigger: 'blur' }],
+          newPassword: [
+            {required: true, validator: validatePass1, min: 6, message: '密码长度最少为6位', trigger: 'blur'}
+          ],
+          repassword: [
+            {required: true, validator: validatePass2,  trigger: 'blur'}
+          ],
+        },
       }
     },
     components: {
@@ -105,6 +191,39 @@
           this.$message.error('上传头像图片大小不能超过 2MB!');
         }
         return isJPG && isLt2M;
+      },
+      handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done()
+          })
+          .catch(_ => {})
+      },
+      submitForm(formName){
+        this.$refs[formName].validate(valid =>{
+          console.log(this.ruleForm2)
+          if (valid) {
+            axios.put('http://127.0.0.1:7001/business/user/modify',this.ruleForm2,{
+              headers:{
+                authorization:`Bearer ${Token}`,
+                'content-type': 'application/json'
+              }
+            }).then(res => {
+              console.log(this.ruleForm2)
+              if (res.data.code === 0) {
+                this.$refs[formName].resetFields()
+                this.dialogVisible2 = false
+              }
+              console.log(res.data)
+            })
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
+      },
+      resetForm (formName) {
+        this.$refs[formName].resetFields()
       },
     },
   }
