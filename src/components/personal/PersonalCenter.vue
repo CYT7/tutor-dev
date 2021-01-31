@@ -30,7 +30,7 @@
             <span v-else>女</span>
           </div>
         </el-form-item>
-        <el-form-item label="地址">{{resultsMap.address}}</el-form-item>
+        <el-form-item label="地址">{{formatAddress(resultsMap.address)}}</el-form-item>
         <el-form-item>
           <el-button type="primary" @click="dialogVisible2=true">修改</el-button>
         </el-form-item>
@@ -70,7 +70,7 @@
 </template>
 <script>
   import Header from "./Header"
-  import { provinceAndCityData } from 'element-china-area-data'
+  import { provinceAndCityData,CodeToText } from 'element-china-area-data'
   import axios from 'axios'
   const Token = localStorage.getItem('token');
   export default {
@@ -224,6 +224,26 @@
       },
       resetForm (formName) {
         this.$refs[formName].resetFields()
+      },
+      formatAddress: function (value) {
+        if (value === null) {
+          return null
+        }
+        let area = ''
+        switch (value.length) {
+          case 1:
+            area += CodeToText[value[0]]
+            break
+          case 2:
+            area += CodeToText[value[0]] + '/' + CodeToText[value[1]]
+            break
+          case 3:
+            area += CodeToText[value[0]] + '/' + CodeToText[value[1]] + '/' + CodeToText[value[2]]
+            break
+          default:
+            break
+        }
+        return area
       },
     },
   }
