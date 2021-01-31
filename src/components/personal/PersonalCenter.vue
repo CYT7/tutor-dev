@@ -43,7 +43,7 @@
           <el-input v-model="ruleForm2.oldPassword" type="password" name="oldPassword" placeholder="请输入旧密码" />
         </el-form-item>
         <el-form-item label="新密码" prop="password">
-          <el-input v-model="ruleForm2.password"  type="password" name="password" placeholder="请输入新密码"  />
+          <el-input v-model="ruleForm2.newPassword"  type="password" name="newPassword" placeholder="请输入新密码"  />
         </el-form-item>
         <el-form-item label="确认新密码" prop="repassword"><el-input v-model="ruleForm2.repassword" type="password" name="repassword" placeholder="请再次输入密码" /></el-form-item>
         <el-form-item label="性别" prop="gender">
