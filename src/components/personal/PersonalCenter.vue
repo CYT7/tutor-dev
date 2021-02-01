@@ -33,7 +33,7 @@
         </el-form-item>
         <el-form-item label="地址">{{formatAddress(resultsMap.address)}}</el-form-item>
         <el-form-item>
-          <span v-if="resultsMap.type ==0"><el-button type="primary" @click="dialogVisible4=true">申请做家教</el-button></span>
+          <span v-if="resultsMap.type ==0"><el-button type="primary" @click="handle">申请做家教</el-button></span>
           <el-button type="primary" @click="dialogVisible2=true">修改</el-button>
           <el-button type="primary" @click="dialogVisible3=true">充值余额</el-button>
         </el-form-item>
@@ -156,6 +156,9 @@
       this.getList();
     },
     methods:{
+      handle() {
+        this.$router.push({ name: "Apply" });
+      },
       getList(){
         axios.post('http://127.0.0.1:7001/business/user/information',{},{
           headers:{

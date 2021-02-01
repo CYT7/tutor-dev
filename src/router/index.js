@@ -18,6 +18,7 @@ import AppointDetail from '@/components/personalDetails/AppointDetail'
 import NeedDetail from '@/components/personalDetails/NeedDetail'
 import TeacherNeed from '@/components/personalDetails/TeacherNeed'
 import TeacherAppoint from '@/components/personalDetails/TeacherAppoint'
+import Apply from '@/components/personal/Apply'
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -58,7 +59,8 @@ export default new Router({
     {
       path: '/PersonalCenter',
       name: 'PersonalCenter',
-      component: PersonalCenter
+      component: PersonalCenter,
+      children:[]
     },
     {
       path: '/PersonalNeeds',
@@ -104,6 +106,11 @@ export default new Router({
       path: '/TeacherAppoint',
       name: 'TeacherAppoint',
       component: TeacherAppoint
+    },
+    {
+      path: '/Apply',
+      name: 'Apply',
+      component: Apply
     },
   ]
 })
