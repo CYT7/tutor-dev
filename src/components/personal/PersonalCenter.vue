@@ -33,7 +33,7 @@
         </el-form-item>
         <el-form-item label="地址">{{formatAddress(resultsMap.address)}}</el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="dialogVisible4=true">申请做家教</el-button>
+          <span v-if="resultsMap.type ==0"><el-button type="primary" @click="dialogVisible4=true">申请做家教</el-button></span>
           <el-button type="primary" @click="dialogVisible2=true">修改</el-button>
           <el-button type="primary" @click="dialogVisible3=true">充值余额</el-button>
         </el-form-item>
@@ -64,7 +64,7 @@
           </el-cascader>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm2')">立即创建</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm2')">保存</el-button>
           <el-button @click="resetForm('ruleForm2')">重置</el-button>
         </el-form-item>
       </el-form>
@@ -73,7 +73,7 @@
       <el-form ref="ruleForm3" :model="ruleForm3" label-width="auto" class="demo-ruleForm">
         <el-form-item label="金额" prop="balance"><el-input v-model="ruleForm3.balance " style="width: auto"/>元</el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm2('ruleForm3')">立即充值</el-button>
+          <el-button type="primary" @click="submitForm2('ruleForm3')">充值</el-button>
           <el-button @click="resetForm2('ruleForm3')">重置</el-button>
         </el-form-item>
       </el-form>
