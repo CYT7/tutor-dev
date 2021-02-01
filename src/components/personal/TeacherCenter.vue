@@ -14,6 +14,11 @@
         <el-form-item label="课时费用">{{resultsMap.hourPrice}}</el-form-item>
         <el-form-item label="在读/毕业院校">{{resultsMap.school}}</el-form-item>
         <el-form-item label="所在城市">{{formatAddress(resultsMap.city)}}</el-form-item>
+        <el-form-item label="审核状态">
+            <span v-if="resultsMap.state ==1">已提交审核</span>
+            <span v-else-if="resultsMap.state ==2">审核通过</span>
+            <span v-else>审核不通过</span>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="dialogVisible2=true">修改</el-button>
         </el-form-item>
