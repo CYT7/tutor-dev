@@ -2,8 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Login from '@/components/home/Login'
-import RegisterParent from '@/components/home/RegisterParent'
-import RegisterTutor from '@/components/home/RegisterTutor'
+import Register from '@/components/home/Register'
 import Home from '@/components/home/Home'
 import TeacherInfo from '@/components/teacher/TeacherInfo'
 import TeachersWanted from '@/components/teacher/TeachersWanted'
@@ -33,14 +32,9 @@ export default new Router({
       component: Login
     },
     {
-      path: '/RegisterParent',
-      name: 'RegisterParent',
-      component: RegisterParent
-    },
-    {
-      path: '/RegisterTutor',
-      name: 'RegisterTutor',
-      component: RegisterTutor
+      path: '/Register',
+      name: 'Register',
+      component: Register
     },
     {
       path: '/TeacherInfo',

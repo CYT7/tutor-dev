@@ -10,8 +10,8 @@
         <div>
           <h2>家教网</h2>
           <el-divider></el-divider>
-          <el-tabs v-model="activeName" type="card">
-            <el-tab-pane label="家长登录" name="first">
+          <el-tabs type="card">
+            <el-tab-pane label="登录">
               <el-row  class="loginForm">
                 <el-card shadow="hover">
                   <el-row>
@@ -23,71 +23,16 @@
                         <el-input v-model="login_form.password" type="password" name="password" placeholder="请输入密码"></el-input>
                       </el-form-item>
                       <el-form-item>
-                        <el-button type="primary" @click="tutorSubmitForm('login_form')">登&nbsp;&nbsp;录</el-button>
+                        <el-button type="primary" @click="SubmitForm('login_form')">登&nbsp;&nbsp;录</el-button>
                         <el-button @click="resetForm('login_form')">重&nbsp;&nbsp;置</el-button>
                       </el-form-item>
                     </el-form>
                   </el-row>
                   <el-row>
                     <el-col :offset="10">
-                      <el-dropdown>
-                        <span>
-                          注册<i class="el-icon-arrow-down el-icon--right"></i>
-                        </span>
-                        <el-dropdown-menu slot="dropdown">
-                          <el-dropdown-item>
-                            <router-link tag="div" :to="{name: 'RegisterTutor'}" class="header-abs">
-                              <span>家教注册</span>
-                            </router-link>
-                          </el-dropdown-item>
-                          <el-dropdown-item>
-                            <router-link tag="div" :to="{name: 'RegisterParent'}" class="header-abs">
-                              <span>家长注册</span>
-                            </router-link>
-                          </el-dropdown-item>
-                        </el-dropdown-menu>
-                      </el-dropdown>
-                    </el-col>
-                  </el-row>
-                </el-card>
-              </el-row>
-            </el-tab-pane>
-            <el-tab-pane label="家教登录" name="second">
-              <el-row  class="loginForm">
-                <el-card shadow="hover">
-                  <el-row>
-                    <el-form  label-width="80px"   :model="login_form" :rules="rules" ref="login_form">
-                      <el-form-item label="账号"  prop="username">
-                        <el-input v-model="login_form.username" name="username" placeholder="请输入手机或者邮箱"></el-input>
-                      </el-form-item>
-                      <el-form-item label="密码" prop="password">
-                        <el-input v-model="login_form.password" type="password" name="password" placeholder="请输入密码"></el-input>
-                      </el-form-item>
-                      <el-form-item>
-                        <el-button type="primary" @click="parentSubmitForm('login_form')">登&nbsp;&nbsp;录</el-button>
-                        <el-button @click="resetForm('login_form')">重&nbsp;&nbsp;置</el-button>
-                      </el-form-item>
-                    </el-form>
-                  </el-row>
-                  <el-row>
-                    <el-col :offset="10">
-                      <el-dropdown>
-                        <span>
-                          注册<i class="el-icon-arrow-down el-icon--right"></i>
-                        </span>
-                        <el-dropdown-menu slot="dropdown">
-                          <el-dropdown-item>
-                            <router-link tag="div" :to="{name: 'RegisterTutor'}" class="header-abs">
-                              <span>家教注册</span>
-                            </router-link>
-                          </el-dropdown-item>
-                          <el-dropdown-item>
-                            <router-link tag="div" :to="{name: 'RegisterParent'}" class="header-abs">
-                              <span>家长注册</span>
-                            </router-link>
-                          </el-dropdown-item>
-                        </el-dropdown-menu>
-                      </el-dropdown>
+                      <router-link tag="div" :to="{name: 'Register'}" class="header-abs">
+                        <span>注册<i class="el-icon-arrow-right el-icon--right"></i></span>
+                      </router-link>
                     </el-col>
                   </el-row>
                 </el-card>
@@ -114,7 +59,6 @@ export default {
       callback(new Error('请输入合法的邮箱或手机号码'))
     }
     return {
-      activeName: 'first',
       login_form: {
         username: '',
         password: '',
@@ -130,7 +74,7 @@ export default {
     }
   },
   methods: {
-    tutorSubmitForm (formName) {
+    SubmitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           axios.post('http://127.0.0.1:7001/business/user/login', this.login_form)
@@ -161,38 +105,6 @@ export default {
         }
       })
     },
-    parentSubmitForm (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          axios.post('http://127.0.0.1:7001/business/user/login', this.login_form)
-            .then(res => {
-              if (res.data.code === 0 ){
-                localStorage.setItem('token',res.data.token)
-                this.$router.push('/home')
-                this.$notify({
-                  title:'Success',
-                  dangerouslyUseHTMLString: true,
-                  message: res.data.msg,
-                  type: 'Success'
-                })
-                console.log(res.data)
-              }else if (res.data.code !== 0) {
-                this.$notify({
-                  title:'Error',
-                  message: res.data.msg,
-                  type: 'error'
-                })
-              }
-            })
-            .catch(function (error) {
-              console.log(error)
-            })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    },
     resetForm (formName) {
       this.$refs[formName].resetFields()
     }
@@ -200,14 +112,6 @@ export default {
 }
 </script>
 <style scoped="scoped">
-  .registerLink{
-    text-decoration: none;
-    color: #2c3e50;
-  }
-  .registerLink:hover{
-    cursor: pointer;
-    color: #409EFF;
-  }
   .el-icon-arrow-down {
     font-size: 12px;
   }

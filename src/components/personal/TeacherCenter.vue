@@ -7,6 +7,7 @@
       <el-form ref="form" :model="resultsMap" label-width="auto" style="float: left;">
         <el-form-item><h2 style="margin-left:-20%">老师信息</h2></el-form-item>
         <el-form-item label="老师ID">{{resultsMap.id}}</el-form-item>
+        <el-form-item label="老师ID">{{resultsMap.realName}}</el-form-item>
         <el-form-item label="成功次数">{{resultsMap.totalSuccess}}次</el-form-item>
         <el-form-item label="教学经验">{{resultsMap.experience}}年</el-form-item>
         <el-form-item label="年龄">{{resultsMap.age}}岁</el-form-item>
@@ -49,7 +50,7 @@
           </el-cascader>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm2')">立即创建</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm2')">保存</el-button>
           <el-button @click="resetForm('ruleForm2')">重置</el-button>
         </el-form-item>
       </el-form>

@@ -33,6 +33,7 @@
         </el-form-item>
         <el-form-item label="地址">{{formatAddress(resultsMap.address)}}</el-form-item>
         <el-form-item>
+          <el-button type="primary" @click="dialogVisible4=true">申请做家教</el-button>
           <el-button type="primary" @click="dialogVisible2=true">修改</el-button>
           <el-button type="primary" @click="dialogVisible3=true">充值余额</el-button>
         </el-form-item>
