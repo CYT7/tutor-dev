@@ -1,5 +1,5 @@
 <template>
-  <div :data="resultsMap">
+  <div>
     <el-col :span="20" offset="2"><PersonalHeader></PersonalHeader></el-col>
     <el-col :span="20">
       <div style="margin-top: 20px">
@@ -16,7 +16,7 @@
             <el-container>
               <el-container>
                 <el-main>
-                  <div class="body-border">
+                  <div class="body-border" :data="resultsMap">
                     <el-row style="margin-top: 20px;margin-left:10px;color: #409EFF">
                       <el-col style="font-weight: bold">具体信息</el-col>
                     </el-row>
@@ -131,6 +131,20 @@
                         </el-popconfirm>
                       </span>
                     </el-row>
+                    <div v-for="(list,index) in teacherMap" :key="index" style="width: 25%;float: left;margin-left:20px">
+                      <el-card class="box-card">
+                        <div slot="header" class="clearfix">
+                          <span>老师信息</span>
+                          <el-popconfirm title="确定关闭选择此老师吗？" @confirm="handleConfirm({_id:list._id})">
+                            <el-button slot="reference" type="text" style="float: right; padding: 3px 0">选择</el-button>
+                          </el-popconfirm>
+                        </div>
+                        <div>老师id：{{list.Teacher.id}}</div>
+                        <div>成功次数：{{list.Teacher.totalSuccess}}</div>
+                        <div>擅长科目：{{list.Teacher.goodAt}}</div>
+                        <div>所在城市：{{formatAddress(list.Teacher.city)}}</div>
+                      </el-card>
+                    </div>
                   </div>
                 </el-main>
                 <el-aside width="30%">
@@ -173,12 +187,14 @@
     data(){
       return{
         resultsMap: [],
+        teacherMap:[],
         tokens : [],
         id:[]
       }
     },
     created(){
       this.getParams()
+      this.getTeacherList()
     },
     methods:{
       getParams(){
@@ -192,6 +208,23 @@
             const data = res.data.data;
             this.resultsMap = data
             console.log(this.resultsMap)
+          },
+          (err) => {
+            console.log(err);
+          }
+        )
+      },
+      getTeacherList(){
+        this.id =this.$route.query.id
+        axios.post('http://127.0.0.1:7001/business/need/application',{id:this.id},{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }
+        }).then(
+          (res) => {
+            const data = res.data.data;
+            this.teacherMap = data
+            console.log(this.teacherMap)
           },
           (err) => {
             console.log(err);
@@ -219,6 +252,16 @@
           console.log(res)
         })
         console.log(id)
+      },
+      // 确定老师
+      handleConfirm(_id){
+        axios.post('http://127.0.0.1:7001/business/need/confirm',{_id:_id},{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }
+        }).then(res => {
+          console.log(res)
+        })
       },
       formatAddress: function (value) {
         if (value === null) {
