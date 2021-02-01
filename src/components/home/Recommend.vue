@@ -16,7 +16,7 @@
               <div>
                 <ul class="info">
                   <li><span>就读学校:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.school}}</li>
-                  <li><span>所在城市:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.city}}</li>
+                  <li><span>所在城市:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{formatAddress(list.city)}}</li>
                   <li><span>擅长学科:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.goodAt}}</li>
                   <li><span>课时费用:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.hourPrice}}元/时</li>
                 </ul>

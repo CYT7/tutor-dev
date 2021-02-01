@@ -21,6 +21,7 @@
         <el-form-item label="用户昵称">{{resultsMap.nickName}}</el-form-item>
         <el-form-item label="手机号码">{{resultsMap.phone}}</el-form-item>
         <el-form-item label="邮箱">{{resultsMap.email}}</el-form-item>
+        <el-form-item label="余额">{{resultsMap.balance}}元</el-form-item>
         <el-form-item label="QQ号">{{resultsMap.qq}}</el-form-item>
         <el-form-item label="微信号">{{resultsMap.wechat}}</el-form-item>
         <el-form-item label="性别">
@@ -33,6 +34,7 @@
         <el-form-item label="地址">{{formatAddress(resultsMap.address)}}</el-form-item>
         <el-form-item>
           <el-button type="primary" @click="dialogVisible2=true">修改</el-button>
+          <el-button type="primary" @click="dialogVisible3=true">充值余额</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -63,6 +65,15 @@
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm2')">立即创建</el-button>
           <el-button @click="resetForm('ruleForm2')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+    <el-dialog title="充值余额" :visible.sync="dialogVisible3" width="30%" :before-close="handleClose">
+      <el-form ref="ruleForm3" :model="ruleForm3" label-width="auto" class="demo-ruleForm">
+        <el-form-item label="金额" prop="balance"><el-input v-model="ruleForm3.balance " style="width: auto"/>元</el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm2('ruleForm3')">立即充值</el-button>
+          <el-button @click="resetForm2('ruleForm3')">重置</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -100,6 +111,7 @@
         resultsMap: {},
         Token : [],
         dialogVisible2:false,
+        dialogVisible3:false,
         ruleForm2:{
           nickName:'',
           gender:'',
@@ -109,6 +121,9 @@
           oldPassword:'',
           newPassword:'',
           repassword:''
+        },
+        ruleForm3:{
+          balance:''
         },
         options: provinceAndCityData,// 城市数据
         gender : [{
@@ -223,6 +238,31 @@
         })
       },
       resetForm (formName) {
+        this.$refs[formName].resetFields()
+      },
+      submitForm2(formName){
+        this.$refs[formName].validate(valid =>{
+          console.log(this.ruleForm3)
+          if (valid) {
+            this.ruleForm3.balance = this.ruleForm3.balance/100
+            axios.post('http://127.0.0.1:7001/business/user/balanceAdd',this.ruleForm3,{
+              headers:{
+                authorization:`Bearer ${Token}`,
+              }
+            }).then(res => {
+              if (res.data.code === 0) {
+                this.$refs[formName].resetFields()
+                this.dialogVisible3 = false
+              }
+              console.log(res.data)
+            })
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
+      },
+      resetForm2 (formName) {
         this.$refs[formName].resetFields()
       },
       formatAddress: function (value) {
