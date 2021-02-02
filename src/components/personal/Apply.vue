@@ -15,7 +15,7 @@
         <el-step title="身份证正面"></el-step>
         <el-step title="身份证反面"></el-step>
       </el-steps>
-      <el-form :model="addForm" ref="addFormRef" :rules="addFormRules" label-width="100px" label-position="top" style="width: 80%;margin: auto;">
+      <el-form :model="addForm" ref="addFormRef" :rules="addFormRules" label-width="auto" label-position="top" style="width: 80%;margin: auto;">
         <div v-if="active ===0">
           <el-form-item label="真实姓名" prop="realName"><el-input v-model="addForm.realName"></el-input></el-form-item>
           <el-form-item label="教学经验" prop="experience"><el-input v-model="addForm.experience"></el-input></el-form-item>
@@ -37,12 +37,12 @@
               style="float: left"
               placeholder="请选择城市"
               :options="options"
-              v-model="ruleForm2.city"
+              v-model="addForm.city"
               :show-all-levels="false">
             </el-cascader>
           </el-form-item>
         </div>
-        <div v-if="active ===2">
+        <div v-if="active ===1">
           <el-upload
             class="upload-demo"
             action="#"
@@ -59,7 +59,7 @@
             <img width="100%" :src="dialogImageUrl" alt />
           </el-dialog>
         </div>
-        <div v-if="active ===3">
+        <div v-if="active ===2">
           <el-upload
             class="upload-demo"
             action="#"
@@ -151,7 +151,7 @@
       next(formName){
         this.$refs[formName].validate(valid =>{
           if (valid) {
-            if (this.active ===1){
+            if (this.active ===0){
               axios.post('http://127.0.0.1:7001/business/teacher/create',this.addForm,{
                 headers:{
                   authorization:`Bearer ${Token}`,
@@ -159,10 +159,10 @@
               }).then(res => {
                 console.log(this.addForm)
                 console.log(res.data)
+                this.active ++
               })
             } else {
-              console.log('error submit!!')
-              return false
+              this.active ++
             }
           }
         })
@@ -200,7 +200,7 @@
           }
         }).then(res => {
           console.log(res);
-          if (res.errCode === 0) {
+          if (res.data.code === 0) {
             this.$message({
               type: "success",
               message: "图片上传成功"
@@ -223,11 +223,12 @@
           }
         }).then(res => {
           console.log(res);
-          if (res.errCode === 0) {
+          if (res.data.code === 0) {
             this.$message({
               type: "success",
               message: "图片上传成功"
             });
+            this.$router.push({ name: "TeacherCenter" });
           } else {
             this.$message({
               type: "warning",
