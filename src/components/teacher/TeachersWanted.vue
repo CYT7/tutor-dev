@@ -1,6 +1,8 @@
 <template>
   <el-row :gutter="20">
-    <el-col :span="20" :offset="2"><TeachersWantedHeader></TeachersWantedHeader></el-col>
+    <el-col :span="20" :offset="2">
+      <TeachersWantedHeader></TeachersWantedHeader>
+    </el-col>
     <div style="margin-top: 10px" align="center">
       <el-table :data="needData.filter(data => !search || data.subject.toLowerCase().includes(search.toLowerCase()))" style="width: 80%" height="500">
         <!--height可实现固定表头的表格-->
@@ -67,7 +69,13 @@
           (res) => {
             this.needData = res.data.data
             this.list = res.data
-            console.log(this.needData)
+            if (res.data.code !== 0){
+              this.$message({
+                message: res.data.msg || 'Error',
+                type: 'error',
+                duration: 3 * 1000
+              })
+            }
           },
           (err) => {
             console.log(err);

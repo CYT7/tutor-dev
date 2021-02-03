@@ -10,7 +10,7 @@
         <el-table-column align="center" label="教授科目" prop="goodAt"></el-table-column>
         <el-table-column align="center" label="在读/毕业院校" prop="school"></el-table-column>
         <el-table-column align="center" label="成功次数" prop="totalSuccess"></el-table-column>
-        <el-table-column align="center" label="所在城市" prop="city"></el-table-column>
+        <el-table-column align="center" label="所在城市" prop="city" :formatter="formatAddress"></el-table-column>
         <!--点击查看，跳转到家教页面详情-->
         <el-table-column align="center" label="操作" width="150">
           <template slot-scope="scope">
@@ -39,6 +39,7 @@
 </template>
 <script>
   import TeacherInfoHeader from "./TeacherInfoHeader";
+  import { CodeToText } from 'element-china-area-data'
   import axios from 'axios'
   const tokens = localStorage.getItem('token');
   export default {
@@ -68,7 +69,13 @@
           (res) => {
             this.teacherData = res.data.data
             this.list = res.data
-            console.log(this.teacher_jian_Data)
+            if (res.data.code !== 0){
+              this.$message({
+                message: res.data.msg || 'Error',
+                type: 'error',
+                duration: 3 * 1000
+              })
+            }
           },
           (err) => {
             console.log(err);
@@ -96,6 +103,27 @@
           }
         )
       },
+      formatAddress(row) {
+        if (row.city === null) {
+          return null
+        }
+        let area = ''
+        switch (row.city.length) {
+          case 1:
+            area += CodeToText[row.city[0]]
+            break
+          case 2:
+            area += CodeToText[row.city[0]] + '/' + CodeToText[row.city[1]]
+            break
+          case 3:
+            area += CodeToText[row.city[0]] + '/' + CodeToText[row.city[1]] + '/' + CodeToText[row.city[2]]
+            break
+          default:
+            break
+        }
+        return area
+      },
+
     }
 
   }
