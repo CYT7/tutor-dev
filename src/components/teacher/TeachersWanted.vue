@@ -4,7 +4,7 @@
       <TeachersWantedHeader></TeachersWantedHeader>
     </el-col>
     <div style="margin-top: 10px" align="center">
-      <el-table :data="needData.filter(data => !search || data.subject.toLowerCase().includes(search.toLowerCase()))" style="width: 80%" height="500">
+      <el-table :data="needData" style="width: 80%" height="500">
         <!--height可实现固定表头的表格-->
         <el-table-column type="index" width="50" align="center"/>
         <el-table-column align="center" label="学生称呼" prop="nickName"> </el-table-column>
@@ -21,9 +21,11 @@
           </template>
         </el-table-column>
         <!--搜索框（根据招聘主题即科目筛选招聘信息）-->
-        <el-table-column align="right" width="190">
+        <el-table-column align="right">
           <template slot="header" slot-scope="scope">
-            <el-input prefix-icon="el-icon-search" v-model="search" size="mini" placeholder="输入招聘科目进行筛选"/>
+            <el-input prefix-icon="el-icon-search" v-model="input3" size="mini" placeholder="输入科目进行筛选" style="width:100px" clearable @keydown.enter.native="search"/>
+            <el-button slot="append" @click="search" size="mini" type="text">搜索</el-button>
+            <el-button slot="append" @click="reset" size="mini" type="text">重置</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -50,7 +52,7 @@
         page:1, //初始页
         needData: [],
         list:[],
-        search: '',
+        input3: '',
         tokens : []
       }
     },
@@ -81,6 +83,35 @@
             console.log(err);
           }
         )
+      },
+      search(){
+        if (this.input3 === null){
+          this.getList()
+        } else{
+          var name = this.input3.replace(/\s+/g, "");
+          if (name === ''){
+            this.getList()
+          } else {
+            axios.post('http://127.0.0.1:7001/business/need/search',{name:name},{
+              headers:{
+                authorization:`Bearer ${tokens}`
+              }
+            }).then(
+              (res) => {
+                console.log(name)
+                this.needData = res.data.data
+                this.list = res.data
+              },
+              (err) => {
+                console.log(err);
+              }
+            )
+          }
+        }
+      },
+      reset(){
+        this.input3 = null
+        this.getList()
       },
       // 初始页currentPage、初始每页数据数pagesize和数据data
       handleSizeChange: function (val) {

@@ -4,7 +4,7 @@
       <TeacherInfoHeader></TeacherInfoHeader>
     </el-col>
     <div style="margin-top: 10px" align="center">
-      <el-table :data="teacherData.filter(data => !search || data.goodAt.toLowerCase().includes(search.toLowerCase()))" style="width: 80%" height="500"><!--height可实现固定表头的表格-->
+      <el-table :data="teacherData" style="width: 80%" height="500"><!--height可实现固定表头的表格-->
         <el-table-column type="index" width="50" align="center" />
         <el-table-column align="center" label="家教 ID"  prop="id"></el-table-column>
         <el-table-column align="center" label="教授科目" prop="goodAt"></el-table-column>
@@ -20,9 +20,11 @@
           </template>
         </el-table-column>
         <!--搜索框（根据教授科目筛选家教信息）-->
-        <el-table-column align="right" width="190">
+        <el-table-column align="right">
           <template slot="header" slot-scope="scope">
-            <el-input prefix-icon="el-icon-search" v-model="search" size="mini" placeholder="输入教授科目进行筛选"/>
+            <el-input prefix-icon="el-icon-search" v-model="input3" size="mini" placeholder="输入科目进行筛选" style="width:100px" clearable @keydown.enter.native="search"/>
+            <el-button slot="append" @click="search" size="mini" type="text">搜索</el-button>
+            <el-button slot="append" @click="reset" size="mini" type="text">重置</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -49,7 +51,7 @@
         page:1, //初始页
         teacherData: [],
         list:[],
-        search: '',
+        input3: null,
         tokens : []
       }
     },
@@ -102,6 +104,35 @@
             console.log(err);
           }
         )
+      },
+      search(){
+        if (this.input3 === null){
+          this.getList()
+        } else{
+          var name = this.input3.replace(/\s+/g, "");
+          if (name === ''){
+            this.getList()
+          } else {
+            axios.post('http://127.0.0.1:7001/business/teacher/search',{name:name},{
+              headers:{
+                authorization:`Bearer ${tokens}`
+              }
+            }).then(
+              (res) => {
+                console.log(name)
+                this.teacherData = res.data.data
+                this.list = res.data
+              },
+              (err) => {
+                console.log(err);
+              }
+            )
+          }
+        }
+      },
+      reset(){
+        this.input3 = null
+        this.getList()
       },
       formatAddress(row) {
         if (row.city === null) {

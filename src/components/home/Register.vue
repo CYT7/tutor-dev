@@ -26,7 +26,7 @@
                 <el-input v-model="parentRegisterForm.nickName" name="nickName" placeholder="请输入昵称"></el-input>
               </el-form-item>
               <el-form-item label="性别" prop="gender">
-                <el-radio-group v-model="parentRegisterForm.gender" name="gender">
+                <el-radio-group v-model="parentRegisterForm.gender" name="gender" style="float: left">
                   <el-radio v-for="item in gender" :key = "item.id" :label="item.id">{{item.name}}</el-radio>
                 </el-radio-group>
               </el-form-item>
