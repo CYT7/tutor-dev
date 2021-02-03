@@ -1,7 +1,14 @@
 <template>
   <div style="margin-top: 0px">
-    <div style="width: 580px;height: 60px">
+    <div style="height: 60px">
       <img src="../../assets/styles/images/logo.png" class="logo">
+      <div class="block">
+        <div style="margin-right: 15px">欢迎你! {{resultsMap.nickName}}</div>
+        <router-link tag="div" :to="{path:'/PersonalCenter'}">
+          <el-avatar :size="60" style="float: left;"  :src="resultsMap.image_url" :key="resultsMap.image_url" v-if="resultsMap.image_url !== null"></el-avatar>
+          <el-avatar v-else :size="60" style="float: left;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+        </router-link>
+      </div>
     </div>
     <div class="menu">
       <el-menu :default-active="activeIndex"
@@ -42,22 +49,30 @@
               <i class="el-icon-tickets"></i><span style="font-size: 16px">个人预约列表</span>
             </router-link>
           </el-menu-item>
-          <el-menu-item index="4-3" style="text-align: center">
+          <el-menu-item index="4-4" style="text-align: center">
+            <el-dropdown-item @click.native="logout">
+              <i class="el-icon-close"></i><span style="font-size: 16px">退出</span>
+            </el-dropdown-item>
+          </el-menu-item>
+        </el-submenu>
+        <el-submenu index="5" v-if="resultsMap.type == 1">
+          <template slot="title" ><i class="el-icon-user-solid"></i><span>老师中心</span></template>
+          <el-menu-item index="5-1" style="text-align: center">
             <router-link tag="div" :to="{path:'/TeacherCenter'}">
               <i class="el-icon-s-custom"></i><span style="font-size: 16px">老师个人中心列表</span>
             </router-link>
           </el-menu-item>
-          <el-menu-item index="4-3" style="text-align: center">
+          <el-menu-item index="5-2" style="text-align: center">
             <router-link tag="div" :to="{path:'/TeacherNeeds'}">
               <i class="el-icon-s-order"></i><span style="font-size: 16px">老师个人需求列表</span>
             </router-link>
           </el-menu-item>
-          <el-menu-item index="4-3" style="text-align: center">
+          <el-menu-item index="5-3" style="text-align: center">
             <router-link tag="div" :to="{path:'/TeacherAppointment'}">
               <i class="el-icon-tickets"></i><span style="font-size: 16px">老师个人预约列表</span>
             </router-link>
           </el-menu-item>
-          <el-menu-item index="4-4" style="text-align: center">
+          <el-menu-item index="5-4" style="text-align: center">
             <el-dropdown-item @click.native="logout">
               <i class="el-icon-close"></i><span style="font-size: 16px">退出</span>
             </el-dropdown-item>
@@ -68,16 +83,36 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
+  const Token = localStorage.getItem('token');
   export default {
     name: "Header",
     data() {
       return {
         activeIndex: '1',
+        resultsMap: [],
       };
+    },
+    created() {
+      this.getUser();
     },
     methods: {
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
+      },
+      getUser(){
+        axios.post('http://127.0.0.1:7001/business/user/information',{},{
+          headers:{
+            authorization:`Bearer ${Token}`
+          }
+        }).then((res) => {
+            this.resultsMap = res.data.data
+            console.log(this.resultsMap)
+          },
+          (err) => {
+            console.log(err);
+          }
+        )
       },
       async logout(){
         localStorage.clear()
@@ -98,29 +133,14 @@
   *{
     font-size: 18px;
   }
-  .logo,.block{
+  .logo{
+    width: 160px;
     display: flex;
     float: left;
   }
-  .logo{
-    width: 160px;
-  }
   .block{
     width: 150px;
-    margin-left: 20px;
-  }
-  .search{
+    display: flex;
     float: right;
-    display: inline-block;
-    width: 200px;
-    margin-right: 20px;
-  }
-  .searchinput{
-    display: inline;
-  }
-  .searchbutton{
-    display: inline;
-    position: absolute;
-    margin-left: 10px
   }
 </style>

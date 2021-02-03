@@ -9,9 +9,9 @@
           <el-card class="box-card" style="height: 330px" @click.native="tutorDetail(list.id)">
             <div  class="text item">
               <div style="display: flex;margin-left: 20px">
-                <span v-if="list.User.image_url !== null"><el-avatar :size="80" style="float: left;"  :src="list.User.image_url" :key="list.User.image_url"></el-avatar></span>
-                <span v-else><el-avatar :size="80" style="float: left;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar></span>
-                <h3 style="float: left;margin-left: 80px">{{list.User.nickName}}老师</h3>
+                <el-avatar :size="60" style="float: left;"  :src="list.User.image_url" :key="list.User.image_url" v-if="list.User.image_url !== null" shape="square"></el-avatar>
+                <el-avatar v-else :size="60" style="float: left;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" shape="square"></el-avatar>
+                <h3 style="float: left;margin-left: 80px">{{list.realName}}老师</h3>
               </div>
               <div>
                 <ul class="info">

@@ -98,7 +98,7 @@ export default {
       options: provinceAndCityData,
       gender : [{
         id:0,
-        name:'未知'
+        name:'保密'
       },{
         id:1,
         name:'男'

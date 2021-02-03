@@ -112,7 +112,7 @@ export default {
 }
 </script>
 <style scoped="scoped">
-  .el-icon-arrow-down {
+  .el-icon-arrow-right {
     font-size: 12px;
   }
 </style>
