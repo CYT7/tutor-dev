@@ -1,10 +1,10 @@
 <template>
   <div class="recommend">
-    <div class="tutorRecommend">
+    <div class="tutorRecommend" v-if="tutorData != ''">
       <el-divider content-position="left">
         <i class="el-icon-menu" style="color: #409EFF"></i>&nbsp;&nbsp;&nbsp;&nbsp;家教推荐
       </el-divider>
-      <div  v-for="(list,index) in tutorData" :key="index" class="tutorRecommend">
+      <div v-for="list in tutorData"class="tutorRecommend">
         <router-link :to="{path:`/TeacherDetail`,name:`TeacherDetail`,params:{id:list.id},query:{id:list.id}}">
           <el-card class="box-card" style="height: 330px" @click.native="tutorDetail(list.id)">
             <div  class="text item">
@@ -26,11 +26,11 @@
         </router-link>
       </div>
     </div>
-    <div class="recruitRecommend">
+    <div class="recruitRecommend" v-if="needData != ''">
       <el-divider content-position="left">
         <i class="el-icon-s-operation" style="color: #409EFF"></i>&nbsp;&nbsp;&nbsp;&nbsp;需求推荐
       </el-divider>
-      <div  v-for="(list,index) in needData" :key="index" class="recruitRecommend">
+      <div  v-for="list in needData" class="recruitRecommend">
         <router-link :to="{path:`/parentDetail`,name:`ParentDetail`,params:{id:list.id},query:{id:list.id}}">
           <el-card class="box-card" style="height: 248px;" @click.native="recruitDetail(list.id)">
             <div  class="text item">
