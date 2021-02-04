@@ -94,19 +94,19 @@
           <el-cascader
             v-model="ruleForm2.teach_date"
             :options="times"
-            :props="{ expandTrigger: 'hover', multiple: true }"
             style="float: left;"></el-cascader>
         </el-form-item>
         <el-form-item label="每次上几小时" prop="timeHour"><el-input v-model="ruleForm2.timeHour" /></el-form-item>
-        <el-form-item label="上课地址" prop="address">
+        <el-form-item label="所在城市区域" prop="city">
           <el-cascader
             style="float: left"
             placeholder="请选择城市"
             :options="options"
-            v-model="ruleForm2.address"
+            v-model="ruleForm2.city"
             :show-all-levels="false">
           </el-cascader>
         </el-form-item>
+        <el-form-item label="上课详情地址/区域" prop="address"><el-input v-model="ruleForm2.address" /></el-form-item>
         <el-form-item label="课时费用" prop="hourPrice"><el-input v-model="ruleForm2.hourPrice" /></el-form-item>
         <el-form-item label="家教性别要求" prop="teacherGender">
           <el-radio-group v-model="ruleForm2.teacherGender" name="teacherGender" style="float: left">
@@ -132,6 +132,14 @@
   export default {
     name: "PersonalNeeds",
     data() {
+      // 验证手机号的校验规则
+      var checkMobile = (rule, value, callback) => {
+        const regMobile = /^1(3|5|7|8)\d{9}$/;// 验证手机号的正则表达式
+        if (regMobile.test(value)) {
+          return callback()// 合法的手机号
+        }
+        callback(new Error('请输入合法的手机号'))// 不合法
+      }
       return {
         page:1, //初始页
         resultsMap: [],
@@ -149,16 +157,24 @@
           phone:'',
           qq:'',
           wechat:'',
-          address:[],
+          address:'',
+          city:[],
           subject:'',
         },
         rules2: {
-          nickName: [{ required: true, message: '请输入学生称呼', trigger: 'blur' }]
+          nickName: [{ required: true, message: '请输入学生称呼', trigger: 'blur' }],
+          frequency: [{ required: true, message: '请输入要上几次课', trigger: 'blur' }],
+          timeHour: [{ required: true, message: '请输入要上几小时', trigger: 'blur' }],
+          teach_date: [{ required: true, message: '请选择周几什么时段上课', trigger: 'blur' }],
+          city:[{ required: true, message: '请输入所在城市', trigger: 'blur' }],
+          address:[{ required: true, message: '请输入上课详情地址/区域', trigger: 'blur' }],
+          hourPrice:[{ required: true, message: '请输入课时费用', trigger: 'blur' }],
+          phone: [{ required: true, message: '请输入手机号码', trigger: 'blur',validator: checkMobile, trigger: 'blur' },],
         },
         options: regionData,// 城市数据
         gender : [{
           id:0,
-          name:'未知'
+          name:'不限'
         },{
           id:1,
           name:'男'
@@ -320,6 +336,7 @@
           }
         }).then(res => {
           console.log(res)
+          this.getList()
         })
         console.log(id)
       },
@@ -331,6 +348,7 @@
           }
         }).then(res => {
           console.log(res)
+          this.getList()
         })
         console.log(id)
       },
@@ -389,6 +407,7 @@
               if (res.data.code === 0) {
                 this.$refs[formName].resetFields()
                 this.dialogVisible2 = false
+                this.getList()
               }
               console.log(res.data)
             })

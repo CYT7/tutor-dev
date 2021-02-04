@@ -12,8 +12,8 @@
         finish-status="success"
       >
         <el-step title="基本信息"></el-step>
-        <el-step title="身份证正面"></el-step>
-        <el-step title="身份证反面"></el-step>
+        <el-step title="身份证"></el-step>
+        <el-step title="学生证"></el-step>
       </el-steps>
       <el-form :model="addForm" ref="addFormRef" :rules="addFormRules" label-width="auto" label-position="top" style="width: 80%;margin: auto;">
         <div v-if="active ===0">
@@ -194,7 +194,7 @@
         this.file = file.raw;
         var formData = new FormData();
         formData.append("file", this.file);
-        axios.post('http://127.0.0.1:7001/business/teacher/identityCard1',formData,{
+        axios.post('http://127.0.0.1:7001/business/teacher/identityCard',formData,{
           headers:{
             authorization:`Bearer ${Token}`
           }
@@ -217,7 +217,7 @@
         this.file = file.raw;
         var formData = new FormData();
         formData.append("file", this.file);
-        axios.post('http://127.0.0.1:7001/business/teacher/identityCard2',formData,{
+        axios.post('http://127.0.0.1:7001/business/teacher/StudentCard',formData,{
           headers:{
             authorization:`Bearer ${Token}`
           }
