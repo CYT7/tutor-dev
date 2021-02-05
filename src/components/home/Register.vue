@@ -144,7 +144,6 @@ export default {
                   type: 'Success',
                   duration: 3 * 1000
                 })
-                console.log(res.data)
               }else if (res.data.code !== 0) {
                 this.$message({
                   message: res.data.msg || 'Error',

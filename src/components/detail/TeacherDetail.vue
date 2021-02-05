@@ -307,6 +307,7 @@
         },
         rules2: {
           name: [{ required: true, message: '请输入学生称呼', trigger: 'blur' }],
+          subject:[{ required: true, message: '请选择科目', trigger: 'blur' }],
           frequency: [{ required: true, message: '请输入要上几次课', trigger: 'blur' }],
           timeHour: [{ required: true, message: '请输入要上几小时', trigger: 'blur' }],
           teach_date: [{ required: true, message: '请选择周几什么时段上课', trigger: 'blur' }],

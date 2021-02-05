@@ -177,20 +177,19 @@
         return area
       },
       handleApply(id) {
-        this.id = id
-        axios.post('http://127.0.0.1:7001/business/need/apply',this.id,{
+        axios.post('http://127.0.0.1:7001/business/need/apply',id,{
           headers:{
             authorization:`Bearer ${tokens}`
           }
         }).then(res =>{
           if (res.data.code === 0){
-            this.$notify({
+            this.$message({
               title:'成功',
               message:res.data.msg,
               type:'success'
             })
           }else{
-            this.$notify({
+            this.$message({
               title:'失败',
               message:res.data.msg,
               type:'error'
