@@ -10,7 +10,7 @@
         <el-table-column align="center" label="学生称呼" prop="nickName"> </el-table-column>
         <el-table-column align="center" label="授课科目" prop="subject"></el-table-column>
         <el-table-column align="center" label="所在城市区域" prop="city" :formatter="formatAddress"></el-table-column>
-        <el-table-column align="center" label="需求总报价(元)" prop="totalPrice"></el-table-column>
+        <el-table-column align="center" label="需求总报价" prop="totalPrice" :formatter="formatFee"></el-table-column>
         <el-table-column align="center" label="需求发布时间" prop="createTime" :formatter="formatDate"></el-table-column>
         <!--点击查看，跳转到招聘页面详情-->
         <el-table-column align="center" label="操作" width="150">
@@ -174,6 +174,13 @@
             break
         }
         return area
+      },
+      formatFee(row, column) {
+        if (!row.totalPrice) {
+          return
+        } else {
+          return row.totalPrice / 100 + '元'
+        }
       },
     }
   }

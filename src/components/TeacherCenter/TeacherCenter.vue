@@ -147,6 +147,7 @@
                 this.dialogVisible2 = false
               }
               console.log(res.data)
+              this.getList();
             })
           } else {
             console.log('error submit!!')

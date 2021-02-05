@@ -14,7 +14,7 @@
         <el-table-column align="center" label="授课科目" prop="subject"></el-table-column>
         <el-table-column align="center" label="上几次课" prop="frequency"></el-table-column>
         <el-table-column align="center" label="城市区域" prop="city" :formatter="formatAddress"></el-table-column>
-        <el-table-column align="center" label="需求总报价(元)" prop="totalPrice"></el-table-column>
+        <el-table-column align="center" label="需求总报价(元)" prop="totalPrice" :formatter="formatFee"></el-table-column>
         <el-table-column align="center" label="需求发布时间" prop="createTime" :formatter="formatDate"></el-table-column>
         <el-table-column label="需求状态" prop="state" align="center">
           <template slot-scope="scope">
@@ -40,7 +40,7 @@
                 <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">关闭</el-button>
               </el-popconfirm>
             </span>
-            <span v-if="scope.row.state == 3">
+            <span v-else-if="scope.row.state == 3">
               <router-link :to="{path:`/NeedDetail`,name:`NeedDetail`,params:{id:scope.row.id},query:{id:scope.row.id}}">
               <el-button type="text" size="small" icon="el-icon-thumb">选择老师</el-button>
             </router-link>
@@ -425,6 +425,7 @@
       submitForm(formName){
         this.$refs[formName].validate(valid =>{
           if (valid) {
+            this.ruleForm2.hourPrice = this.ruleForm2.hourPrice * 100
             axios.post('http://127.0.0.1:7001/business/need/create',this.ruleForm2,{
               headers:{
                 authorization:`Bearer ${tokens}`
@@ -465,6 +466,13 @@
             break
         }
         return area
+      },
+      formatFee(row, column) {
+        if (!row.totalPrice) {
+          return
+        } else {
+          return row.totalPrice / 100 + '元'
+        }
       },
     }
   }

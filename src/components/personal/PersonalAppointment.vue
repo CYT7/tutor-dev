@@ -8,7 +8,7 @@
         <el-table-column align="center" label="学生称呼" prop="name"> </el-table-column>
         <el-table-column align="center" label="授课科目" prop="subject"></el-table-column>
         <el-table-column align="center" label="所在城市区域" prop="city" :formatter="formatAddress" ></el-table-column>
-        <el-table-column align="center" label="预约总报价(元)" prop="totalPrice"></el-table-column>
+        <el-table-column align="center" label="预约总报价(元)" prop="totalPrice" :formatter="formatFee"></el-table-column>
         <el-table-column align="center" label="预约发布时间" prop="createTime" :formatter="formatDate"></el-table-column>
         <el-table-column label="预约状态" prop="state" align="center">
           <template slot-scope="scope">
@@ -196,6 +196,13 @@
             break
         }
         return area
+      },
+      formatFee(row, column) {
+        if (!row.totalPrice) {
+          return
+        } else {
+          return row.totalPrice / 100 + '元'
+        }
       },
     }
   }

@@ -13,20 +13,19 @@
             :show-file-list="false"
             :http-request="upLoad"
             :before-upload="beforeAvatarUpload">
-            <img v-if="resultsMap.image_url !== null" :src="resultsMap.image_url" class="avatar" fit="cover">
-            <img v-else class="el-icon-plus avatar-uploader-icon" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png">
+            <img v-if="resultsMap.image_url !== null" :src="resultsMap.image_url" class="avatar" fit="cover" style="width: 100px;height: 100px">
+            <img v-else class="el-icon-plus avatar-uploader-icon" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" style="width: 100px;height: 100px">
           </el-upload>
         </el-form-item>
-        <el-form-item label="用户ID">{{resultsMap.id}}</el-form-item>
         <el-form-item label="用户昵称">{{resultsMap.nickName}}</el-form-item>
         <el-form-item label="手机号码">{{resultsMap.phone}}</el-form-item>
         <el-form-item label="邮箱">{{resultsMap.email}}</el-form-item>
-        <el-form-item label="余额">{{resultsMap.balance}}元</el-form-item>
-        <el-form-item label="QQ号">{{resultsMap.qq}}</el-form-item>
-        <el-form-item label="微信号">{{resultsMap.wechat}}</el-form-item>
+        <el-form-item label="余额">{{resultsMap.balance / 100 }}元</el-form-item>
+        <el-form-item label="QQ号" v-if="resultsMap.qq?'':resultsMap.qq">{{resultsMap.qq}}</el-form-item>
+        <el-form-item label="微信号" v-if="resultsMap.wechat?'':resultsMap.wechat">{{resultsMap.wechat}}</el-form-item>
         <el-form-item label="性别">
           <div class="grid-content bg-purple-light">
-            <span v-if="resultsMap.gender ==0">不限</span>
+            <span v-if="resultsMap.gender ==0">保密</span>
             <span v-else-if="resultsMap.gender ==1">男</span>
             <span v-else>女</span>
           </div>
@@ -34,7 +33,7 @@
         <el-form-item label="地址">{{formatAddress(resultsMap.address)}}</el-form-item>
         <el-form-item>
           <span v-if="resultsMap.type ==0"><el-button type="primary" @click="handle">申请做家教</el-button></span>
-          <el-button type="primary" @click="dialogVisible2=true">修改</el-button>
+          <el-button type="primary" @click="dialogVisible2=true">修改信息</el-button>
           <el-button type="primary" @click="dialogVisible3=true">充值余额</el-button>
         </el-form-item>
       </el-form>
@@ -54,6 +53,8 @@
             <el-radio v-for="item in gender" :key = "item.id" :label="item.id">{{item.name}}</el-radio>
           </el-radio-group>
         </el-form-item>
+        <el-form-item label="QQ" prop="qq"><el-input v-model="ruleForm2.qq" /></el-form-item>
+        <el-form-item label="微信号" prop="wechat"><el-input v-model="ruleForm2.wechat" /></el-form-item>
         <el-form-item label="所在城市" prop="address">
           <el-cascader
             style="float: left"
@@ -71,7 +72,7 @@
     </el-dialog>
     <el-dialog title="充值余额" :visible.sync="dialogVisible3" width="30%" :before-close="handleClose">
       <el-form ref="ruleForm3" :model="ruleForm3" label-width="auto" class="demo-ruleForm">
-        <el-form-item label="金额" prop="balance"><el-input v-model="ruleForm3.balance " style="width: auto"/>元</el-form-item>
+        <el-form-item label="金额" prop="balance"><el-input v-model="ruleForm3.balance" style="width: auto"/>元</el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm2('ruleForm3')">充值</el-button>
           <el-button @click="resetForm2('ruleForm3')">重置</el-button>
@@ -121,7 +122,9 @@
           address:[],
           oldPassword:'',
           newPassword:'',
-          repassword:''
+          repassword:'',
+          qq:'',
+          wechat:''
         },
         ruleForm3:{
           balance:''
@@ -129,7 +132,7 @@
         options: provinceAndCityData,// 城市数据
         gender : [{
           id:0,
-          name:'未知'
+          name:'保密'
         },{
           id:1,
           name:'男'
@@ -140,9 +143,7 @@
         rules2: {
           nickName: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
           oldPassword: [{ required: true, message: '请输入旧密码', trigger: 'blur' }],
-          newPassword: [
-            {required: true, validator: validatePass1, min: 6, message: '密码长度最少为6位', trigger: 'blur'}
-          ],
+          newPassword: [{required: true, validator: validatePass1, min: 6, message: '密码长度最少为6位', trigger: 'blur'}],
           repassword: [
             {required: true, validator: validatePass2,  trigger: 'blur'}
           ],
@@ -194,6 +195,7 @@
               message:res.data.msg
             })
           }
+            this.getList();
           },
           (err) => {
             console.log(err);
@@ -234,6 +236,7 @@
                 this.dialogVisible2 = false
               }
               console.log(res.data)
+              this.getList();
             })
           } else {
             console.log('error submit!!')
@@ -248,7 +251,7 @@
         this.$refs[formName].validate(valid =>{
           console.log(this.ruleForm3)
           if (valid) {
-            this.ruleForm3.balance = this.ruleForm3.balance/100
+            this.ruleForm3.balance = this.ruleForm3.balance*100
             axios.post('http://127.0.0.1:7001/business/user/balanceAdd',this.ruleForm3,{
               headers:{
                 authorization:`Bearer ${Token}`,
@@ -259,6 +262,7 @@
                 this.dialogVisible3 = false
               }
               console.log(res.data)
+              this.getList();
             })
           } else {
             console.log('error submit!!')
