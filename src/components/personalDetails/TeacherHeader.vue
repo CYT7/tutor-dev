@@ -86,10 +86,10 @@
   import axios from 'axios'
   const Token = localStorage.getItem('token');
   export default {
-    name: "PersonalHeader",
+    name: "TeacherHeader",
     data() {
       return {
-        activeIndex: '4',
+        activeIndex: '5',
         resultsMap: [],
       };
     },

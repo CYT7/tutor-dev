@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-col :span="20" offset="2"><PersonalHeader></PersonalHeader></el-col>
+    <el-col :span="20" :offset="2"><PersonalHeader></PersonalHeader></el-col>
     <el-col :span="20">
       <div style="margin-top: 20px">
         <el-row>
@@ -85,14 +85,19 @@
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">所在城市区域</div></el-col>
-                      <el-col :span="4"><div class="grid-content bg-purple-light">{{formatAddress(resultsMap.address)}}</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{formatAddress(resultsMap.city)}}</div></el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">详情地址</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.address}}</div></el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">联系方式</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.phone}}</div></el-col>
                     </el-row>
-                    <el-row>
+                    <el-row v-if="resultsMap.qq?'':resultsMap.qq">
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">QQ</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.qq}}</div></el-col>
@@ -107,16 +112,16 @@
                       <el-col :span="6"><div class="grid-content bg-purple">需求状态</div></el-col>
                       <el-col :span="4">
                         <div class="grid-content bg-purple-light">
-                          <span v-if="resultsMap.state ==1">需求审核中</span>
-                          <span v-else-if="resultsMap.state ==2">需求审核不通过</span>
-                          <span v-else-if="resultsMap.state ==3">需求审核通过</span>
-                          <span v-else-if="resultsMap.state ==4">需求已选定老师</span>
-                          <span v-else-if="resultsMap.state ==5">需求已完成</span>
-                          <span v-else>需求已关闭</span>
+                          <span v-if="resultsMap.state ==1" style="font-weight: bolder">需求审核中</span>
+                          <span v-else-if="resultsMap.state ==2" style="color: #F56C6C; font-weight: bolder">需求审核不通过</span>
+                          <span v-else-if="resultsMap.state ==3" style="color: #67C23A; font-weight: bolder">需求审核通过</span>
+                          <span v-else-if="resultsMap.state ==4" style="color: #E6A23C; font-weight: bolder">需求已选定老师</span>
+                          <span v-else-if="resultsMap.state ==5" style="color: #409EFF; font-weight: bolder">需求已完成</span>
+                          <span v-else style="color: #F56C6C; font-weight: bolder">需求已关闭</span>
                         </div>
                       </el-col>
                     </el-row>
-                    <el-row>
+                    <el-row style="margin-top: 20px">
                       <span v-if="resultsMap.state == 4">
                         <el-popconfirm title="确定此需求完成了吗？" @confirm="handleComplete({id:resultsMap.id})">
                           <el-button slot="reference" class="favorites" type="primary">完成</el-button>
@@ -131,19 +136,27 @@
                         </el-popconfirm>
                       </span>
                     </el-row>
-                    <div v-for="(list,index) in teacherMap" :key="index" style="width: 25%;float: left;margin-left:20px">
-                      <el-card class="box-card">
-                        <div slot="header" class="clearfix">
-                          <span>老师信息</span>
-                          <el-popconfirm title="确定关闭选择此老师吗？" @confirm="handleConfirm({_id:list._id})">
-                            <el-button slot="reference" type="text" style="float: right; padding: 3px 0">选择</el-button>
-                          </el-popconfirm>
-                        </div>
-                        <div>老师id：{{list.Teacher.id}}</div>
-                        <div>成功次数：{{list.Teacher.totalSuccess}}</div>
-                        <div>擅长科目：{{list.Teacher.goodAt}}</div>
-                        <div>所在城市：{{formatAddress(list.Teacher.city)}}</div>
-                      </el-card>
+                    <div v-if="teacherMap != ''&&resultsMap.state ==3">
+                      <el-divider content-position="left">
+                        <i class="el-icon-menu" style="color: #409EFF"></i>选择家教
+                      </el-divider>
+                      <div v-for="(list,index) in teacherMap" :key="index" style="width: 25%;float: left;margin-left:20px">
+                        <el-card class="box-card">
+                          <div slot="header" class="clearfix">
+                            <span>老师信息</span>
+                            <el-popconfirm title="确定选择此老师吗？" @confirm="handleConfirm({_id:list._id})">
+                              <el-button slot="reference" type="text" style="float: right; padding: 3px 0">选择</el-button>
+                            </el-popconfirm>
+                          </div>
+                          <router-link :to="{path:`/TeacherDetail`,name:`TeacherDetail`,params:{id:list.id},query:{id:list.id}}">
+                            <div>老师id：{{list.Teacher.id}}</div>
+                            <div>老师名字：{{list.Teacher.realName}}</div>
+                            <div>成功次数：{{list.Teacher.totalSuccess}}</div>
+                            <div>擅长科目：{{list.Teacher.goodAt}}</div>
+                            <div>所在城市：{{formatAddress(list.Teacher.city)}}</div>
+                          </router-link>
+                        </el-card>
+                      </div>
                     </div>
                   </div>
                 </el-main>
@@ -238,9 +251,21 @@
             authorization:`Bearer ${tokens}`
           }
         }).then(res => {
-          console.log(res)
+          if (res.data.code === 0){
+            this.$message({
+              title:'成功',
+              message:res.data.msg,
+              type:'success'
+            })
+          }else{
+            this.$message({
+              title:'失败',
+              message:res.data.msg,
+              type:'error'
+            })
+          }
+          this.getParams()
         })
-        console.log(id)
       },
       // 完成预约
       handleComplete(id) {
@@ -249,9 +274,21 @@
             authorization:`Bearer ${tokens}`
           }
         }).then(res => {
-          console.log(res)
+          if (res.data.code === 0){
+            this.$message({
+              title:'成功',
+              message:res.data.msg,
+              type:'success'
+            })
+          }else{
+            this.$message({
+              title:'失败',
+              message:res.data.msg,
+              type:'error'
+            })
+          }
+          this.getParams()
         })
-        console.log(id)
       },
       // 确定老师
       handleConfirm(_id){
@@ -260,7 +297,20 @@
             authorization:`Bearer ${tokens}`
           }
         }).then(res => {
-          console.log(res)
+          if (res.data.code === 0){
+            this.$message({
+              title:'成功',
+              message:res.data.msg,
+              type:'success'
+            })
+          }else{
+            this.$message({
+              title:'失败',
+              message:res.data.msg,
+              type:'error'
+            })
+          }
+          this.getParams()
         })
       },
       formatAddress: function (value) {
@@ -287,4 +337,8 @@
   }
 </script>
 <style scoped>
+  /*去掉连接下滑线*/
+  .router-link {
+    text-decoration: none;
+  }
 </style>

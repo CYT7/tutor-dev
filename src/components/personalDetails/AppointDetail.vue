@@ -28,11 +28,18 @@
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">老师id</div></el-col>
-                      <el-col :span="4"><div class="grid-content bg-purple-light">
-                        <router-link :to="{path:`/TeacherDetail`,name:`TeacherDetail`,params:{id:resultsMap.teacher.id},query:{id:resultsMap.teacher.id}}">
-                          {{resultsMap.teacher.id}}
-                        </router-link>
-                      </div></el-col>
+                      <el-col :span="4">
+                        <div class="grid-content bg-purple-light">
+                          <router-link :to="{path:`/TeacherDetail`,name:`TeacherDetail`,params:{id:resultsMap.teacher.id},query:{id:resultsMap.teacher.id}}" class="router-link">
+                            {{resultsMap.teacher.id}}
+                          </router-link>
+                        </div>
+                      </el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">老师姓名</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.teacher.realName}}</div></el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
@@ -72,7 +79,27 @@
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">所在城市区域</div></el-col>
-                      <el-col :span="4"><div class="grid-content bg-purple-light">{{formatAddress(resultsMap.address)}}</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{formatAddress(resultsMap.city)}}</div></el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">详情地址</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.address}}</div></el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">联系方式</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.phone}}</div></el-col>
+                    </el-row>
+                    <el-row v-if="resultsMap.qq?'':resultsMap.qq">
+                      <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">QQ</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.qq}}</div></el-col>
+                    </el-row>
+                    <el-row v-if="resultsMap.wechat?'':resultsMap.wechat">
+                      <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">微信号</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.wechat?'':resultsMap.wechat}}</div></el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
@@ -172,9 +199,21 @@
             authorization:`Bearer ${tokens}`
           }
         }).then(res => {
-          console.log(res)
+          if (res.data.code === 0){
+            this.$message({
+              title:'成功',
+              message:res.data.msg,
+              type:'success'
+            })
+          }else{
+            this.$message({
+              title:'失败',
+              message:res.data.msg,
+              type:'error'
+            })
+          }
+          this.getParams()
         })
-        console.log(id)
       },
       // 关闭预约
       handleClose(id) {
@@ -183,9 +222,21 @@
             authorization:`Bearer ${tokens}`
           }
         }).then(res => {
-          console.log(res)
+          if (res.data.code === 0){
+            this.$message({
+              title:'成功',
+              message:res.data.msg,
+              type:'success'
+            })
+          }else{
+            this.$message({
+              title:'失败',
+              message:res.data.msg,
+              type:'error'
+            })
+          }
+          this.getParams()
         })
-        console.log(id)
       },
       formatAddress: function (value) {
         if (value === null) {
@@ -215,5 +266,9 @@
     margin-top: 8px;
     margin-bottom: 8px;
     margin-right: 40px;
+  }
+  /*去掉连接下滑线*/
+  .router-link {
+    text-decoration: none;
   }
 </style>

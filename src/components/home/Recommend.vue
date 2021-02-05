@@ -34,7 +34,6 @@
         <router-link :to="{path:`/parentDetail`,name:`ParentDetail`,params:{id:list.id},query:{id:list.id}}">
           <el-card class="box-card" style="height: 248px;" @click.native="recruitDetail(list.id)">
             <div  class="text item">
-              <span style="font-size: 20px;font-weight: bolder">{{list.title}}</span>
               <div>
                 <ul class="info">
                   <li>辅导学科:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{list.subject}}</span></li>

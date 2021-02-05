@@ -1,6 +1,6 @@
 <template>
   <div :data="resultsMap">
-    <el-col :span="20" offset="2"><PersonalHeader></PersonalHeader></el-col>
+    <el-col :span="20" offset="2"><TeacherHeader></TeacherHeader></el-col>
     <el-col :span="20">
       <div style="margin-top: 20px">
         <el-row>
@@ -63,24 +63,27 @@
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">所在城市区域</div></el-col>
-                      <el-col :span="4"><div class="grid-content bg-purple-light">{{formatAddress(resultsMap.address)}}</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{formatAddress(resultsMap.city)}}</div></el-col>
                     </el-row>
-                    <el-row v-if="resultsMap.phone !== ''">
+                    <el-row>
+                      <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">详情地址</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.address}}</div></el-col>
+                    </el-row>
+                    <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">联系方式</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.phone}}</div></el-col>
                     </el-row>
-                    <el-row v-if="resultsMap.qq !== ''">
-<!--                      <span v-if="resultsMap.qq !== ''"></span>-->
+                    <el-row v-if="resultsMap.qq?'':resultsMap.qq">
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">QQ</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.qq}}</div></el-col>
                     </el-row>
-                    <el-row v-if="resultsMap.wechat !== ''">
-                        <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
-                        <el-col :span="6"><div class="grid-content bg-purple">微信号</div></el-col>
-                        <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.wechat}}</div></el-col>
-                      </span>
+                    <el-row v-if="resultsMap.wechat?'':resultsMap.wechat">
+                      <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">微信号</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.wechat?'':resultsMap.wechat}}</div></el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
@@ -129,7 +132,7 @@
                           <a style="font-size: 20px">温馨提示</a>
                         </i>
                         <br>
-                        <a style="font-size: 15px ;line-height: 25px; margin-left:30px">填写完善预约信息，家教老师受理预约概率大大提高，预约进行中请务必提高警惕,发现不对劲请立刻关闭预约并报警</a>
+                        <a style="font-size: 15px ;line-height: 25px; margin-left:30px">承诺在见面第一时间出示证件，但是为了确保您的个人信息以及安全，请提高防范</a>
                       </div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
                     </el-row>
@@ -146,13 +149,13 @@
 </template>
 <script>
   import axios from 'axios'
-  import PersonalHeader from "./PersonalHeader";
+  import TeacherHeader from "./TeacherHeader";
   import { CodeToText } from 'element-china-area-data'
   const tokens = localStorage.getItem('token');
   export default {
     name: "TeacherAppoint",
     components:{
-      PersonalHeader
+      TeacherHeader
     },
     data(){
       return{
@@ -190,10 +193,21 @@
             authorization:`Bearer ${tokens}`
           }
         }).then(res => {
-          console.log(res)
-          this.request()
+          if (res.data.code === 0){
+            this.$message({
+              title:'成功',
+              message:res.data.msg,
+              type:'success'
+            })
+          }else{
+            this.$message({
+              title:'失败',
+              message:res.data.msg,
+              type:'error'
+            })
+          }
+          this.getParams()
         })
-        console.log(this.id)
       },
       // 不同意预约
       handleDisagree(id) {
@@ -202,8 +216,20 @@
             authorization:`Bearer ${tokens}`
           }
         }).then(res => {
-          console.log(res)
-          this.request()
+          if (res.data.code === 0){
+            this.$message({
+              title:'成功',
+              message:res.data.msg,
+              type:'success'
+            })
+          }else{
+            this.$message({
+              title:'失败',
+              message:res.data.msg,
+              type:'error'
+            })
+          }
+          this.getParams()
         })
         console.log(id)
       },
@@ -214,8 +240,20 @@
             authorization:`Bearer ${tokens}`
           }
         }).then(res => {
-          console.log(res)
-          this.request()
+          if (res.data.code === 0){
+            this.$message({
+              title:'成功',
+              message:res.data.msg,
+              type:'success'
+            })
+          }else{
+            this.$message({
+              title:'失败',
+              message:res.data.msg,
+              type:'error'
+            })
+          }
+          this.getParams()
         })
         console.log(id)
       },
@@ -226,8 +264,20 @@
             authorization:`Bearer ${tokens}`
           }
         }).then(res => {
-          console.log(res)
-          this.request()
+          if (res.data.code === 0){
+            this.$message({
+              title:'成功',
+              message:res.data.msg,
+              type:'success'
+            })
+          }else{
+            this.$message({
+              title:'失败',
+              message:res.data.msg,
+              type:'error'
+            })
+          }
+          this.getParams()
         })
         console.log(id)
       },

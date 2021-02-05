@@ -1,6 +1,6 @@
 <template>
   <div :data="resultsMap">
-    <el-col :span="20" offset="2"><PersonalHeader></PersonalHeader></el-col>
+    <el-col :span="20" offset="2"><TeacherHeader></TeacherHeader></el-col>
     <el-col :span="20">
       <div style="margin-top: 20px">
         <el-row>
@@ -85,19 +85,24 @@
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">所在城市区域</div></el-col>
-                      <el-col :span="4"><div class="grid-content bg-purple-light">{{formatAddress(resultsMap.address)}}</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{formatAddress(resultsMap.city)}}</div></el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">详情地址</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.address}}</div></el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">联系方式</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.phone}}</div></el-col>
                     </el-row>
-                    <el-row>
+                    <el-row v-if="resultsMap.qq?'':resultsMap.qq">
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">QQ</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.qq}}</div></el-col>
                     </el-row>
-                    <el-row>
+                    <el-row v-if="resultsMap.wechat?'':resultsMap.wechat">
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">微信号</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.wechat?'':resultsMap.wechat}}</div></el-col>
@@ -107,16 +112,16 @@
                       <el-col :span="6"><div class="grid-content bg-purple">需求状态</div></el-col>
                       <el-col :span="4">
                         <div class="grid-content bg-purple-light">
-                          <span v-if="resultsMap.state ==1">需求审核中</span>
-                          <span v-else-if="resultsMap.state ==2">需求审核不通过</span>
-                          <span v-else-if="resultsMap.state ==3">需求审核通过</span>
-                          <span v-else-if="resultsMap.state ==4">需求已选定老师</span>
-                          <span v-else-if="resultsMap.state ==5">需求已完成</span>
-                          <span v-else>需求已关闭</span>
+                          <span v-if="resultsMap.state ==1" style="font-weight: bolder">需求审核中</span>
+                          <span v-else-if="resultsMap.state ==2" style="color: #F56C6C; font-weight: bolder">需求审核不通过</span>
+                          <span v-else-if="resultsMap.state ==3" style="color: #67C23A; font-weight: bolder">需求审核通过</span>
+                          <span v-else-if="resultsMap.state ==4" style="color: #E6A23C; font-weight: bolder">需求已选定老师</span>
+                          <span v-else-if="resultsMap.state ==5" style="color: #409EFF; font-weight: bolder">需求已完成</span>
+                          <span v-else style="color: #F56C6C; font-weight: bolder">需求已关闭</span>
                         </div>
                       </el-col>
                     </el-row>
-                    <el-row>
+                    <el-row style="margin-top: 20px">
                       <span v-if="resultsMap.state !=5 && resultsMap.state !=6">
                         <el-popconfirm title="确定关闭此需求吗？" @confirm="handleClose({id:resultsMap.id})">
                           <el-button slot="reference" class="favorites" type="danger">关闭</el-button>
@@ -135,8 +140,7 @@
                         </i>
                         <br>
                         <a style="font-size: 15px ;line-height: 25px; margin-left:30px">
-                          请完善需求信息，家教更好应聘你的需求。
-                          家教只能查看部分的需求信息而不能查看所有信息，家教如果应聘成功，会在个人中心查看到你此需求的所有信息，
+                          承诺在见面第一时间出示证件，但是为了确保您的个人信息以及安全，请提高防范
                         </a>
                       </div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
@@ -154,13 +158,13 @@
 </template>
 <script>
   import axios from 'axios'
-  import PersonalHeader from "./PersonalHeader";
+  import TeacherHeader from "./TeacherHeader";
   import { CodeToText } from 'element-china-area-data'
   const tokens = localStorage.getItem('token');
   export default {
     name: "TeacherNeed",
     components:{
-      PersonalHeader
+      TeacherHeader
     },
     data(){
       return{
