@@ -19,6 +19,7 @@ import NeedDetail from '@/components/personalDetails/NeedDetail'
 import TeacherNeed from '@/components/personalDetails/TeacherNeed'
 import TeacherAppoint from '@/components/personalDetails/TeacherAppoint'
 import Apply from '@/components/personal/Apply'
+import Modify from '@/components/TeacherCenter/Modify'
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -111,6 +112,11 @@ export default new Router({
       path: '/Apply',
       name: 'Apply',
       component: Apply
+    },
+    {
+      path: '/Modify',
+      name: 'Modify',
+      component: Modify
     },
   ]
 })

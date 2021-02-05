@@ -94,7 +94,7 @@
                     <el-row>
                       <el-col :span="2" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple">授课价格</div></el-col>
-                      <el-col :span="10"><div class="grid-content bg-purple-light">{{teacherList.hourPrice}}元/小时</div></el-col>
+                      <el-col :span="10"><div class="grid-content bg-purple-light">{{teacherList.hourPrice /100 }}元/小时</div></el-col>
                     </el-row>
                     <el-row>
                       <el-button type="primary" class="favorites" @click="dialogVisible2=true">预约</el-button>

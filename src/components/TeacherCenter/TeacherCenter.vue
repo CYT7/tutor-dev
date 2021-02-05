@@ -12,16 +12,17 @@
         <el-form-item label="教学经验">{{resultsMap.experience}}年</el-form-item>
         <el-form-item label="年龄">{{resultsMap.age}}岁</el-form-item>
         <el-form-item label="擅长科目">{{resultsMap.goodAt}}</el-form-item>
-        <el-form-item label="课时费用">{{resultsMap.hourPrice}}</el-form-item>
+        <el-form-item label="课时费用">{{resultsMap.hourPrice / 100}}元</el-form-item>
         <el-form-item label="在读/毕业院校">{{resultsMap.school}}</el-form-item>
         <el-form-item label="所在城市">{{formatAddress(resultsMap.city)}}</el-form-item>
         <el-form-item label="审核状态">
-            <span v-if="resultsMap.state ==1">已提交审核</span>
-            <span v-else-if="resultsMap.state ==2">审核通过</span>
-            <span v-else>审核不通过</span>
+            <span v-if="resultsMap.state ==1" style="font-weight: bolder">已提交审核</span>
+            <span v-else-if="resultsMap.state ==2" style="color: #67C23A; font-weight: bolder">审核通过</span>
+            <span v-else style="color: #F56C6C; font-weight: bolder">审核不通过</span>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="dialogVisible2=true">修改</el-button>
+          <span v-if="resultsMap.state ==3"><el-button type="primary" @click="handle">重新认证</el-button></span>
         </el-form-item>
       </el-form>
     </div>
@@ -94,6 +95,9 @@
       this.getCateList();
     },
     methods:{
+      handle() {
+        this.$router.push({ name: "Modify" });
+      },
       getList(){
         axios.post('http://127.0.0.1:7001/business/teacher/information',{},{
           headers:{
@@ -135,6 +139,7 @@
         this.$refs[formName].validate(valid =>{
           console.log(this.ruleForm2)
           if (valid) {
+            this.ruleForm2.hourPrice = this.ruleForm2.hourPrice *100
             axios.put('http://127.0.0.1:7001/business/teacher/information',this.ruleForm2,{
               headers:{
                 authorization:`Bearer ${Token}`,

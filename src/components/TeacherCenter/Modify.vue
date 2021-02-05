@@ -5,7 +5,7 @@
     </el-col>
     <el-col style="margin-top: -6%">
       <div style="margin-top:8%;margin-left:10%;" align="center" class="app-container">
-        <el-page-header @back="goBack" content="认证家教"></el-page-header>
+        <el-page-header @back="goBack" content="重新认证家教"></el-page-header>
         <el-steps
           style="margin:15px 0;font-size:13px"
           align-center
@@ -97,7 +97,7 @@
   import axios from 'axios'
   const Token = localStorage.getItem('token');
   export default {
-    name: "Apply",
+    name: "Modify",
     components: {Header},
     data(){
       return{
@@ -141,7 +141,7 @@
     },
     methods:{
       goBack(){
-        this.$router.push({ name: "PersonalCenter" });
+        this.$router.push({ name: "TeacherCenter" });
         console.log("go back");
       },
       prev() {
@@ -155,13 +155,13 @@
           if (valid) {
             if (this.active ===0){
               this.addForm.hourPrice = this.addForm.hourPrice * 100
-              axios.post('http://127.0.0.1:7001/business/teacher/create',this.addForm,{
+              axios.put('http://127.0.0.1:7001/business/teacher/information',this.addForm,{
                 headers:{
                   authorization:`Bearer ${Token}`,
                 }
               }).then(res => {
                 if (res.data.code ===0) {
-                  this.$confirm('申请做家教成功，是否继续上传身份证和学生证提供审核？','提示',{
+                  this.$confirm('重新认证家教成功，是否继续上传身份证和学生证提供审核？','提示',{
                     confirmButtonText:"确定",
                     cancelButtonText:"取消",
                     type:"success"

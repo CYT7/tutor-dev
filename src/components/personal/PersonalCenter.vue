@@ -70,9 +70,9 @@
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-dialog title="充值余额" :visible.sync="dialogVisible3" width="30%" :before-close="handleClose">
+    <el-dialog title="充值余额" :visible.sync="dialogVisible3" :before-close="handleClose">
       <el-form ref="ruleForm3" :model="ruleForm3" label-width="auto" class="demo-ruleForm">
-        <el-form-item label="金额" prop="balance"><el-input v-model="ruleForm3.balance" style="width: auto"/>元</el-form-item>
+        <el-form-item label="金额(元)" prop="balance"><el-input v-model="ruleForm3.balance"/></el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm2('ruleForm3')">充值</el-button>
           <el-button @click="resetForm2('ruleForm3')">重置</el-button>
