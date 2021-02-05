@@ -1,6 +1,6 @@
 <template>
   <div :data="resultsMap">
-    <el-col :span="20" offset="2"><PersonalHeader></PersonalHeader></el-col>
+    <el-col :span="20" :offset="2"><PersonalHeader></PersonalHeader></el-col>
     <el-col :span="20">
       <div style="margin-top: 20px">
         <el-row>

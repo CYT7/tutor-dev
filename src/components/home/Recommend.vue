@@ -6,7 +6,7 @@
       </el-divider>
       <div v-for="list in tutorData"class="tutorRecommend">
         <router-link :to="{path:`/TeacherDetail`,name:`TeacherDetail`,params:{id:list.id},query:{id:list.id}}">
-          <el-card class="box-card" style="height: 330px" @click.native="tutorDetail(list.id)">
+          <el-card class="box-card" style="height: 330px">
             <div  class="text item">
               <div style="display: flex;margin-left: 20px">
                 <el-avatar :size="60" style="float: left;"  :src="list.User.image_url" :key="list.User.image_url" v-if="list.User.image_url !== null" shape="square"></el-avatar>
@@ -32,7 +32,7 @@
       </el-divider>
       <div  v-for="list in needData" class="recruitRecommend">
         <router-link :to="{path:`/parentDetail`,name:`ParentDetail`,params:{id:list.id},query:{id:list.id}}">
-          <el-card class="box-card" style="height: 248px;" @click.native="recruitDetail(list.id)">
+          <el-card class="box-card" style="height: 248px;">
             <div  class="text item">
               <div>
                 <ul class="info">
