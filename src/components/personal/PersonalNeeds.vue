@@ -12,7 +12,8 @@
         <el-table-column align="center" label="需求id" prop="id"> </el-table-column>
         <el-table-column align="center" label="学生称呼" prop="nickName"> </el-table-column>
         <el-table-column align="center" label="授课科目" prop="subject"></el-table-column>
-        <el-table-column align="center" label="所在城市区域" prop="address" :formatter="formatAddress"></el-table-column>
+        <el-table-column align="center" label="上几次课" prop="frequency"></el-table-column>
+        <el-table-column align="center" label="城市区域" prop="city" :formatter="formatAddress"></el-table-column>
         <el-table-column align="center" label="需求总报价(元)" prop="totalPrice"></el-table-column>
         <el-table-column align="center" label="需求发布时间" prop="createTime" :formatter="formatDate"></el-table-column>
         <el-table-column label="需求状态" prop="state" align="center">
@@ -166,6 +167,7 @@
           frequency: [{ required: true, message: '请输入要上几次课', trigger: 'blur' }],
           timeHour: [{ required: true, message: '请输入要上几小时', trigger: 'blur' }],
           teach_date: [{ required: true, message: '请选择周几什么时段上课', trigger: 'blur' }],
+          subject: [{ required: true, message: '请选择科目', trigger: 'blur' }],
           city:[{ required: true, message: '请输入所在城市', trigger: 'blur' }],
           address:[{ required: true, message: '请输入上课详情地址/区域', trigger: 'blur' }],
           hourPrice:[{ required: true, message: '请输入课时费用', trigger: 'blur' }],
@@ -335,7 +337,19 @@
             authorization:`Bearer ${tokens}`
           }
         }).then(res => {
-          console.log(res)
+          if (res.data.code === 0){
+            this.$message({
+              title:'成功',
+              message:res.data.msg,
+              type:'success'
+            })
+          }else{
+            this.$message({
+              title:'失败',
+              message:res.data.msg,
+              type:'error'
+            })
+          }
           this.getList()
         })
         console.log(id)
@@ -347,7 +361,19 @@
             authorization:`Bearer ${tokens}`
           }
         }).then(res => {
-          console.log(res)
+          if (res.data.code === 0){
+            this.$message({
+              title:'成功',
+              message:res.data.msg,
+              type:'success'
+            })
+          }else{
+            this.$message({
+              title:'失败',
+              message:res.data.msg,
+              type:'error'
+            })
+          }
           this.getList()
         })
         console.log(id)
@@ -421,19 +447,19 @@
         this.$refs[formName].resetFields()
       },
       formatAddress(row) {
-        if (row.address === null) {
+        if (row.city === null) {
           return null
         }
         let area = ''
-        switch (row.address.length) {
+        switch (row.city.length) {
           case 1:
-            area += CodeToText[row.address[0]]
+            area += CodeToText[row.city[0]]
             break
           case 2:
-            area += CodeToText[row.address[0]] + '/' + CodeToText[row.address[1]]
+            area += CodeToText[row.city[0]] + '/' + CodeToText[row.city[1]]
             break
           case 3:
-            area += CodeToText[row.address[0]] + '/' + CodeToText[row.address[1]] + '/' + CodeToText[row.address[2]]
+            area += CodeToText[row.city[0]] + '/' + CodeToText[row.city[1]] + '/' + CodeToText[row.city[2]]
             break
           default:
             break

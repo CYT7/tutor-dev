@@ -7,7 +7,7 @@
         <el-table-column align="center" label="预约id" prop="id"> </el-table-column>
         <el-table-column align="center" label="学生称呼" prop="name"> </el-table-column>
         <el-table-column align="center" label="授课科目" prop="subject"></el-table-column>
-        <el-table-column align="center" label="所在城市区域" prop="address" :formatter="formatAddress" ></el-table-column>
+        <el-table-column align="center" label="所在城市区域" prop="city" :formatter="formatAddress" ></el-table-column>
         <el-table-column align="center" label="预约总报价(元)" prop="totalPrice"></el-table-column>
         <el-table-column align="center" label="预约发布时间" prop="createTime" :formatter="formatDate"></el-table-column>
         <el-table-column label="预约状态" prop="state" align="center">
@@ -117,9 +117,21 @@
             authorization:`Bearer ${tokens}`
           }
         }).then(res => {
-          console.log(res)
+          if (res.data.code === 0){
+            this.$message({
+              title:'成功',
+              message:res.data.msg,
+              type:'success'
+            })
+          }else{
+            this.$message({
+              title:'失败',
+              message:res.data.msg,
+              type:'error'
+            })
+          }
+          this.getList()
         })
-        console.log(id)
       },
       // 关闭预约
       handleClose(id) {
@@ -128,9 +140,21 @@
             authorization:`Bearer ${tokens}`
           }
         }).then(res => {
-          console.log(res)
+          if (res.data.code === 0){
+            this.$message({
+              title:'成功',
+              message:res.data.msg,
+              type:'success'
+            })
+          }else{
+            this.$message({
+              title:'失败',
+              message:res.data.msg,
+              type:'error'
+            })
+          }
+          this.getList()
         })
-        console.log(id)
       },
       formatDate(row, column) {
         const date = new Date(parseInt(row.createTime) * 1000)
@@ -154,19 +178,19 @@
         return Y + M + D + h + m + s
       },
       formatAddress(row) {
-        if (row.address === null) {
+        if (row.city === null) {
           return null
         }
         let area = ''
-        switch (row.address.length) {
+        switch (row.city.length) {
           case 1:
-            area += CodeToText[row.address[0]]
+            area += CodeToText[row.city[0]]
             break
           case 2:
-            area += CodeToText[row.address[0]] + '/' + CodeToText[row.address[1]]
+            area += CodeToText[row.city[0]] + '/' + CodeToText[row.city[1]]
             break
           case 3:
-            area += CodeToText[row.address[0]] + '/' + CodeToText[row.address[1]] + '/' + CodeToText[row.address[2]]
+            area += CodeToText[row.city[0]] + '/' + CodeToText[row.city[1]] + '/' + CodeToText[row.city[2]]
             break
           default:
             break
