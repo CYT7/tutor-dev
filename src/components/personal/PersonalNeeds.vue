@@ -123,6 +123,21 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+    <el-dialog title="评论" :visible.sync="dialogVisible3" width="30%" :before-close="handleClose" :append-to-body="true">
+      <el-form ref="ruleForm3" :model="ruleForm3" :rules="rules3" label-width="140px" class="demo-ruleForm">
+        <el-form-item label="评论" prop="content"><el-input v-model="ruleForm3.content"/></el-form-item>
+        <el-form-item label="评分" prop="rate">
+          <el-rate
+            v-model="ruleForm3.rate"
+            show-text>
+          </el-rate>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm2('ruleForm3')">完成</el-button>
+          <el-button @click="resetForm2('ruleForm3')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </el-row>
 </template>
 <script>
@@ -147,6 +162,7 @@
         list:[],
         tokens : [],
         dialogVisible2:false,
+        dialogVisible3:false,
         ruleForm2:{
           nickName:'',
           gender:'',
@@ -172,6 +188,14 @@
           address:[{ required: true, message: '请输入上课详情地址/区域', trigger: 'blur' }],
           hourPrice:[{ required: true, message: '请输入课时费用', trigger: 'blur' }],
           phone: [{ required: true, message: '请输入手机号码', trigger: 'blur',validator: checkMobile, trigger: 'blur' },],
+        },
+        ruleForm3:{
+          content:'',
+          rate:null,
+          id:''
+        },
+        rules3: {
+          content: [{ required: true,message: '请输入你的评论内容', trigger: 'blur' },{max: 5,message: '超过字数限制' }]
         },
         options: regionData,// 城市数据
         gender : [{
@@ -356,27 +380,45 @@
       },
       // 完成预约
       handleComplete(id) {
-        axios.post('http://127.0.0.1:7001/business/need/finish',id,{
-          headers:{
-            authorization:`Bearer ${tokens}`
-          }
-        }).then(res => {
-          if (res.data.code === 0){
-            this.$message({
-              title:'成功',
-              message:res.data.msg,
-              type:'success'
-            })
-          }else{
-            this.$message({
-              title:'失败',
-              message:res.data.msg,
-              type:'error'
-            })
-          }
-          this.getList()
-        })
+        this.dialogVisible3 = true;
+        this.ruleForm3 = id;
         console.log(id)
+      },
+      submitForm2(formName){
+        this.$refs[formName].validate(valid =>{
+          if (valid) {
+            console.log(this.ruleForm3.id)
+            axios.post('http://127.0.0.1:7001/business/need/finish',this.ruleForm3,{
+              headers:{
+                authorization:`Bearer ${tokens}`
+              }
+            }).then(res => {
+              if (res.data.code === 0) {
+                this.$refs[formName].resetFields()
+                this.dialogVisible3 = false
+                this.getList()
+                this.$message({
+                  title:'成功',
+                  message:res.data.msg,
+                  type:'success'
+                })
+              } else {
+                this.$message({
+                  title:'失败',
+                  message:res.data.msg,
+                  type:'error'
+                })
+              }
+              console.log(res.data)
+            })
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
+      },
+      resetForm2 (formName) {
+        this.$refs[formName].resetFields()
       },
       formatDate(row, column) {
         const date = new Date(parseInt(row.createTime) * 1000)

@@ -1,5 +1,5 @@
 <template>
-  <div :data="resultsMap">
+  <div>
     <el-col :span="20" :offset="2"><PersonalHeader></PersonalHeader></el-col>
     <el-col :span="20">
       <div style="margin-top: 20px">
@@ -103,6 +103,20 @@
                     </el-row>
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">评论</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.content}}</div></el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">评分</div></el-col>
+                      <el-col :span="4">
+                        <div class="grid-content bg-purple-light">
+                          <el-rate v-model="resultsMap.rate" show-text> </el-rate>
+                        </div>
+                      </el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">预约状态</div></el-col>
                       <el-col :span="4">
                         <div class="grid-content bg-purple-light">
@@ -119,12 +133,20 @@
                         <el-popconfirm title="确定支付此预约吗？" @confirm="handlePay({id:resultsMap.id})">
                           <el-button slot="reference" class="favorites" type="primary">支付预约</el-button>
                         </el-popconfirm>
-                        <el-popconfirm title="确定关闭此预约吗？" @confirm="handleClose({id:resultsMap.id})">
+                        <el-popconfirm title="确定关闭此预约吗？" @confirm="handleShut({id:resultsMap.id})">
                           <el-button slot="reference" class="favorites" type="danger">关闭</el-button>
                         </el-popconfirm>
                       </span>
-                      <span v-else-if="resultsMap.state !=3 && resultsMap.state !=4">
-                        <el-popconfirm title="确定关闭此预约吗？" @confirm="handleClose({id:resultsMap.id})">
+                      <span v-if="resultsMap.state == 2">
+                        <el-popconfirm title="确定此预约完成吗？" @confirm="handleComplete({id:resultsMap.id})">
+                          <el-button slot="reference" class="favorites" type="primary">完成</el-button>
+                        </el-popconfirm>
+                        <el-popconfirm title="确定关闭此预约吗？" @confirm="handleShut({id:resultsMap.id})">
+                          <el-button slot="reference" class="favorites" type="danger">关闭</el-button>
+                        </el-popconfirm>
+                      </span>
+                      <span v-else-if="resultsMap.state ==3 && resultsMap.state ==4">
+                        <el-popconfirm title="确定关闭此预约吗？" @confirm="handleShut({id:resultsMap.id})">
                           <el-button slot="reference" class="favorites" type="danger">关闭</el-button>
                         </el-popconfirm>
                       </span>
@@ -151,6 +173,21 @@
           </div>
           </el-col>
         </el-row>
+        <el-dialog title="评论" :visible.sync="dialogVisible2" width="30%" :before-close="handleClose" :append-to-body="true">
+          <el-form ref="ruleForm2" :model="ruleForm2" :rules="rules2" label-width="140px" class="demo-ruleForm">
+            <el-form-item label="评论" prop="content"><el-input v-model="ruleForm2.content"/></el-form-item>
+            <el-form-item label="评分" prop="rate">
+              <el-rate
+                v-model="ruleForm2.rate"
+                show-text>
+              </el-rate>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="submitForm('ruleForm2')">完成</el-button>
+              <el-button @click="resetForm('ruleForm2')">重置</el-button>
+            </el-form-item>
+          </el-form>
+        </el-dialog>
       </div>
     </el-col>
   </div>
@@ -169,6 +206,15 @@
       return{
         resultsMap: [],
         tokens : [],
+        dialogVisible2:false,
+        ruleForm2:{
+          content:'',
+          rate:null,
+          id:''
+        },
+        rules2: {
+          content: [{ required: true,message: '请输入你的评论内容', trigger: 'blur' },{max: 5,message: '超过字数限制' }]
+        },
       }
     },
     created(){
@@ -215,8 +261,50 @@
           this.getParams()
         })
       },
+      // 完成预约
+      handleComplete(id){
+        this.dialogVisible2 = true;
+        this.ruleForm2 = id;
+        console.log(id)
+      },
+      submitForm(formName){
+        this.$refs[formName].validate(valid =>{
+          if (valid) {
+            console.log(this.ruleForm2.id)
+            axios.post('http://127.0.0.1:7001/business/appoint/finish',this.ruleForm2,{
+              headers:{
+                authorization:`Bearer ${tokens}`
+              }
+            }).then(res => {
+              if (res.data.code === 0) {
+                this.$refs[formName].resetFields()
+                this.dialogVisible2 = false
+                this.getParams()
+                this.$message({
+                  title:'成功',
+                  message:res.data.msg,
+                  type:'success'
+                })
+              } else {
+                this.$message({
+                  title:'失败',
+                  message:res.data.msg,
+                  type:'error'
+                })
+              }
+              console.log(res.data)
+            })
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
+      },
+      resetForm (formName) {
+        this.$refs[formName].resetFields()
+      },
       // 关闭预约
-      handleClose(id) {
+      handleShut(id) {
         axios.post('http://127.0.0.1:7001/business/appoint/userClose',id,{
           headers:{
             authorization:`Bearer ${tokens}`
@@ -262,13 +350,68 @@
   }
 </script>
 <style scoped>
-  .favorites{
-    margin-top: 8px;
-    margin-bottom: 8px;
-    margin-right: 40px;
+  .el-row {
+    margin-bottom: 20px;
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+  .el-header, .el-footer {
+    /*background-color: #B3C0D1;*/
+    color: #333;
+    text-align: center;
+    line-height: 40px;
+  }
+  .el-aside {
+    /*background-color: #D3DCE6;*/
+    color: #333;
+    /* text-align: left;*/
+    line-height: 40px;
+
+  }
+
+  .el-main {
+    /*background-color: #E9EEF3;*/
+    color: #333;
+    text-align: left;
+    line-height: 10px;
   }
   /*去掉连接下滑线*/
   .router-link {
     text-decoration: none;
+  }
+  .router-link2 {
+    text-decoration: none;
+    color: black;
+  }
+  .top-border{
+    border:1px solid #B3C0D1;
+    border-radius: 4px;
+    margin-top: 2px;
+    background-color: #F2F6FC;
+  }
+  .top-text{
+    margin-top: 20px;
+    margin-left: 10px;
+    font-family: '微软雅黑';
+    font-size: 20px;
+    font-weight: bold
+  }
+  .body-border{
+    border:1px solid #B3C0D1;
+    border-radius: 4px;
+    /*margin-top: 2px*/
+  }
+  .body-border-2{
+    border:1px solid #B3C0D1;
+    border-radius: 4px;
+    margin-top: 2px;
+    background-color: #F2F6FC;
+  }
+  .favorites{
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-right: 40px;
+    float: right
   }
 </style>

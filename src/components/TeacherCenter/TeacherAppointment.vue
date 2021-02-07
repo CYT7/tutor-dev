@@ -34,15 +34,7 @@
                 <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">不同意</el-button>
               </el-popconfirm>
             </span>
-            <span v-if="scope.row.state === 1">
-              <el-popconfirm title="确定关闭此预约吗？" @confirm="handleClose({id:scope.row.id})">
-                <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">关闭</el-button>
-              </el-popconfirm>
-            </span>
-            <span v-else-if="scope.row.state === 2">
-              <el-popconfirm title="确定你已经完成此预约吗？" @confirm="handleComplete({id:scope.row.id})">
-                <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">完成</el-button>
-              </el-popconfirm>
+            <span v-else-if="scope.row.state !== 3">
               <el-popconfirm title="确定关闭此预约吗？" @confirm="handleClose({id:scope.row.id})">
                 <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">关闭</el-button>
               </el-popconfirm>
@@ -172,30 +164,6 @@
       // 关闭预约
       handleClose(id) {
         axios.post('http://127.0.0.1:7001/business/appoint/teacherClose',id,{
-          headers:{
-            authorization:`Bearer ${tokens}`
-          }
-        }).then(res => {
-          if (res.data.code === 0){
-            this.$message({
-              title:'成功',
-              message:res.data.msg,
-              type:'success'
-            })
-          }else{
-            this.$message({
-              title:'失败',
-              message:res.data.msg,
-              type:'error'
-            })
-          }
-          this.getList()
-        })
-        console.log(id)
-      },
-      // 完成预约
-      handleComplete(id) {
-        axios.post('http://127.0.0.1:7001/business/appoint/finish',id,{
           headers:{
             authorization:`Bearer ${tokens}`
           }

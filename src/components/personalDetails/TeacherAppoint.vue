@@ -87,6 +87,20 @@
                     </el-row>
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">评论</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.content}}</div></el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">评分</div></el-col>
+                      <el-col :span="4">
+                        <div class="grid-content bg-purple-light">
+                          <el-rate v-model="resultsMap.rate" show-text> </el-rate>
+                        </div>
+                      </el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">预约状态</div></el-col>
                       <el-col :span="4">
                         <div class="grid-content bg-purple-light">
@@ -305,9 +319,69 @@
   }
 </script>
 <style scoped>
+  .el-row {
+    margin-bottom: 20px;
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+  .el-header, .el-footer {
+    /*background-color: #B3C0D1;*/
+    color: #333;
+    text-align: center;
+    line-height: 40px;
+  }
+  .el-aside {
+    /*background-color: #D3DCE6;*/
+    color: #333;
+    /* text-align: left;*/
+    line-height: 40px;
+
+  }
+
+  .el-main {
+    /*background-color: #E9EEF3;*/
+    color: #333;
+    text-align: left;
+    line-height: 10px;
+  }
+  /*去掉连接下滑线*/
+  .router-link {
+    text-decoration: none;
+    color: aliceblue;
+  }
+  .router-link2 {
+    text-decoration: none;
+    color: black;
+  }
+  .top-border{
+    border:1px solid #B3C0D1;
+    border-radius: 4px;
+    margin-top: 2px;
+    background-color: #F2F6FC;
+  }
+  .top-text{
+    margin-top: 20px;
+    margin-left: 10px;
+    font-family: '微软雅黑';
+    font-size: 20px;
+    font-weight: bold
+  }
+  .body-border{
+    border:1px solid #B3C0D1;
+    border-radius: 4px;
+    /*margin-top: 2px*/
+  }
+  .body-border-2{
+    border:1px solid #B3C0D1;
+    border-radius: 4px;
+    margin-top: 2px;
+    background-color: #F2F6FC;
+  }
   .favorites{
     margin-top: 8px;
     margin-bottom: 8px;
     margin-right: 40px;
+    float: right
   }
 </style>

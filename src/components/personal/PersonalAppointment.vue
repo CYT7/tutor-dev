@@ -33,8 +33,16 @@
                 <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">关闭</el-button>
               </el-popconfirm>
             </span>
-            <span v-else-if="scope.row.state != 3">
+            <span v-if="scope.row.state == 2">
+              <el-popconfirm title="确定此预约完成了吗？" @confirm="handleComplete({id:scope.row.id})">
+                <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">完成</el-button>
+              </el-popconfirm>
               <el-popconfirm title="确定关闭此预约吗？" @confirm="handleClose({id:scope.row.id})">
+                <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">关闭</el-button>
+              </el-popconfirm>
+            </span>
+            <span v-else-if="scope.row.state == 3">
+              <el-popconfirm title="确定关闭此预约吗？" @confirm="handleShut({id:scope.row.id})">
                 <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">关闭</el-button>
               </el-popconfirm>
             </span>
@@ -50,6 +58,21 @@
         :page-count="list.totals"
       ></el-pagination>
     </div>
+    <el-dialog title="评论" :visible.sync="dialogVisible2" width="30%" :before-close="handleClose" :append-to-body="true">
+      <el-form ref="ruleForm2" :model="ruleForm2" :rules="rules2" label-width="140px" class="demo-ruleForm">
+        <el-form-item label="评论" prop="content"><el-input v-model="ruleForm2.content"/></el-form-item>
+        <el-form-item label="评分" prop="rate">
+          <el-rate
+            v-model="ruleForm2.rate"
+            show-text>
+          </el-rate>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('ruleForm2')">完成</el-button>
+          <el-button @click="resetForm('ruleForm2')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </el-row>
 </template>
 <script>
@@ -64,7 +87,16 @@
         page:1, //初始页
         resultsMap: [],
         list:[],
-        tokens : []
+        tokens : [],
+        dialogVisible2:false,
+        ruleForm2:{
+          content:'',
+          rate:null,
+          id:''
+        },
+        rules2: {
+          content: [{ required: true,message: '请输入你的评论内容', trigger: 'blur' },{max: 5,message: '超过字数限制' }]
+        },
       }
     },
     components: {
@@ -134,7 +166,7 @@
         })
       },
       // 关闭预约
-      handleClose(id) {
+      handleShut(id) {
         axios.post('http://127.0.0.1:7001/business/appoint/userClose',id,{
           headers:{
             authorization:`Bearer ${tokens}`
@@ -155,6 +187,55 @@
           }
           this.getList()
         })
+      },
+      // 完成预约
+      handleComplete(id){
+        this.dialogVisible2 = true;
+        this.ruleForm2 = id;
+        console.log(id)
+      },
+      submitForm(formName){
+        this.$refs[formName].validate(valid =>{
+          if (valid) {
+            console.log(this.ruleForm2.id)
+            axios.post('http://127.0.0.1:7001/business/appoint/finish',this.ruleForm2,{
+              headers:{
+                authorization:`Bearer ${tokens}`
+              }
+            }).then(res => {
+              if (res.data.code === 0) {
+                this.$refs[formName].resetFields()
+                this.dialogVisible2 = false
+                this.getList()
+                this.$message({
+                  title:'成功',
+                  message:res.data.msg,
+                  type:'success'
+                })
+              } else {
+                this.$message({
+                  title:'失败',
+                  message:res.data.msg,
+                  type:'error'
+                })
+              }
+              console.log(res.data)
+            })
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
+      },
+      resetForm (formName) {
+        this.$refs[formName].resetFields()
+      },
+      handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done()
+          })
+          .catch(_ => {})
       },
       formatDate(row, column) {
         const date = new Date(parseInt(row.createTime) * 1000)
