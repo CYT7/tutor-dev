@@ -3,29 +3,42 @@
     <el-col :span="20" :offset="2">
       <Header></Header>
     </el-col>
-    <div style="margin-top:8%;margin-left:35%;" align="center" class="app-container">
-      <el-form ref="form" :model="resultsMap" label-width="auto" style="float: left;">
-        <el-form-item><h2 style="margin-left:-20%">老师信息</h2></el-form-item>
-        <el-form-item label="老师ID">{{resultsMap.id}}</el-form-item>
-        <el-form-item label="真实姓名">{{resultsMap.realName}}</el-form-item>
-        <el-form-item label="成功次数">{{resultsMap.totalSuccess}}次</el-form-item>
-        <el-form-item label="教学经验">{{resultsMap.experience}}年</el-form-item>
-        <el-form-item label="年龄">{{resultsMap.age}}岁</el-form-item>
-        <el-form-item label="擅长科目">{{resultsMap.goodAt}}</el-form-item>
-        <el-form-item label="课时费用">{{resultsMap.hourPrice / 100}}元</el-form-item>
-        <el-form-item label="在读/毕业院校">{{resultsMap.school}}</el-form-item>
-        <el-form-item label="所在城市">{{formatAddress(resultsMap.city)}}</el-form-item>
-        <el-form-item label="审核状态">
+    <el-col :span="20" >
+      <div style="margin-left:35%;" align="center" class="app-container">
+        <el-form ref="form" :model="resultsMap" label-width="auto" style="float: left;">
+          <el-form-item><h2 style="margin-left:-20%">老师信息</h2></el-form-item>
+          <el-form-item label="老师ID">{{resultsMap.id}}</el-form-item>
+          <el-form-item label="真实姓名">{{resultsMap.realName}}</el-form-item>
+          <el-form-item label="成功次数">{{resultsMap.totalSuccess}}次</el-form-item>
+          <el-form-item label="总体评分">
+            <el-rate
+              v-model="resultsMap.satisfaction / 100"
+              disabled
+              show-score
+              text-color="#ff9900"
+              show-text>
+            </el-rate>
+          </el-form-item>
+          <el-form-item label="总评论次数">{{resultsMap.totalComment}}次</el-form-item>
+          <el-form-item label="教学经验">{{resultsMap.experience}}年</el-form-item>
+          <el-form-item label="年龄">{{resultsMap.age}}岁</el-form-item>
+          <el-form-item label="擅长科目">{{resultsMap.goodAt}}</el-form-item>
+          <el-form-item label="课时费用">{{resultsMap.hourPrice / 100}}元</el-form-item>
+          <el-form-item label="在读/毕业院校">{{resultsMap.school}}</el-form-item>
+          <el-form-item label="所在城市">{{formatAddress(resultsMap.city)}}</el-form-item>
+          <el-form-item label="审核状态">
             <span v-if="resultsMap.state ==1" style="font-weight: bolder">已提交审核</span>
-            <span v-else-if="resultsMap.state ==2" style="color: #67C23A; font-weight: bolder">审核通过</span>
-            <span v-else style="color: #F56C6C; font-weight: bolder">审核不通过</span>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="dialogVisible2=true">修改</el-button>
-          <span v-if="resultsMap.state ==3"><el-button type="primary" @click="handle">重新认证</el-button></span>
-        </el-form-item>
-      </el-form>
-    </div>
+            <span v-else-if="resultsMap.state ==2" style="color: #F56C6C; font-weight: bolder">审核不通过</span>
+            <span v-else style="color: #67C23A; font-weight: bolder">审核通过</span>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="dialogVisible2=true">修改</el-button>
+            <span v-if="resultsMap.state ==3"><el-button type="primary" @click="handle">重新认证</el-button></span>
+          </el-form-item>
+        </el-form>
+
+      </div>
+    </el-col>
     <el-dialog title="修改老师信息" :visible.sync="dialogVisible2"  width="30%" :before-close="handleClose" :append-to-body="true">
       <el-form ref="ruleForm2" :model="ruleForm2" :rules="rules2" label-width="auto" class="demo-ruleForm">
         <el-form-item label="教学经验(年)" prop="experience"><el-input v-model="ruleForm2.experience" /></el-form-item>

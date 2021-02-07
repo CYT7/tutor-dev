@@ -252,7 +252,7 @@
   .body-border{
     border:1px solid #B3C0D1;
     border-radius: 4px;
-    /*margin-top: 2px*/
+    margin-top: 2px
   }
   .body-border-2{
     border:1px solid #B3C0D1;

@@ -3,41 +3,43 @@
     <el-col :span="20" :offset="2">
       <Header></Header>
     </el-col>
-    <div style="margin-top:8%;margin-left:35%;" align="center" class="app-container">
-      <el-form ref="form" :model="resultsMap" label-width="auto" style="float: left;">
-        <el-form-item><h2 style="margin-left:-20%">个人信息</h2></el-form-item>
-        <el-form-item label="头像">
-          <el-upload
-            class="avatar-uploader"
-            action="#"
-            :show-file-list="false"
-            :http-request="upLoad"
-            :before-upload="beforeAvatarUpload">
-            <img v-if="resultsMap.image_url !== null" :src="resultsMap.image_url" class="avatar" fit="cover" style="width: 100px;height: 100px">
-            <img v-else class="el-icon-plus avatar-uploader-icon" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" style="width: 100px;height: 100px">
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="用户昵称">{{resultsMap.nickName}}</el-form-item>
-        <el-form-item label="手机号码">{{resultsMap.phone}}</el-form-item>
-        <el-form-item label="邮箱">{{resultsMap.email}}</el-form-item>
-        <el-form-item label="余额">{{resultsMap.balance / 100 }}元</el-form-item>
-        <el-form-item label="QQ号" v-if="resultsMap.qq?'':resultsMap.qq">{{resultsMap.qq}}</el-form-item>
-        <el-form-item label="微信号" v-if="resultsMap.wechat?'':resultsMap.wechat">{{resultsMap.wechat}}</el-form-item>
-        <el-form-item label="性别">
-          <div class="grid-content bg-purple-light">
-            <span v-if="resultsMap.gender ==0">保密</span>
-            <span v-else-if="resultsMap.gender ==1">男</span>
-            <span v-else>女</span>
-          </div>
-        </el-form-item>
-        <el-form-item label="地址">{{formatAddress(resultsMap.address)}}</el-form-item>
-        <el-form-item>
-          <span v-if="resultsMap.type ==0"><el-button type="primary" @click="handle">申请做家教</el-button></span>
-          <el-button type="primary" @click="dialogVisible2=true">修改信息</el-button>
-          <el-button type="primary" @click="dialogVisible3=true">充值余额</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
+    <el-col :span="20">
+      <div style="margin-left:35%;" align="center" class="app-container">
+        <el-form ref="form" :model="resultsMap" label-width="auto" style="float: left;">
+          <el-form-item><h2 style="margin-left:-20%">个人信息</h2></el-form-item>
+          <el-form-item label="头像">
+            <el-upload
+              class="avatar-uploader"
+              action="#"
+              :show-file-list="false"
+              :http-request="upLoad"
+              :before-upload="beforeAvatarUpload">
+              <img v-if="resultsMap.image_url !== null" :src="resultsMap.image_url" class="avatar" fit="cover" style="width: 100px;height: 100px">
+              <img v-else class="el-icon-plus avatar-uploader-icon" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" style="width: 100px;height: 100px">
+            </el-upload>
+          </el-form-item>
+          <el-form-item label="用户昵称">{{resultsMap.nickName}}</el-form-item>
+          <el-form-item label="手机号码">{{resultsMap.phone}}</el-form-item>
+          <el-form-item label="邮箱">{{resultsMap.email}}</el-form-item>
+          <el-form-item label="余额">{{resultsMap.balance / 100 }}元</el-form-item>
+          <el-form-item label="QQ号" v-if="resultsMap.qq?'':resultsMap.qq">{{resultsMap.qq}}</el-form-item>
+          <el-form-item label="微信号" v-if="resultsMap.wechat?'':resultsMap.wechat">{{resultsMap.wechat}}</el-form-item>
+          <el-form-item label="性别">
+            <div class="grid-content bg-purple-light">
+              <span v-if="resultsMap.gender ==0">保密</span>
+              <span v-else-if="resultsMap.gender ==1">男</span>
+              <span v-else>女</span>
+            </div>
+          </el-form-item>
+          <el-form-item label="地址">{{formatAddress(resultsMap.address)}}</el-form-item>
+          <el-form-item>
+            <span v-if="resultsMap.type ==0"><el-button type="primary" @click="handle">申请做家教</el-button></span>
+            <el-button type="primary" @click="dialogVisible2=true">修改信息</el-button>
+            <el-button type="primary" @click="dialogVisible3=true">充值余额</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-col>
     <el-dialog title="修改个人信息" :visible.sync="dialogVisible2"  width="30%" :before-close="handleClose" :append-to-body="true">
       <el-form ref="ruleForm2" :model="ruleForm2" :rules="rules2" label-width="auto" class="demo-ruleForm">
         <el-form-item label="昵称" prop="nickName"><el-input v-model="ruleForm2.nickName" /></el-form-item>

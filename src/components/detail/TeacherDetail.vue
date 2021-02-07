@@ -83,6 +83,26 @@
                     </el-row>
                     <el-row>
                       <el-col :span="2" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple">评论次数</div></el-col>
+                      <el-col :span="10"><div class="grid-content bg-purple-light">{{teacherList.totalComment}}次</div></el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="2" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple">总体评分</div></el-col>
+                      <el-col :span="10">
+                        <div class="grid-content bg-purple-light">
+                          <el-rate
+                            v-model="teacherList.satisfaction / 100"
+                            disabled
+                            show-score
+                            text-color="#ff9900"
+                            show-text>
+                          </el-rate>
+                        </div>
+                      </el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="2" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple">所在城市</div></el-col>
                       <el-col :span="10"><div class="grid-content bg-purple-light">{{formatAddress(teacherList.city)}}</div></el-col>
                     </el-row>

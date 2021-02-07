@@ -18,7 +18,8 @@
                   <li><span>就读学校:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.school}}</li>
                   <li><span>所在城市:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{formatAddress(list.city)}}</li>
                   <li><span>擅长学科:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.goodAt}}</li>
-                  <li><span>课时费用:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.hourPrice}}元/时</li>
+                  <li><span>成功次数:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.totalSuccess}}</li>
+                  <li><span>课时费用:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.hourPrice /100 }}元/时</li>
                 </ul>
               </div>
             </div>
@@ -38,7 +39,7 @@
                 <ul class="info">
                   <li>辅导学科:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{list.subject}}</span></li>
                   <li>授课总价:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{list.totalPrice}}元</span></li>
-                  <li>授课地址:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{formatAddress(list.address)}}</span></li>
+                  <li>授课地址:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{formatAddress(list.city)}}</span></li>
                   <li>发布时间：&nbsp;&nbsp;<span>{{formatDate(list.createTime)}}</span></li>
                 </ul>
               </div>
