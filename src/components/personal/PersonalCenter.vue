@@ -22,12 +22,12 @@
           <el-form-item label="手机号码">{{resultsMap.phone}}</el-form-item>
           <el-form-item label="邮箱">{{resultsMap.email}}</el-form-item>
           <el-form-item label="余额">{{resultsMap.balance / 100 }}元</el-form-item>
-          <el-form-item label="QQ号" v-if="resultsMap.qq?'':resultsMap.qq">{{resultsMap.qq}}</el-form-item>
-          <el-form-item label="微信号" v-if="resultsMap.wechat?'':resultsMap.wechat">{{resultsMap.wechat}}</el-form-item>
+          <el-form-item label="QQ号" v-if="resultsMap.qq !== null">{{resultsMap.qq}}</el-form-item>
+          <el-form-item label="微信号" v-if="resultsMap.wechat !== null">{{resultsMap.wechat}}</el-form-item>
           <el-form-item label="性别">
             <div class="grid-content bg-purple-light">
-              <span v-if="resultsMap.gender ==0">保密</span>
-              <span v-else-if="resultsMap.gender ==1">男</span>
+              <span v-if="resultsMap.gender ==1">保密</span>
+              <span v-else-if="resultsMap.gender ==2">男</span>
               <span v-else>女</span>
             </div>
           </el-form-item>
@@ -133,22 +133,17 @@
         },
         options: provinceAndCityData,// 城市数据
         gender : [{
-          id:0,
+          id:1,
           name:'保密'
         },{
-          id:1,
+          id:2,
           name:'男'
         },{
-          id:2,
+          id:3,
           name:'女'
         }],
         rules2: {
           nickName: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
-          oldPassword: [{ required: true, message: '请输入旧密码', trigger: 'blur' }],
-          newPassword: [{required: true, validator: validatePass1, min: 6, message: '密码长度最少为6位', trigger: 'blur'}],
-          repassword: [
-            {required: true, validator: validatePass2,  trigger: 'blur'}
-          ],
         },
       }
     },
@@ -169,6 +164,7 @@
           }
         }).then((res) => {
             this.resultsMap = res.data.data
+            this.ruleForm2 = res.data.data
             console.log(this.resultsMap)
             },
             (err) => {
@@ -236,6 +232,11 @@
               if (res.data.code === 0) {
                 this.$refs[formName].resetFields()
                 this.dialogVisible2 = false
+                this.$message({
+                  message: res.data.msg || 'Success',
+                  type: 'Success',
+                  duration: 3 * 1000
+                })
               }
               console.log(res.data)
               this.getList();

@@ -31,8 +31,8 @@
                       <el-col :span="6"><div class="grid-content bg-purple">同学性别</div></el-col>
                       <el-col :span="4">
                         <div class="grid-content bg-purple-light">
-                          <span v-if="parentList.gender ==0">保密</span>
-                          <span v-else-if="parentList.gender ==1">男</span>
+                          <span v-if="parentList.gender ==1">保密</span>
+                          <span v-else-if="parentList.gender ==2">男</span>
                           <span v-else>女</span>
                         </div>
                       </el-col>
@@ -47,8 +47,8 @@
                       <el-col :span="6"><div class="grid-content bg-purple">教师性别要求</div></el-col>
                       <el-col :span="4">
                         <div class="grid-content bg-purple-light">
-                          <span v-if="parentList.teacherGender ==0">不限</span>
-                          <span v-else-if="parentList.teacherGender ==1">男</span>
+                          <span v-if="parentList.teacherGender ==1">不限</span>
+                          <span v-else-if="parentList.teacherGender ==2">男</span>
                           <span v-else>女</span>
                         </div>
                       </el-col>

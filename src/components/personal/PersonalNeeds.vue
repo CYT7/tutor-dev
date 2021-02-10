@@ -199,13 +199,13 @@
         },
         options: regionData,// 城市数据
         gender : [{
-          id:0,
+          id:1,
           name:'不限'
         },{
-          id:1,
+          id:2,
           name:'男'
         },{
-          id:2,
+          id:3,
           name:'女'
         }],
         times: [{
