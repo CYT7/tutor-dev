@@ -138,6 +138,7 @@
     },
     created(){
       this.getCateList();
+      this.getList();
     },
     methods:{
       goBack(){
@@ -150,11 +151,24 @@
           this.active = 0;
         }
       },
+      getList(){
+        axios.post('http://127.0.0.1:7001/business/teacher/information',{},{
+          headers:{
+            authorization:`Bearer ${Token}`
+          }
+        }).then((res) => {
+            this.addForm = res.data.data;
+            console.log(this.resultsMap)
+          },
+          (err) => {
+            console.log(err);
+          }
+        )
+      },
       next(formName){
         this.$refs[formName].validate(valid =>{
           if (valid) {
             if (this.active ===0){
-              this.addForm.hourPrice = this.addForm.hourPrice * 100
               axios.put('http://127.0.0.1:7001/business/teacher/information',this.addForm,{
                 headers:{
                   authorization:`Bearer ${Token}`,

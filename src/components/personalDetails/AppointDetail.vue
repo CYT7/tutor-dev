@@ -69,12 +69,12 @@
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">课时费用</div></el-col>
-                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.hourPrice /100}}元</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.hourPrice}}元</div></el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">预约总价格</div></el-col>
-                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.totalPrice /100}}元</div></el-col>
+                      <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.totalPrice}}元</div></el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>

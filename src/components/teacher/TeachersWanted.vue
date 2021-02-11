@@ -179,7 +179,7 @@
         if (!row.totalPrice) {
           return
         } else {
-          return row.totalPrice / 100 + '元'
+          return row.totalPrice + '元'
         }
       },
     }

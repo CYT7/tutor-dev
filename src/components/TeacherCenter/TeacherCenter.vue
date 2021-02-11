@@ -12,7 +12,7 @@
           <el-form-item label="成功次数">{{resultsMap.totalSuccess}}次</el-form-item>
           <el-form-item label="总体评分">
             <el-rate
-              v-model="resultsMap.satisfaction / 100"
+              v-model="resultsMap.satisfaction"
               disabled
               show-score
               text-color="#ff9900"
@@ -23,7 +23,7 @@
           <el-form-item label="教学经验">{{resultsMap.experience}}年</el-form-item>
           <el-form-item label="年龄">{{resultsMap.age}}岁</el-form-item>
           <el-form-item label="擅长科目">{{resultsMap.goodAt}}</el-form-item>
-          <el-form-item label="课时费用">{{resultsMap.hourPrice / 100}}元</el-form-item>
+          <el-form-item label="课时费用">{{resultsMap.hourPrice}}元</el-form-item>
           <el-form-item label="在读/毕业院校">{{resultsMap.school}}</el-form-item>
           <el-form-item label="所在城市">{{formatAddress(resultsMap.city)}}</el-form-item>
           <el-form-item label="审核状态">
@@ -33,10 +33,9 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="dialogVisible2=true">修改</el-button>
-            <span v-if="resultsMap.state ==3"><el-button type="primary" @click="handle">重新认证</el-button></span>
+            <span v-if="resultsMap.state ==2"><el-button type="primary" @click="handle">重新认证</el-button></span>
           </el-form-item>
         </el-form>
-
       </div>
     </el-col>
     <el-dialog title="修改老师信息" :visible.sync="dialogVisible2"  width="30%" :before-close="handleClose" :append-to-body="true">
@@ -118,6 +117,7 @@
           }
         }).then((res) => {
             this.resultsMap = res.data.data;
+            this.ruleForm2 = res.data.data;
             console.log(this.resultsMap)
           },
           (err) => {
@@ -152,7 +152,6 @@
         this.$refs[formName].validate(valid =>{
           console.log(this.ruleForm2)
           if (valid) {
-            this.ruleForm2.hourPrice = this.ruleForm2.hourPrice *100
             axios.put('http://127.0.0.1:7001/business/teacher/information',this.ruleForm2,{
               headers:{
                 authorization:`Bearer ${Token}`,

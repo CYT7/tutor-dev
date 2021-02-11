@@ -21,7 +21,7 @@
           <el-form-item label="用户昵称">{{resultsMap.nickName}}</el-form-item>
           <el-form-item label="手机号码">{{resultsMap.phone}}</el-form-item>
           <el-form-item label="邮箱">{{resultsMap.email}}</el-form-item>
-          <el-form-item label="余额">{{resultsMap.balance / 100 }}元</el-form-item>
+          <el-form-item label="余额">{{resultsMap.balance}}元</el-form-item>
           <el-form-item label="QQ号" v-if="resultsMap.qq !== null">{{resultsMap.qq}}</el-form-item>
           <el-form-item label="微信号" v-if="resultsMap.wechat !== null">{{resultsMap.wechat}}</el-form-item>
           <el-form-item label="性别">
@@ -254,7 +254,6 @@
         this.$refs[formName].validate(valid =>{
           console.log(this.ruleForm3)
           if (valid) {
-            this.ruleForm3.balance = this.ruleForm3.balance*100
             axios.post('http://127.0.0.1:7001/business/user/balanceAdd',this.ruleForm3,{
               headers:{
                 authorization:`Bearer ${Token}`,

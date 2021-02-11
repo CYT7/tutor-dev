@@ -86,13 +86,13 @@
                       <el-col :span="4"><div class="grid-content bg-purple">评论次数</div></el-col>
                       <el-col :span="10"><div class="grid-content bg-purple-light">{{teacherList.totalComment}}次</div></el-col>
                     </el-row>
-                    <el-row>
+                    <el-row v-if="teacherList.satisfaction !== 0">
                       <el-col :span="2" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple">总体评分</div></el-col>
                       <el-col :span="10">
                         <div class="grid-content bg-purple-light">
                           <el-rate
-                            v-model="teacherList.satisfaction / 100"
+                            v-model="teacherList.satisfaction"
                             disabled
                             show-score
                             text-color="#ff9900"
@@ -114,7 +114,7 @@
                     <el-row>
                       <el-col :span="2" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple">授课价格</div></el-col>
-                      <el-col :span="10"><div class="grid-content bg-purple-light">{{teacherList.hourPrice /100 }}元/小时</div></el-col>
+                      <el-col :span="10"><div class="grid-content bg-purple-light">{{teacherList.hourPrice }}元/小时</div></el-col>
                     </el-row>
                     <el-row>
                       <el-button type="primary" class="favorites" @click="dialogVisible2=true">预约</el-button>
@@ -172,7 +172,7 @@
               </el-cascader>
             </el-form-item>
             <el-form-item label="上课详情地址/区域" prop="address"><el-input v-model="ruleForm2.address" /></el-form-item>
-            <el-form-item label="课时费用" prop="hourPrice"><el-input v-model="ruleForm2.hourPrice" /></el-form-item>
+            <el-form-item label="课时费用" prop="hourPrice"><el-input v-model="ruleForm2.hourPrice = teacherList.hourPrice" /></el-form-item>
             <el-form-item label="联系方式" prop="phone"><el-input v-model="ruleForm2.phone" /></el-form-item>
             <el-form-item label="QQ" prop="qq"><el-input v-model="ruleForm2.qq" /></el-form-item>
             <el-form-item label="微信号" prop="wechat"><el-input v-model="ruleForm2.wechat" /></el-form-item>

@@ -14,7 +14,7 @@
         <el-table-column align="center" label="授课科目" prop="subject"></el-table-column>
         <el-table-column align="center" label="上几次课" prop="frequency"></el-table-column>
         <el-table-column align="center" label="城市区域" prop="city" :formatter="formatAddress"></el-table-column>
-        <el-table-column align="center" label="需求总报价(元)" prop="totalPrice" :formatter="formatFee"></el-table-column>
+        <el-table-column align="center" label="需求总报价(元)" prop="totalPrice"></el-table-column>
         <el-table-column align="center" label="需求发布时间" prop="createTime" :formatter="formatDate"></el-table-column>
         <el-table-column label="需求状态" prop="state" align="center">
           <template slot-scope="scope">
@@ -48,7 +48,18 @@
                 <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">关闭</el-button>
               </el-popconfirm>
             </span>
-            <span v-else-if="scope.row.state != 5 && scope.row.state != 6">
+            <span v-else-if="scope.row.state == 2">
+              <router-link :to="{path:`/NeedDetail`,name:`NeedDetail`,params:{id:scope.row.id},query:{id:scope.row.id}}">
+              <el-button type="text" size="small" icon="el-icon-thumb">查看</el-button>
+            </router-link>
+              <el-popconfirm title="确定修改此需求吗？" @confirm="handleModify({id:scope.row.id})">
+                <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">修改</el-button>
+              </el-popconfirm>
+               <el-popconfirm title="确定关闭此需求吗？" @confirm="handleShut({id:scope.row.id})">
+                <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">关闭</el-button>
+              </el-popconfirm>
+            </span>
+            <span v-else>
               <router-link :to="{path:`/NeedDetail`,name:`NeedDetail`,params:{id:scope.row.id},query:{id:scope.row.id}}">
               <el-button type="text" size="small" icon="el-icon-thumb">查看</el-button>
             </router-link>
@@ -111,7 +122,7 @@
         <el-form-item label="课时费用" prop="hourPrice"><el-input v-model="ruleForm2.hourPrice" /></el-form-item>
         <el-form-item label="家教性别要求" prop="teacherGender">
           <el-radio-group v-model="ruleForm2.teacherGender" name="teacherGender" style="float: left">
-            <el-radio v-for="item in gender" :key = "item.id" :label="item.id">{{item.name}}</el-radio>
+            <el-radio v-for="item in gender1" :key = "item.id" :label="item.id">{{item.name}}</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="联系方式" prop="phone"><el-input v-model="ruleForm2.phone" /></el-form-item>
@@ -120,6 +131,61 @@
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm2')">立即创建</el-button>
           <el-button @click="resetForm('ruleForm2')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+    <el-dialog title="修改需求"
+               :visible.sync="dialogVisible4"
+               width="30%"
+               :before-close="handleClose"
+               :append-to-body="true">
+      <el-form ref="ruleForm4" :model="ruleForm4" :rules="rules4" label-width="140px" class="demo-ruleForm">
+        <el-form-item label="学生称呼" prop="nickName"><el-input v-model="ruleForm4.nickName" /></el-form-item>
+        <el-form-item label="性别" prop="gender">
+          <el-radio-group v-model="ruleForm4.gender" name="gender" style="float: left">
+            <el-radio v-for="item in gender" :key = "item.id" :label="item.id">{{item.name}}</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="科目" prop="subject">
+          <el-select v-model="ruleForm4.subject" placeholder="请选择" style="float: left">
+            <el-option
+              v-for="item in catelist"
+              :key="item.id"
+              :label="item.name"
+              :value="item.name"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="预约上几次家教" prop="frequency"><el-input v-model="ruleForm4.frequency" /></el-form-item>
+        <el-form-item label="上课时间" prop="teach_date">
+          <el-cascader
+            v-model="ruleForm4.teach_date"
+            :options="times"
+            style="float: left;"></el-cascader>
+        </el-form-item>
+        <el-form-item label="每次上几小时" prop="timeHour"><el-input v-model="ruleForm4.timeHour" /></el-form-item>
+        <el-form-item label="所在城市区域" prop="city">
+          <el-cascader
+            style="float: left"
+            placeholder="请选择城市"
+            :options="options"
+            v-model="ruleForm4.city"
+            :show-all-levels="false">
+          </el-cascader>
+        </el-form-item>
+        <el-form-item label="上课详情地址/区域" prop="address"><el-input v-model="ruleForm4.address" /></el-form-item>
+        <el-form-item label="课时费用" prop="hourPrice"><el-input v-model="ruleForm4.hourPrice" /></el-form-item>
+        <el-form-item label="家教性别要求" prop="teacherGender">
+          <el-radio-group v-model="ruleForm4.teacherGender" name="teacherGender" style="float: left">
+            <el-radio v-for="item in gender1" :key = "item.id" :label="item.id">{{item.name}}</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="联系方式" prop="phone"><el-input v-model="ruleForm4.phone" /></el-form-item>
+        <el-form-item label="QQ" prop="qq"><el-input v-model="ruleForm4.qq" /></el-form-item>
+        <el-form-item label="微信号" prop="wechat"><el-input v-model="ruleForm4.wechat" /></el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm3('ruleForm4')">立即修改</el-button>
+          <el-button @click="resetForm3('ruleForm4')">重置</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -163,6 +229,7 @@
         tokens : [],
         dialogVisible2:false,
         dialogVisible3:false,
+        dialogVisible4:false,
         ruleForm2:{
           nickName:'',
           gender:'',
@@ -189,6 +256,32 @@
           hourPrice:[{ required: true, message: '请输入课时费用', trigger: 'blur' }],
           phone: [{ required: true, message: '请输入手机号码', trigger: 'blur',validator: checkMobile, trigger: 'blur' },],
         },
+        ruleForm4:{
+          nickName:'',
+          gender:'',
+          teacherGender:'',
+          frequency:'',
+          timeHour:'',
+          teach_date:'',
+          hourPrice:'',
+          phone:'',
+          qq:'',
+          wechat:'',
+          address:'',
+          city:[],
+          subject:'',
+        },
+        rules4: {
+          nickName: [{ required: true, message: '请输入学生称呼', trigger: 'blur' }],
+          frequency: [{ required: true, message: '请输入要上几次课', trigger: 'blur' }],
+          timeHour: [{ required: true, message: '请输入要上几小时', trigger: 'blur' }],
+          teach_date: [{ required: true, message: '请选择周几什么时段上课', trigger: 'blur' }],
+          subject: [{ required: true, message: '请选择科目', trigger: 'blur' }],
+          city:[{ required: true, message: '请输入所在城市', trigger: 'blur' }],
+          address:[{ required: true, message: '请输入上课详情地址/区域', trigger: 'blur' }],
+          hourPrice:[{ required: true, message: '请输入课时费用', trigger: 'blur' }],
+          phone: [{ required: true, message: '请输入手机号码', trigger: 'blur',validator: checkMobile, trigger: 'blur' },],
+        },
         ruleForm3:{
           content:'',
           rate:null,
@@ -199,6 +292,16 @@
         },
         options: regionData,// 城市数据
         gender : [{
+          id:1,
+          name:'保密'
+        },{
+          id:2,
+          name:'男'
+        },{
+          id:3,
+          name:'女'
+        }],
+        gender1 : [{
           id:1,
           name:'不限'
         },{
@@ -378,6 +481,57 @@
         })
         console.log(id)
       },
+      handleModify(id){
+        this.dialogVisible4 = true;
+        axios.post('http://127.0.0.1:7001/business/need/information',id,{
+          headers:{
+            authorization:`Bearer ${tokens}`
+          }
+        }).then(
+          (res) => {
+            this.ruleForm4 = res.data.data;
+          },
+          (err) => {
+            console.log(err);
+          }
+        )
+        console.log(id)
+      },
+      submitForm3(formName){
+        this.$refs[formName].validate(valid =>{
+          if (valid) {
+            axios.put('http://127.0.0.1:7001/business/need/modify',this.ruleForm4,{
+              headers:{
+                authorization:`Bearer ${tokens}`
+              }
+            }).then(res => {
+              if (res.data.code === 0) {
+                this.$refs[formName].resetFields()
+                this.dialogVisible4 = false
+                this.getList()
+                this.$message({
+                  title:'成功',
+                  message:res.data.msg,
+                  type:'success'
+                })
+              } else {
+                this.$message({
+                  title:'失败',
+                  message:res.data.msg,
+                  type:'error'
+                })
+              }
+              console.log(res.data)
+            })
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
+      },
+      resetForm3 (formName) {
+        this.$refs[formName].resetFields()
+      },
       // 完成预约
       handleComplete(id) {
         this.dialogVisible3 = true;
@@ -467,7 +621,6 @@
       submitForm(formName){
         this.$refs[formName].validate(valid =>{
           if (valid) {
-            this.ruleForm2.hourPrice = this.ruleForm2.hourPrice * 100
             axios.post('http://127.0.0.1:7001/business/need/create',this.ruleForm2,{
               headers:{
                 authorization:`Bearer ${tokens}`
@@ -508,13 +661,6 @@
             break
         }
         return area
-      },
-      formatFee(row, column) {
-        if (!row.totalPrice) {
-          return
-        } else {
-          return row.totalPrice / 100 + '元'
-        }
       },
     }
   }
