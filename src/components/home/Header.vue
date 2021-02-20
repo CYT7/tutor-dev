@@ -3,7 +3,7 @@
     <div style="height: 60px">
       <img src="../../assets/styles/images/logo.png" class="logo">
       <div class="block">
-        <div style="margin-right: 15px">欢迎你! {{resultsMap.nickName}}</div>
+        <div style="margin-right: 15px">{{resultsMap.nickName}}</div>
         <router-link tag="div" :to="{path:'/PersonalCenter'}">
           <el-avatar :size="60" style="float: left;"  :src="resultsMap.image_url" :key="resultsMap.image_url" v-if="resultsMap.image_url !== null"></el-avatar>
           <el-avatar v-else :size="60" style="float: left;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>

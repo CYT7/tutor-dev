@@ -20,7 +20,7 @@
           </el-form-item>
           <el-form-item label="用户昵称">{{resultsMap.nickName}}</el-form-item>
           <el-form-item label="手机号码">{{resultsMap.phone}}</el-form-item>
-          <el-form-item label="邮箱">{{resultsMap.email}}</el-form-item>
+          <el-form-item label="邮箱" v-if="resultsMap.email === null">{{resultsMap.email}}</el-form-item>
           <el-form-item label="余额">{{resultsMap.balance}}元</el-form-item>
           <el-form-item label="QQ号" v-if="resultsMap.qq !== null">{{resultsMap.qq}}</el-form-item>
           <el-form-item label="微信号" v-if="resultsMap.wechat !== null">{{resultsMap.wechat}}</el-form-item>
@@ -193,7 +193,8 @@
               message:res.data.msg
             })
           }
-            this.getList();
+          this.getList();
+          location.reload();
           },
           (err) => {
             console.log(err);

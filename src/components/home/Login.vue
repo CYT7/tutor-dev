@@ -82,11 +82,7 @@ export default {
               if (res.data.code === 0 ){
                 localStorage.setItem('token',res.data.token)
                 this.$router.push('/home')
-                this.$message({
-                  message: res.data.msg || 'Success',
-                  type: 'Success',
-                  duration: 3 * 1000
-                })
+                location.reload()
                 console.log(res.data)
               }else if (res.data.code !== 0) {
                 this.$message({

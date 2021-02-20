@@ -126,9 +126,6 @@
                         <el-popconfirm title="确定此需求完成了吗？" @confirm="handleComplete({id:resultsMap.id})">
                           <el-button slot="reference" class="favorites" type="primary">完成</el-button>
                         </el-popconfirm>
-                        <el-popconfirm title="确定关闭此需求吗？" @confirm="handleShut({id:resultsMap.id})">
-                          <el-button slot="reference" class="favorites" type="danger">关闭</el-button>
-                        </el-popconfirm>
                       </span>
                       <span v-if="resultsMap.state == 2">
                         <el-popconfirm title="确定修改此需求吗？" @confirm="handleModify({id:resultsMap.id})">

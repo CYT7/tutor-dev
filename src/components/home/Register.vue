@@ -6,7 +6,7 @@
           <el-row>
             <div style="width: auto;height: 60px;display:flex;">
               <img src="../../assets/styles/images/logo.png" class="logo" style="width: 180px;height: 60px;float: left">
-              <h2 style="float: left">家教网-家长注册</h2>
+              <h2 style="float: left">家教网-注册</h2>
             </div>
             <el-divider></el-divider>
             <el-form  label-width="80px"  :model="parentRegisterForm" :rules="rules" ref="parentRegisterForm">
@@ -68,6 +68,7 @@ export default {
     // 验证邮箱的校验规则
     var checkEmail = (rule, value, callback) => {
       const regEmail =  /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;// 验证邮箱的正则表达式
+      if (!value){return callback()}
       if (regEmail.test(value)) {
         return callback()// 合法的邮箱
       }
@@ -120,7 +121,7 @@ export default {
           { required: true, message: '请输入手机号码', trigger: 'blur',validator: checkMobile, trigger: 'blur' },
         ],
         email:[
-          { required: true, message: '请输入邮箱', trigger: 'blur',validator: checkEmail, trigger: 'blur' },
+          {validator: checkEmail},
         ],
         password: [
           {required: true, validator: validatePass1, min: 6, message: '密码长度最少为6位', trigger: 'blur'}

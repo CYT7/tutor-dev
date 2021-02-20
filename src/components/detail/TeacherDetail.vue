@@ -143,16 +143,7 @@
           <el-form ref="ruleForm2" :model="ruleForm2" :rules="rules2" label-width="140px" class="demo-ruleForm">
             <el-form-item label="老师编号" prop="id"><el-input v-model="ruleForm2.id=teacherList.id" disabled /></el-form-item>
             <el-form-item label="学生称呼" prop="name"><el-input v-model="ruleForm2.name" /></el-form-item>
-            <el-form-item label="科目" prop="subject">
-              <el-select v-model="ruleForm2.subject" placeholder="请选择" style="float: left">
-                <el-option
-                  v-for="item in catelist"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.name"
-                ></el-option>
-              </el-select>
-            </el-form-item>
+            <el-form-item label="科目" prop="subject"><el-input v-model="ruleForm2.subject = teacherList.goodAt" /></el-form-item>
             <el-form-item label="预约上几次家教" prop="frequency"><el-input v-model="ruleForm2.frequency" /></el-form-item>
             <el-form-item label="上课时间" prop="teach_date">
               <el-cascader

@@ -630,6 +630,11 @@
                 this.$refs[formName].resetFields()
                 this.dialogVisible2 = false
                 this.getList()
+                this.$message({
+                  title:'成功',
+                  message:res.data.msg,
+                  type:'success'
+                })
               }
               console.log(res.data)
             })
