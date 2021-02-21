@@ -19,7 +19,7 @@
                   <li><span>所在城市:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{formatAddress(list.city)}}</li>
                   <li><span>擅长学科:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.goodAt}}</li>
                   <li><span>成功次数:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.totalSuccess}}</li>
-                  <li><span>课时费用:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.hourPrice /100 }}元/时</li>
+                  <li><span>课时费用:</span>&nbsp;&nbsp;&nbsp;&nbsp;{{list.hourPrice}}元/时</li>
                 </ul>
               </div>
             </div>

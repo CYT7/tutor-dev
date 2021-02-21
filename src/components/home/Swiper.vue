@@ -2,13 +2,15 @@
   <div class="wrapper">
     <swiper :options="swiperOption" >
       <swiper-slide v-for="item in swiperList" :key="item.id">
-        <img :src="item.url" class="swiper-img">
+        <img :src="item.carousel" class="swiper-img">
       </swiper-slide>
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
   </div>
 </template>
 <script>
+  import axios from 'axios'
+  const Token = localStorage.getItem('token');
   export default {
     name: "HomeSwiper",
     data() {
@@ -18,18 +20,27 @@
           pagination: '.swiper-pagination',
           loop: true
         },
-        swiperList: [
-          {
-            id: "0001", url:require('../../assets/styles/images/banner1.png')
-          },
-          {
-            id: "0002",  url:require('../../assets/styles/images/banner2.png')
-          },
-          {
-            id: "0003",  url:require('../../assets/styles/images/banner3.png')
-          }
-        ]
+        swiperList: []
       }
+    },
+    created() {
+      this.getList();
+    },
+    methods:{
+      getList(){
+        axios.get('http://127.0.0.1:7001/business/banner/list',{
+          headers:{
+            authorization:`Bearer ${Token}`
+          }
+        }).then((res) => {
+            this.swiperList = res.data.data
+            console.log(this.swiperList)
+          },
+          (err) => {
+            console.log(err);
+          }
+        )
+      },
     }
   }
 </script>
