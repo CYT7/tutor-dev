@@ -390,6 +390,13 @@
                   type: 'Success',
                   duration: 3 * 1000
                 })
+              }else {
+                this.dialogVisible2 = false
+                this.$message({
+                  title:'失败',
+                  message:res.data.msg,
+                  type:'error'
+                })
               }
               console.log(res)
             })

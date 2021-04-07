@@ -595,6 +595,7 @@
                   type:'success'
                 })
               } else {
+                this.dialogVisible2 = false
                 this.$message({
                   title:'失败',
                   message:res.data.msg,

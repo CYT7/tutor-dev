@@ -154,7 +154,6 @@
         this.$refs[formName].validate(valid =>{
           if (valid) {
             if (this.active ===0){
-              this.addForm.hourPrice = this.addForm.hourPrice * 100
               axios.post('http://127.0.0.1:7001/business/teacher/create',this.addForm,{
                 headers:{
                   authorization:`Bearer ${Token}`,
