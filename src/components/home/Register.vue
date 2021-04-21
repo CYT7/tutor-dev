@@ -98,13 +98,13 @@ export default {
       // 城市数据
       options: provinceAndCityData,
       gender : [{
-        id:0,
+        id:1,
         name:'保密'
       },{
-        id:1,
+        id:2,
         name:'男'
       },{
-        id:2,
+        id:3,
         name:'女'
       }],
       parentRegisterForm: {

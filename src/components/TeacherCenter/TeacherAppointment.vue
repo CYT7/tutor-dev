@@ -2,7 +2,7 @@
   <el-row :gutter="20">
     <el-col :span="20" :offset="2"><Header></Header></el-col>
     <div style="margin-top: 10px" align="center">
-      <el-table :data="resultsMap" style="width: 82%" height="500"><!--height可实现固定表头的表格-->
+      <el-table :data="resultsMap" style="width: 80%" height="700px"><!--height可实现固定表头的表格-->
         <el-table-column type="index" width="50" align="center" />
         <el-table-column align="center" label="预约id" prop="id"> </el-table-column>
         <el-table-column align="center" label="学生称呼" prop="name"> </el-table-column>

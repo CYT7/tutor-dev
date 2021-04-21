@@ -7,7 +7,7 @@
       </div>
     </el-col>
     <div style="margin-top: 20px" align="center">
-      <el-table :data="resultsMap" style="width: 80%" height="500"><!--height可实现固定表头的表格-->
+      <el-table :data="resultsMap" style="width: 80%" height="700px"><!--height可实现固定表头的表格-->
         <el-table-column type="index" width="50" align="center" />
         <el-table-column align="center" label="需求id" prop="id"> </el-table-column>
         <el-table-column align="center" label="学生称呼" prop="nickName"> </el-table-column>
@@ -119,7 +119,7 @@
           </el-cascader>
         </el-form-item>
         <el-form-item label="上课详情地址/区域" prop="address"><el-input v-model="ruleForm2.address" /></el-form-item>
-        <el-form-item label="课时费用" prop="hourPrice"><el-input v-model="ruleForm2.hourPrice" /></el-form-item>
+        <el-form-item label="课时费用(元)" prop="hourPrice"><el-input v-model="ruleForm2.hourPrice" /></el-form-item>
         <el-form-item label="家教性别要求" prop="teacherGender">
           <el-radio-group v-model="ruleForm2.teacherGender" name="teacherGender" style="float: left">
             <el-radio v-for="item in gender1" :key = "item.id" :label="item.id">{{item.name}}</el-radio>

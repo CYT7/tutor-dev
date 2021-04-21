@@ -67,35 +67,41 @@
                     </el-row>
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
-                      <el-col :span="6"><div class="grid-content bg-purple">详情地址</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">授课详情地址</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.address}}</div></el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
-                      <el-col :span="6"><div class="grid-content bg-purple">联系方式</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">同学联系方式</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.phone}}</div></el-col>
                     </el-row>
                     <el-row v-if="resultsMap.qq?'':resultsMap.qq">
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
-                      <el-col :span="6"><div class="grid-content bg-purple">QQ</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">同学QQ</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.qq}}</div></el-col>
                     </el-row>
                     <el-row v-if="resultsMap.wechat?'':resultsMap.wechat">
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
-                      <el-col :span="6"><div class="grid-content bg-purple">微信号</div></el-col>
+                      <el-col :span="6"><div class="grid-content bg-purple">同学微信号</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.wechat?'':resultsMap.wechat}}</div></el-col>
                     </el-row>
-                    <el-row>
+                    <el-row v-if="resultsMap.content?'':resultsMap.content">
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">评论</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.content}}</div></el-col>
                     </el-row>
-                    <el-row>
+                    <el-row v-if="resultsMap.rate?'':resultsMap.rate">
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">评分</div></el-col>
                       <el-col :span="4">
                         <div class="grid-content bg-purple-light">
-                          <el-rate v-model="resultsMap.rate" show-text> </el-rate>
+                          <el-rate
+                            v-model="resultsMap.rate"
+                            disabled
+                            show-score
+                            text-color="#ff9900"
+                            show-text>
+                          </el-rate>
                         </div>
                       </el-col>
                     </el-row>

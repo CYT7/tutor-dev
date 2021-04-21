@@ -31,7 +31,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="课时费用" prop="hourPrice"><el-input v-model="addForm.hourPrice"></el-input></el-form-item>
+            <el-form-item label="课时费用(元)" prop="hourPrice"><el-input v-model="addForm.hourPrice"></el-input></el-form-item>
             <el-form-item label="就读院校" prop="school"><el-input v-model="addForm.school"></el-input></el-form-item>
             <el-form-item label="所在城市" prop="city">
               <el-cascader

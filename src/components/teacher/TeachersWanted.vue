@@ -4,7 +4,7 @@
       <TeachersWantedHeader></TeachersWantedHeader>
     </el-col>
     <div style="margin-top: 10px" align="center">
-      <el-table :data="needData" style="width: 80%" height="500">
+      <el-table :data="needData" style="width: 80%" height="700px">
         <!--height可实现固定表头的表格-->
         <el-table-column type="index" width="50" align="center"/>
         <el-table-column align="center" label="学生称呼" prop="nickName"> </el-table-column>

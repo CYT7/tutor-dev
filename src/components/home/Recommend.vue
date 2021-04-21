@@ -39,6 +39,7 @@
                 <ul class="info">
                   <li>辅导学科:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{list.subject}}</span></li>
                   <li>授课总价:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{list.totalPrice}}元</span></li>
+                  <li>课时费用:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{list.hourPrice}}元/时</span></li>
                   <li>授课地址:&nbsp;&nbsp;&nbsp;&nbsp;<span>{{formatAddress(list.city)}}</span></li>
                   <li>发布时间：&nbsp;&nbsp;<span>{{formatDate(list.createTime)}}</span></li>
                 </ul>

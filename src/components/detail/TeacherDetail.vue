@@ -163,7 +163,7 @@
               </el-cascader>
             </el-form-item>
             <el-form-item label="上课详情地址/区域" prop="address"><el-input v-model="ruleForm2.address" /></el-form-item>
-            <el-form-item label="课时费用" prop="hourPrice"><el-input v-model="ruleForm2.hourPrice = teacherList.hourPrice" /></el-form-item>
+            <el-form-item label="课时费用(元)" prop="hourPrice"><el-input v-model="ruleForm2.hourPrice = teacherList.hourPrice" /></el-form-item>
             <el-form-item label="联系方式" prop="phone"><el-input v-model="ruleForm2.phone" /></el-form-item>
             <el-form-item label="QQ" prop="qq"><el-input v-model="ruleForm2.qq" /></el-form-item>
             <el-form-item label="微信号" prop="wechat"><el-input v-model="ruleForm2.wechat" /></el-form-item>

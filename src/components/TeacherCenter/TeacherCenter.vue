@@ -52,7 +52,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="课时费用(分)" prop="hourPrice"><el-input v-model="ruleForm2.hourPrice" /></el-form-item>
+        <el-form-item label="课时费用(元)" prop="hourPrice"><el-input v-model="ruleForm2.hourPrice" /></el-form-item>
         <el-form-item label="所在城市" prop="city">
           <el-cascader
             style="float: left"

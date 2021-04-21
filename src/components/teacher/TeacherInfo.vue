@@ -4,7 +4,7 @@
       <TeacherInfoHeader></TeacherInfoHeader>
     </el-col>
     <div style="margin-top: 10px" align="center">
-      <el-table :data="teacherData" style="width: 80%" height="500"><!--height可实现固定表头的表格-->
+      <el-table :data="teacherData" style="width: 80%" height="700px"><!--height可实现固定表头的表格-->
         <el-table-column type="index" width="50" align="center" />
         <el-table-column align="center" label="家教 ID"  prop="id"></el-table-column>
         <el-table-column align="center" label="教授科目" prop="goodAt"></el-table-column>
