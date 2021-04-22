@@ -142,20 +142,17 @@
                       </el-col>
                     </el-row>
                     <el-row style="margin-top: 20px">
-                      <span v-if="resultsMap.state == 4">
+                      <span v-if="resultsMap.state === 4">
                         <el-popconfirm title="确定此需求完成了吗？" @confirm="handleComplete({id:resultsMap.id})">
                           <el-button slot="reference" class="favorites" type="primary">完成</el-button>
                         </el-popconfirm>
                       </span>
-                      <span v-if="resultsMap.state == 2">
+                      <span v-if="resultsMap.state === 2">
                         <el-popconfirm title="确定修改此需求吗？" @confirm="handleModify({id:resultsMap.id})">
                           <el-button slot="reference" class="favorites" type="primary">修改</el-button>
                         </el-popconfirm>
-                        <el-popconfirm title="确定关闭此需求吗？" @confirm="handleShut({id:resultsMap.id})">
-                          <el-button slot="reference" class="favorites" type="danger">关闭</el-button>
-                        </el-popconfirm>
                       </span>
-                      <span v-else>
+                      <span v-if="resultsMap.state !== 5&&resultsMap.state !== 6">
                         <el-popconfirm title="确定关闭此需求吗？" @confirm="handleShut({id:resultsMap.id})">
                           <el-button slot="reference" class="favorites" type="danger">关闭</el-button>
                         </el-popconfirm>
@@ -262,7 +259,7 @@
             </el-dialog>
             <el-dialog title="评论" :visible.sync="dialogVisible2" width="30%" :before-close="handleClose" :append-to-body="true">
               <el-form ref="ruleForm2" :model="ruleForm2" :rules="rules2" label-width="140px" class="demo-ruleForm">
-                <el-form-item label="评论" prop="content"><el-input v-model="ruleForm2.content"/></el-form-item>
+                <el-form-item label="评论(20字以内)" prop="content"><el-input v-model="ruleForm2.content"/></el-form-item>
                 <el-form-item label="评分" prop="rate">
                   <el-rate
                     v-model="ruleForm2.rate"
@@ -313,7 +310,7 @@
           id:''
         },
         rules2: {
-          content: [{ required: true,message: '请输入你的评论内容', trigger: 'blur' },{max: 5,message: '超过字数限制' }]
+          content: [{ required: true,message: '请输入你的评论内容', trigger: 'blur' },{max: 20,message: '超过字数限制' }]
         },
         ruleForm4:{
           nickName:'',

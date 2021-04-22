@@ -29,7 +29,7 @@
         <!--点击查看，跳转到预约页面详情-->
         <el-table-column align="center" label="操作">
           <template slot-scope="scope">
-            <span v-if="scope.row.state == 4">
+            <span v-if="scope.row.state === 4">
               <router-link :to="{path:`/NeedDetail`,name:`NeedDetail`,params:{id:scope.row.id},query:{id:scope.row.id}}">
               <el-button type="text" size="small" icon="el-icon-thumb">查看</el-button>
             </router-link>
@@ -40,7 +40,7 @@
                 <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">关闭</el-button>
               </el-popconfirm>
             </span>
-            <span v-else-if="scope.row.state == 3">
+            <span v-else-if="scope.row.state === 3">
               <router-link :to="{path:`/NeedDetail`,name:`NeedDetail`,params:{id:scope.row.id},query:{id:scope.row.id}}">
               <el-button type="text" size="small" icon="el-icon-thumb">选择老师</el-button>
             </router-link>
@@ -48,7 +48,7 @@
                 <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">关闭</el-button>
               </el-popconfirm>
             </span>
-            <span v-else-if="scope.row.state == 2">
+            <span v-else-if="scope.row.state === 2">
               <router-link :to="{path:`/NeedDetail`,name:`NeedDetail`,params:{id:scope.row.id},query:{id:scope.row.id}}">
               <el-button type="text" size="small" icon="el-icon-thumb">查看</el-button>
             </router-link>
@@ -62,10 +62,7 @@
             <span v-else>
               <router-link :to="{path:`/NeedDetail`,name:`NeedDetail`,params:{id:scope.row.id},query:{id:scope.row.id}}">
               <el-button type="text" size="small" icon="el-icon-thumb">查看</el-button>
-            </router-link>
-               <el-popconfirm title="确定关闭此需求吗？" @confirm="handleShut({id:scope.row.id})">
-                <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">关闭</el-button>
-              </el-popconfirm>
+              </router-link>
             </span>
           </template>
         </el-table-column>
@@ -191,7 +188,7 @@
     </el-dialog>
     <el-dialog title="评论" :visible.sync="dialogVisible3" width="30%" :before-close="handleClose" :append-to-body="true">
       <el-form ref="ruleForm3" :model="ruleForm3" :rules="rules3" label-width="140px" class="demo-ruleForm">
-        <el-form-item label="评论" prop="content"><el-input v-model="ruleForm3.content"/></el-form-item>
+        <el-form-item label="评论(20字以内)" prop="content"><el-input v-model="ruleForm3.content"/></el-form-item>
         <el-form-item label="评分" prop="rate">
           <el-rate
             v-model="ruleForm3.rate"
@@ -288,7 +285,7 @@
           id:''
         },
         rules3: {
-          content: [{ required: true,message: '请输入你的评论内容', trigger: 'blur' },{max: 5,message: '超过字数限制' }]
+          content: [{ required: true,message: '请输入你的评论内容', trigger: 'blur' },{max: 20,message: '超过字数限制' }]
         },
         options: regionData,// 城市数据
         gender : [{

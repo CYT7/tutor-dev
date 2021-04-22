@@ -128,7 +128,7 @@
                         </el-popconfirm>
                       </span>
                       <span v-else-if="resultsMap.state ==1">
-                        <el-popconfirm title="确定关闭此预约吗？" @confirm="handleAgree({id:resultsMap.id})">
+                        <el-popconfirm title="确定关闭此预约吗？" @confirm="handleClose({id:resultsMap.id})">
                           <el-button slot="reference" class="favorites" type="danger">关闭</el-button>
                         </el-popconfirm>
                       </span>

@@ -126,16 +126,16 @@
                       <el-col :span="6"><div class="grid-content bg-purple">预约状态</div></el-col>
                       <el-col :span="4">
                         <div class="grid-content bg-purple-light">
-                          <span v-if="resultsMap.state ==0">老师尚未受理预约</span>
-                          <span v-else-if="resultsMap.state ==1">老师已同意预约</span>
-                          <span v-else-if="resultsMap.state ==2">预约进行中</span>
-                          <span v-else-if="resultsMap.state ==3">预约已完成</span>
+                          <span v-if="resultsMap.state ===0">老师尚未受理预约</span>
+                          <span v-else-if="resultsMap.state ===1">老师已同意预约</span>
+                          <span v-else-if="resultsMap.state ===2">预约进行中</span>
+                          <span v-else-if="resultsMap.state ===3">预约已完成</span>
                           <span v-else>预约已关闭</span>
                         </div>
                       </el-col>
                     </el-row>
                     <el-row>
-                      <span v-if="resultsMap.state == 1">
+                      <span v-if="resultsMap.state === 1">
                         <el-popconfirm title="确定支付此预约吗？" @confirm="handlePay({id:resultsMap.id})">
                           <el-button slot="reference" class="favorites" type="primary">支付预约</el-button>
                         </el-popconfirm>
@@ -143,7 +143,7 @@
                           <el-button slot="reference" class="favorites" type="danger">关闭</el-button>
                         </el-popconfirm>
                       </span>
-                      <span v-if="resultsMap.state == 2">
+                      <span v-if="resultsMap.state === 2">
                         <el-popconfirm title="确定此预约完成吗？" @confirm="handleComplete({id:resultsMap.id})">
                           <el-button slot="reference" class="favorites" type="primary">完成</el-button>
                         </el-popconfirm>
@@ -151,7 +151,7 @@
                           <el-button slot="reference" class="favorites" type="danger">关闭</el-button>
                         </el-popconfirm>
                       </span>
-                      <span v-else-if="resultsMap.state ==3 && resultsMap.state ==4">
+                      <span v-else-if="resultsMap.state ===3 && resultsMap.state ===4">
                         <el-popconfirm title="确定关闭此预约吗？" @confirm="handleShut({id:resultsMap.id})">
                           <el-button slot="reference" class="favorites" type="danger">关闭</el-button>
                         </el-popconfirm>
@@ -181,7 +181,7 @@
         </el-row>
         <el-dialog title="评论" :visible.sync="dialogVisible2" width="30%" :before-close="handleClose" :append-to-body="true">
           <el-form ref="ruleForm2" :model="ruleForm2" :rules="rules2" label-width="140px" class="demo-ruleForm">
-            <el-form-item label="评论" prop="content"><el-input v-model="ruleForm2.content"/></el-form-item>
+            <el-form-item label="评论(20字以内)" prop="content"><el-input v-model="ruleForm2.content"/></el-form-item>
             <el-form-item label="评分" prop="rate">
               <el-rate
                 v-model="ruleForm2.rate"
@@ -227,16 +227,16 @@
       this.getParams()
     },
     methods:{
-      getParams(){
-        this.id =this.$route.query.id
-        axios.post('http://127.0.0.1:7001/business/appoint/userSee',{id:this.id},{
-          headers:{
-            authorization:`Bearer ${tokens}`
+      getParams: function () {
+        this.id = this.$route.query.id;
+        axios.post('http://127.0.0.1:7001/business/appoint/userSee', {id: this.id}, {
+          headers: {
+            authorization: `Bearer ${tokens}`
           }
         }).then(
           (res) => {
             const data = res.data.data;
-            this.resultsMap = data
+            this.resultsMap = data;
             console.log(this.resultsMap)
           },
           (err) => {
@@ -276,16 +276,16 @@
       submitForm(formName){
         this.$refs[formName].validate(valid =>{
           if (valid) {
-            console.log(this.ruleForm2.id)
+            console.log(this.ruleForm2.id);
             axios.post('http://127.0.0.1:7001/business/appoint/finish',this.ruleForm2,{
               headers:{
                 authorization:`Bearer ${tokens}`
               }
             }).then(res => {
               if (res.data.code === 0) {
-                this.$refs[formName].resetFields()
-                this.dialogVisible2 = false
-                this.getParams()
+                this.$refs[formName].resetFields();
+                this.dialogVisible2 = false;
+                this.getParams();
                 this.$message({
                   title:'成功',
                   message:res.data.msg,
@@ -301,7 +301,7 @@
               console.log(res.data)
             })
           } else {
-            console.log('error submit!!')
+            console.log('error submit!!');
             return false
           }
         })
@@ -336,17 +336,17 @@
         if (value === null) {
           return null
         }
-        let area = ''
+        let area = '';
         switch (value.length) {
           case 1:
-            area += CodeToText[value[0]]
-            break
+            area += CodeToText[value[0]];
+            break;
           case 2:
-            area += CodeToText[value[0]] + '/' + CodeToText[value[1]]
-            break
+            area += CodeToText[value[0]] + '/' + CodeToText[value[1]];
+            break;
           case 3:
-            area += CodeToText[value[0]] + '/' + CodeToText[value[1]] + '/' + CodeToText[value[2]]
-            break
+            area += CodeToText[value[0]] + '/' + CodeToText[value[1]] + '/' + CodeToText[value[2]];
+            break;
           default:
             break
         }
@@ -399,7 +399,7 @@
   .top-text{
     margin-top: 20px;
     margin-left: 10px;
-    font-family: '微软雅黑';
+    font-family: '微软雅黑',serif;
     font-size: 20px;
     font-weight: bold
   }

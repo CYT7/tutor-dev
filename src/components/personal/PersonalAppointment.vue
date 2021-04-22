@@ -29,7 +29,7 @@
               <el-popconfirm title="确定支付此预约吗？" @confirm="handlePay({id:scope.row.id})">
                 <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">支付</el-button>
               </el-popconfirm>
-              <el-popconfirm title="确定关闭此预约吗？" @confirm="handleClose({id:scope.row.id})">
+              <el-popconfirm title="确定关闭此预约吗？" @confirm="handleShut({id:scope.row.id})">
                 <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">关闭</el-button>
               </el-popconfirm>
             </span>
@@ -37,7 +37,7 @@
               <el-popconfirm title="确定此预约完成了吗？" @confirm="handleComplete({id:scope.row.id})">
                 <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">完成</el-button>
               </el-popconfirm>
-              <el-popconfirm title="确定关闭此预约吗？" @confirm="handleClose({id:scope.row.id})">
+              <el-popconfirm title="确定关闭此预约吗？" @confirm="handleShut({id:scope.row.id})">
                 <el-button slot="reference" type="text" size="small" icon="el-icon-thumb">关闭</el-button>
               </el-popconfirm>
             </span>
@@ -60,7 +60,7 @@
     </div>
     <el-dialog title="评论" :visible.sync="dialogVisible2" width="30%" :before-close="handleClose" :append-to-body="true">
       <el-form ref="ruleForm2" :model="ruleForm2" :rules="rules2" label-width="140px" class="demo-ruleForm">
-        <el-form-item label="评论" prop="content"><el-input v-model="ruleForm2.content"/></el-form-item>
+        <el-form-item label="评论(20字以内)" prop="content"><el-input v-model="ruleForm2.content"/></el-form-item>
         <el-form-item label="评分" prop="rate">
           <el-rate
             v-model="ruleForm2.rate"
@@ -95,7 +95,7 @@
           id:''
         },
         rules2: {
-          content: [{ required: true,message: '请输入你的评论内容', trigger: 'blur' },{max: 5,message: '超过字数限制' }]
+          content: [{ required: true,message: '请输入你的评论内容', trigger: 'blur' },{max: 20,message: '超过字数限制' }]
         },
       }
     },

@@ -231,10 +231,17 @@
         }).then(res => {
           console.log(res);
           if (res.data.code === 0) {
-            this.$message({
-              type: "success",
-              message: "图片上传成功"
-            });
+            this.$confirm('图片上传成功，是否继续学生证提供审核？','提示',{
+              confirmButtonText:"确定",
+              cancelButtonText:"取消",
+              type:"success"
+            }).then(() => {
+              this.active ++
+              this.dialogImageUrl = '';
+            })
+              .catch(()=>{
+                this.$router.push({ name: "TeacherCenter" });
+              })
           } else {
             this.$message({
               type: "warning",
