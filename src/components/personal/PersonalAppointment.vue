@@ -1,5 +1,5 @@
 <template>
-  <el-row :gutter="20">
+  <el-row :gutter="20" style="margin: 0px;padding:0">
     <el-col :span="20" :offset="2"><Header></Header></el-col>
     <div style="margin-top: 10px" align="center">
       <el-table :data="resultsMap" style="width: 80%" height="700px"><!--height可实现固定表头的表格-->

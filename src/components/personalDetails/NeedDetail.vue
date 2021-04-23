@@ -97,12 +97,12 @@
                       <el-col :span="6"><div class="grid-content bg-purple">你的联系方式</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.phone}}</div></el-col>
                     </el-row>
-                    <el-row v-if="resultsMap.qq?'':resultsMap.qq">
+                    <el-row v-if="resultsMap.qq?resultsMap.qq:''">
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">你的QQ</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.qq}}</div></el-col>
                     </el-row>
-                    <el-row v-if="resultsMap.wechat?'':resultsMap.wechat">
+                    <el-row v-if="resultsMap.wechat?resultsMap.wechat:''">
                       <el-col :span="5" ><div class="grid-content bg-purple">&nbsp;</div></el-col>
                       <el-col :span="6"><div class="grid-content bg-purple">你的微信号</div></el-col>
                       <el-col :span="4"><div class="grid-content bg-purple-light">{{resultsMap.wechat?'':resultsMap.wechat}}</div></el-col>

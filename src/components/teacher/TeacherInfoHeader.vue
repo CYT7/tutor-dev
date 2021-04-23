@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top: 0px">
+  <div>
     <div style="height: 60px">
       <img src="../../assets/styles/images/logo.png" class="logo">
       <div class="block">

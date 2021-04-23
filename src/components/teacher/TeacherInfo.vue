@@ -1,5 +1,5 @@
 <template>
-  <el-row :gutter="20">
+  <el-row :gutter="20" style="margin: 0px;padding:0">
     <el-col :span="20" :offset="2">
       <TeacherInfoHeader></TeacherInfoHeader>
     </el-col>

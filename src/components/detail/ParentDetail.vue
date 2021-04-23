@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin: 0px;padding:0">
     <el-col :span="20" :offset="2"><parent-header></parent-header></el-col>
     <el-col :span="20">
       <div style="margin-top: 20px">

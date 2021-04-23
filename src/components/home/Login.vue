@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-    <el-row :gutter="20">
+    <el-row :gutter="20" style="margin: 0px;padding:0">
       <el-col :span="10" :offset="7" class="header">
         <div style="width: 180px;height: 60px">
           <img src="../../assets/styles/images/logo.png" class="logo" style="width: 180px;height: 60px">

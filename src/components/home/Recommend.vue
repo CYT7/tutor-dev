@@ -1,6 +1,6 @@
 <template>
   <div class="recommend">
-    <div class="tutorRecommend" v-if="tutorData != ''">
+    <div class="tutorRecommend" v-if="tutorData?tutorData:''">
       <el-divider content-position="left">
         <i class="el-icon-menu" style="color: #409EFF"></i>&nbsp;&nbsp;&nbsp;&nbsp;家教推荐
       </el-divider>
@@ -27,7 +27,7 @@
         </router-link>
       </div>
     </div>
-    <div class="recruitRecommend" v-if="needData != ''">
+    <div class="recruitRecommend" v-if="needData?needData:''">
       <el-divider content-position="left">
         <i class="el-icon-s-operation" style="color: #409EFF"></i>&nbsp;&nbsp;&nbsp;&nbsp;需求推荐
       </el-divider>
